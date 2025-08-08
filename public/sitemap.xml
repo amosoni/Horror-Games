@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- 首页 -->
+  <url>
+    <loc>https://horrorgameshub.com/</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 平台页面 -->
+  <url>
+    <loc>https://horrorgameshub.com/horror-games-on-steam</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/horror-games-on-xbox</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/horror-games-on-playstation</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/horror-games-on-nintendo</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/horror-games-on-pc</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 游戏类型页面 -->
+  <url>
+    <loc>https://horrorgameshub.com/survival-horror-games</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/psychological-horror-games</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/jump-scare-games</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/co-op-horror-games</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 特殊SEO页面 -->
+  <url>
+    <loc>https://horrorgameshub.com/free-horror-games</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/horror-games-multiplayer</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/horror-games-online</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/horror-games-2025</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 其他页面 -->
+  <url>
+    <loc>https://horrorgameshub.com/reviews</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/about</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- 游戏详情页面 -->
+  <url>
+    <loc>https://horrorgameshub.com/game/five-nights-freddys</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/game/poppy-playtime</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://horrorgameshub.com/game/phasmophobia</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset> 

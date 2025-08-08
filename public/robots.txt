@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://horrorgameshub.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/
+
+# Allow important pages
+Allow: /horror-games-online
+Allow: /free-horror-games
+Allow: /horror-games-on-steam
+Allow: /horror-games-on-playstation
+Allow: /horror-games-on-xbox
+Allow: /horror-games-on-nintendo
+Allow: /horror-games-on-pc
+Allow: /horror-games-on-roblox
+Allow: /horror-games-multiplayer
+Allow: /horror-games-2025
+Allow: /game/
+Allow: /reviews
+Allow: /about 
