@@ -153,7 +153,7 @@ export default function FreeGamesPage() {
                 transition={{ delay: 0.1 * index, duration: 0.6 }}
               >
                 <SteamRankingCard 
-                  game={game} 
+                  game={game as any} 
                   rank={index + 1}
                 />
               </motion.div>

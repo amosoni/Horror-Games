@@ -135,7 +135,8 @@ export function usePlatformData(options: UsePlatformDataOptions = {}) {
         games: combinedGames.sort((a, b) => b.rating - a.rating),
         total: totalGames,
         platform: 'All Platforms',
-        lastUpdated: new Date().toISOString()
+        lastUpdated: new Date().toISOString(),
+        scrapingTime: 0
       };
 
       setState({
