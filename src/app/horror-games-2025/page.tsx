@@ -1,8 +1,10 @@
+"use client";
+
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { horrorGames } from '../data/games';
-import GameCard from '../components/GameCard';
+import { horrorGames } from '../../data/games';
+import GameCard from '../../components/GameCard';
 import { Star, Clock, TrendingUp, Trophy } from 'lucide-react';
 
 export default function TopGames2025Page() {

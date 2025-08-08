@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { horrorGames } from '../data/games';
-import GameCard from '../components/GameCard';
+import { horrorGames } from '../../data/games';
+import GameCard from '../../components/GameCard';
 import { Star, Clock, TrendingUp, Users } from 'lucide-react';
 
 export default function MultiplayerGamesPage() {

@@ -1,15 +1,18 @@
+"use client";
+
 import React from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Star, Calendar, User, ExternalLink, Play, Share2, Bookmark, Tag } from 'lucide-react';
-import { horrorGames } from '../data/games';
+import { horrorGames } from '../../data/games';
 
 export default function GamePage() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+  const params = useParams<{ id: string }>();
+  const router = useRouter();
   const { t } = useTranslation();
-  
+
+  const id = params?.id as string | undefined;
   const game = horrorGames.find(g => g.id === id);
 
   if (!game) {
@@ -18,7 +21,7 @@ export default function GamePage() {
         <div className="text-center">
           <h2 className="text-2xl font-bold text-white mb-4">Game not found</h2>
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => router.back()}
             className="text-red-400 hover:text-red-300"
           >
             {t('common.back')}
@@ -43,7 +46,7 @@ export default function GamePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
         
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => router.back()}
           className="absolute top-8 left-8 flex items-center space-x-2 bg-black/50 hover:bg-black/70 text-white px-4 py-2 rounded-xl transition-all duration-200"
         >
           <ArrowLeft className="w-5 h-5" />
@@ -93,7 +96,7 @@ export default function GamePage() {
                   className="flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-bold transition-all duration-200"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => window.open(game.steamUrl, '_blank')}
+                  onClick={() => window.open(game.steamUrl as string, '_blank')}
                 >
                   <ExternalLink className="w-5 h-5" />
                   <span>{t('game.buyOnSteam')}</span>
