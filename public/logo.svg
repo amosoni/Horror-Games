@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <style>
+      .stroke { stroke: #e11d48; stroke-width: 3; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .fill { fill: #e11d48; }
+    </style>
+  </defs>
+  <!-- Skull outline -->
+  <path class="stroke" d="M32 6c11 0 20 9 20 20 0 8-4 12-8 14v6H20v-6c-4-2-8-6-8-14 0-11 9-20 20-20z"/>
+  <!-- Eyes -->
+  <circle class="stroke" cx="24" cy="26" r="4"/>
+  <circle class="stroke" cx="40" cy="26" r="4"/>
+  <!-- Nose -->
+  <path class="stroke" d="M28 34l4 4 4-4"/>
+  <!-- Teeth -->
+  <path class="stroke" d="M24 46h16"/>
+  <path class="stroke" d="M28 46v6"/>
+  <path class="stroke" d="M36 46v6"/>
+</svg> 

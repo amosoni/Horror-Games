@@ -51,6 +51,11 @@ export default function Page() {
 
         {/* Featured random game */}
         {featured ? (
+          <div className="mb-2 text-center">
+            <h3 className="text-sm uppercase tracking-widest text-gray-400 mb-2">Featured Game</h3>
+          </div>
+        ) : null}
+        {featured ? (
           <div className="mb-6">
             <div className="relative w-full rounded-2xl overflow-hidden border border-gray-800 shadow-2xl">
               <div className="relative aspect-[16/9] bg-black">
@@ -70,6 +75,9 @@ export default function Page() {
         ) : null}
 
         {/* Dense grid without CTA button */}
+        <div className="mb-2 text-center">
+          <h3 className="text-sm uppercase tracking-widest text-gray-400">Browse Games</h3>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
           {gridGames.map((g, idx) => (
             <motion.div

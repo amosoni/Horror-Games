@@ -24,27 +24,24 @@ export const metadata: Metadata = {
     'psychological horror',
     'jump scare games'
   ].join(', '),
-  metadataBase: new URL('https://horrorgameshub.com'),
+  metadataBase: new URL('https://horrorgames.games'),
   openGraph: {
     title: 'Horror Games Online - Play Free Horror Games in Browser',
     description: 'Play the best free horror games online directly in your browser. No downloads required! Discover survival horror, psychological horror, and jump scare games.',
     type: 'website',
-    url: 'https://horrorgameshub.com/',
+    url: 'https://horrorgames.games/',
     siteName: 'Horror Games Online',
     images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Horror Games Online'
-      }
+      { url: '/logo.svg', width: 512, height: 512, alt: 'Horror Games Online' },
+      { url: '/og-image.jpg', width: 1200, height: 630, alt: 'Horror Games Online' },
     ]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Horror Games Online - Play Free Horror Games in Browser',
     description: 'Play the best free horror games online directly in your browser. No downloads required!',
-    images: ['/og-image.jpg']
+    images: ['/logo.svg', '/og-image.jpg'],
+    site: '@horrorgames'
   },
   robots: {
     index: true,
@@ -60,9 +57,7 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code',
   },
-  alternates: {
-    canonical: 'https://horrorgameshub.com/',
-  },
+  alternates: { canonical: 'https://horrorgames.games/' },
   authors: [{ name: 'Horror Games Hub' }],
   creator: 'Horror Games Hub',
   publisher: 'Horror Games Hub',
@@ -81,8 +76,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" href="/logo.svg" />
+        <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/logo.svg" />
+        <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -102,13 +99,16 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "Horror Games Online",
-              "url": "https://horrorgameshub.com",
+              "url": "https://horrorgames.games",
               "description": "Play the best free horror games online directly in your browser",
               "potentialAction": {
                 "@type": "SearchAction",
-                "target": "https://horrorgameshub.com/search?q={search_term_string}",
+                "target": "https://horrorgames.games/search?q={search_term_string}",
                 "query-input": "required name=search_term_string"
-              }
+              },
+              "icons": [
+                { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml" }
+              ]
             })
           }}
         />

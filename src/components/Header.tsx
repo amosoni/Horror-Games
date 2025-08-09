@@ -49,6 +49,7 @@ export default function Header() {
               <Link
                 key={item.path}
                 href={item.path}
+                title={`${item.label} - Horror Games Online`}
                 className={`relative text-sm font-medium transition-colors duration-200 ${
                   isActive(item.path)
                     ? 'text-red-400'
@@ -92,6 +93,7 @@ export default function Header() {
                   <Link
                     key={item.path}
                     href={item.path}
+                    title={`${item.label} - Horror Games Online`}
                     onClick={() => setIsMenuOpen(false)}
                     className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                       isActive(item.path)

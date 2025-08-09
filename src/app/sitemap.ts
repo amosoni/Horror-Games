@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { curatedWebSlugs } from '../data/games';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://horrorgamesonline.com';
+  const baseUrl = 'https://horrorgames.games';
 
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
