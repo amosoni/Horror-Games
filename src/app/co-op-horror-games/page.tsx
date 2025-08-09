@@ -1,38 +1,36 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { horrorGames } from '../../data/games';
 import GameCard from '../../components/GameCard';
 import { Star, Clock, TrendingUp } from 'lucide-react';
+import { useRawgCoopHorror } from '../../hooks/useRawgGames';
+import type { Game } from '../../types/game';
 
 export default function CoOpHorrorGamesPage() {
   const { t } = useTranslation();
-  const [sortBy, setSortBy] = useState('rating');
+  const [sortBy, setSortBy] = useState<'rating' | 'newest' | 'popular'>('rating');
 
   const genreKey = 'co-op';
 
-  // 根据类型筛选游戏（co-op / multiplayer）
-  const filteredGames = horrorGames.filter(game =>
-    game.genre.some(g => {
-      const key = g.toLowerCase();
-      return key.includes('co-op') || key.includes('coop') || key.includes('multiplayer');
-    })
-  );
+  const { games, loading, error } = useRawgCoopHorror();
 
-  const sortedGames = [...filteredGames].sort((a, b) => {
-    switch (sortBy) {
-      case 'rating':
-        return b.rating - a.rating;
-      case 'newest':
-        return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
-      case 'popular':
-        return b.reviewCount - a.reviewCount;
-      default:
-        return 0;
-    }
-  });
+  const sortedGames = useMemo(() => {
+    const list = [...games];
+    return list.sort((a, b) => {
+      switch (sortBy) {
+        case 'rating':
+          return (b.rating ?? 0) - (a.rating ?? 0);
+        case 'newest':
+          return new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime();
+        case 'popular':
+          return (b.reviewCount ?? 0) - (a.reviewCount ?? 0);
+        default:
+          return 0;
+      }
+    });
+  }, [games, sortBy]);
 
   const sortOptions = [
     { value: 'rating', label: t('platform.topRated'), icon: Star },
@@ -53,10 +51,10 @@ export default function CoOpHorrorGamesPage() {
           animate={{ opacity: 1, y: 0 }}
         >
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
-            {title}
+            Co-op Horror Games Rankings
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            {description}
+            Play the top-rated horror games with friends in these multiplayer co-op experiences.
           </p>
         </motion.div>
 
@@ -70,7 +68,7 @@ export default function CoOpHorrorGamesPage() {
           {sortOptions.map(({ value, label, icon: Icon }) => (
             <button
               key={value}
-              onClick={() => setSortBy(value)}
+              onClick={() => setSortBy(value as any)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 sortBy === value
                   ? 'bg-orange-600 text-white'
@@ -83,26 +81,36 @@ export default function CoOpHorrorGamesPage() {
           ))}
         </motion.div>
 
-        {/* Games Grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          {sortedGames.map((game, index) => (
-            <motion.div
-              key={game.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 * index, duration: 0.5 }}
-            >
-              <GameCard game={game} />
-            </motion.div>
-          ))}
-        </motion.div>
+        {/* Loading / Error */}
+        {loading && (
+          <div className="text-center text-gray-400 py-12">Loading...</div>
+        )}
+        {error && !loading && (
+          <div className="text-center text-red-400 py-12">{error}</div>
+        )}
 
-        {sortedGames.length === 0 && (
+        {/* Games Grid */}
+        {!loading && (
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            {sortedGames.map((game, index) => (
+              <motion.div
+                key={(game as Game).id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index, duration: 0.5 }}
+              >
+                <GameCard game={game as Game} />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+
+        {!loading && sortedGames.length === 0 && (
           <div className="text-center py-16">
             <p className="text-gray-400 text-lg">
               No games found for {genreKey} genre

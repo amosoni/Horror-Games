@@ -17,6 +17,10 @@ export interface Game {
   price?: number;
   featured: boolean;
   tags: string[];
+  metacritic?: number;
+  storeLinks?: { label: string; url: string }[];
+  canonicalSlug?: string;
+  screenshots?: string[];
 }
 
 export interface Platform {

@@ -1,4 +1,4 @@
-// 网络爬虫服务 - 真实抓取游戏平台数据
+// Web scraping service for fetching platform data (demo)
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
@@ -61,17 +61,15 @@ class WebScraper {
     throw new Error('Failed to fetch after retries');
   }
 
-  // Steam爬虫（使用 search/results JSON 接口）
+  // Steam (uses search/results JSON API)
   async scrapeSteam(): Promise<ScrapingResult> {
     const startTime = Date.now();
     const games: ScrapedGame[] = [];
 
     try {
-      // 使用返回 JSON 的接口，字段为 results_html
       const steamJsonUrl = 'https://store.steampowered.com/search/results/?query&norender=1&infinite=1&start=0&count=50&category1=998&term=horror';
       const jsonText = await this.fetchWithRetry(steamJsonUrl);
 
-      // 若为对象则直接使用，否则尝试解析
       const data = typeof jsonText === 'string' ? JSON.parse(jsonText) : jsonText;
       const html = data?.results_html ?? '';
       if (!html) throw new Error('Empty results_html from Steam');
@@ -89,18 +87,17 @@ class WebScraper {
         const reviewSummary = $el.find('.search_review_summary').attr('data-tooltip-html') || '';
         const appId = $el.attr('data-ds-appid') || '';
 
-        // 规范化图片 URL：优先使用 appId 构建稳定 CDN 地址
+        // Normalize image URL using appId when possible
         if (appId) {
           imageUrl = `https://cdn.cloudflare.steamstatic.com/steam/apps/${appId}/capsule_sm_120.jpg`;
         } else if (imageUrl.startsWith('//')) {
           imageUrl = `https:${imageUrl}`;
         } else if (/shared\.st\.dl\.eccdnx\.com/.test(imageUrl)) {
-          // 将不稳定域替换为官方 CDN
           const path = imageUrl.replace(/^https?:\/\/[^/]+\//, '');
           imageUrl = `https://cdn.cloudflare.steamstatic.com/${path.replace('store_item_assets/', '')}`;
         }
 
-        // 粗略解析评分（通过文字强度估计）
+        // Rough rating inference from summary text
         const rating = /Overwhelmingly Positive|Very Positive/i.test(reviewSummary)
           ? 4.8
           : /Mostly Positive/i.test(reviewSummary)
@@ -149,13 +146,12 @@ class WebScraper {
     }
   }
 
-  // Roblox爬虫
+  // Roblox
   async scrapeRoblox(): Promise<ScrapingResult> {
     const startTime = Date.now();
     const games: ScrapedGame[] = [];
 
     try {
-      // 抓取Roblox恐怖游戏
       const robloxUrl = 'https://www.roblox.com/discover/?Keyword=horror&SortType=0';
       const html = await this.fetchWithRetry(robloxUrl);
       const $ = cheerio.load(html);
@@ -205,13 +201,12 @@ class WebScraper {
     }
   }
 
-  // PlayStation Store爬虫
+  // PlayStation Store
   async scrapePlayStation(): Promise<ScrapingResult> {
     const startTime = Date.now();
     const games: ScrapedGame[] = [];
 
     try {
-      // 抓取PlayStation Store恐怖游戏
       const psUrl = 'https://store.playstation.com/en-us/category/44d8bb20-653e-431e-8ad0-c0a365f68d2f';
       const html = await this.fetchWithRetry(psUrl);
       const $ = cheerio.load(html);
@@ -262,13 +257,12 @@ class WebScraper {
     }
   }
 
-  // Xbox Store爬虫
+  // Xbox Store
   async scrapeXbox(): Promise<ScrapingResult> {
     const startTime = Date.now();
     const games: ScrapedGame[] = [];
 
     try {
-      // 抓取Xbox Store恐怖游戏
       const xboxUrl = 'https://www.xbox.com/en-US/games/horror-games';
       const html = await this.fetchWithRetry(xboxUrl);
       const $ = cheerio.load(html);
@@ -319,13 +313,12 @@ class WebScraper {
     }
   }
 
-  // Nintendo eShop爬虫
+  // Nintendo eShop
   async scrapeNintendo(): Promise<ScrapingResult> {
     const startTime = Date.now();
     const games: ScrapedGame[] = [];
 
     try {
-      // 抓取Nintendo eShop恐怖游戏
       const nintendoUrl = 'https://www.nintendo.com/store/products/horror-games/';
       const html = await this.fetchWithRetry(nintendoUrl);
       const $ = cheerio.load(html);
@@ -376,7 +369,7 @@ class WebScraper {
     }
   }
 
-  // 批量抓取所有平台
+  // Aggregate all
   async scrapeAllPlatforms(): Promise<Record<string, ScrapingResult>> {
     const results: Record<string, ScrapingResult> = {};
     

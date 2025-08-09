@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Play, ExternalLink, TrendingUp, Users, Clock } from 'lucide-react';
+import Link from 'next/link';
 import type { PlatformGame } from '../services/platformApi';
 import type { Game } from '../types/game';
 
@@ -14,6 +15,7 @@ interface SteamRankingCardProps {
 
 export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCardProps) {
   const [imageSrc, setImageSrc] = useState<string>((game as any).imageUrl || '');
+  const [storeUrl, setStoreUrl] = useState<string | undefined>(undefined);
 
   const getRankColor = (rank: number) => {
     if (rank === 1) return 'bg-gradient-to-r from-yellow-400 to-yellow-600 text-black';
@@ -51,12 +53,52 @@ export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCa
   const genres: string[] = Array.isArray((game as any).genre) ? (game as any).genre : [];
   const steamUrl: string | undefined = (game as any).steamUrl;
   const iframeUrl: string | undefined = (game as any).iframeUrl;
+  const canonicalSlug: string | undefined = (game as any).canonicalSlug;
+
+  // 生成游戏 slug（若有 canonicalSlug 则优先）
+  const gameSlug = canonicalSlug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+  useEffect(() => {
+    let aborted = false;
+    async function loadStore() {
+      try {
+        const cacheKey = `store:${gameSlug}`;
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) {
+          const u = JSON.parse(cached) as string;
+          if (!aborted) setStoreUrl(u);
+          return;
+        }
+        const res = await fetch(`/api/rawg/game?slug=${encodeURIComponent(gameSlug)}`, { cache: 'no-store' });
+        if (!res.ok) return;
+        const data: any = await res.json();
+        const first = data?.storeLinks?.[0]?.url || data?.steamUrl;
+        if (first && !aborted) {
+          setStoreUrl(first);
+          sessionStorage.setItem(cacheKey, JSON.stringify(first));
+        }
+      } catch {}
+    }
+    loadStore();
+    return () => { aborted = true; };
+  }, [gameSlug]);
+
+  const handleCardClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('a[target="_blank"]')) {
+      return;
+    }
+    if (iframeUrl && onClick) {
+      onClick();
+    } else {
+      window.location.href = `/games/${gameSlug}`;
+    }
+  };
 
   return (
     <motion.div
       className="group relative bg-gradient-to-r from-gray-900/80 to-gray-800/80 backdrop-blur-sm rounded-2xl p-6 hover:from-gray-800/90 hover:to-gray-700/90 transition-all duration-300 cursor-pointer border border-gray-700/50 hover:border-gray-600/50 shadow-lg hover:shadow-xl"
       whileHover={{ x: 8, scale: 1.02 }}
-      onClick={onClick}
+      onClick={handleCardClick}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-transparent via-gray-800/20 to-transparent rounded-2xl" />
       
@@ -79,7 +121,7 @@ export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCa
                 onError={handleImgError}
               />
             ) : (
-              <div className="w-full h-full bg-gray-800" />
+              <img src={'https://placehold.co/80x80?text=Game'} alt={title} className="w-full h-full object-cover" />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           </div>
@@ -128,9 +170,9 @@ export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCa
             </div>
 
             <div className="flex items-center space-x-3">
-              {steamUrl && (
+              {(storeUrl || steamUrl) && (
                 <a
-                  href={steamUrl}
+                  href={storeUrl || steamUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-400 hover:text-blue-300 transition-colors duration-200 p-2 hover:bg-blue-500/20 rounded-full"

@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://horrorgameshub.com/sitemap.xml
+Sitemap: https://horrorgamesonline.com/sitemap.xml
 
 # Disallow admin areas
 Disallow: /admin/

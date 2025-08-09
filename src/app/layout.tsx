@@ -24,6 +24,7 @@ export const metadata: Metadata = {
     'psychological horror',
     'jump scare games'
   ].join(', '),
+  metadataBase: new URL('https://horrorgameshub.com'),
   openGraph: {
     title: 'Horror Games Online - Play Free Horror Games in Browser',
     description: 'Play the best free horror games online directly in your browser. No downloads required! Discover survival horror, psychological horror, and jump scare games.',
@@ -84,6 +85,14 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7QH42Q9P3L"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-7QH42Q9P3L');`,
+          }}
+        />
         
         {/* Structured Data */}
         <script

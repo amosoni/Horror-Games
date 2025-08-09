@@ -1,165 +1,112 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Play, Globe } from 'lucide-react';
-import { featuredGames, horrorGames } from '../data/games';
-import FeaturedGame from '../components/FeaturedGame';
-import GameCard from '../components/GameCard';
-import GameIframe from '../components/GameIframe';
-import SearchBar from '../components/SearchBar';
+import { Skull } from 'lucide-react';
 import Header from '../components/Header';
-import type { Game } from '../types/game';
+import Footer from '../components/Footer';
+import Link from 'next/link';
+import { curatedWebGames } from '../data/games';
 
 export default function Page() {
-  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
-  const [searchResults, setSearchResults] = useState<Game[]>(horrorGames);
-
-  const handlePlayGame = (game: Game) => {
-    if (game.iframeUrl) {
-      setSelectedGame(game);
-    }
-  };
-
-  const handleSearch = (query: string) => {
-    if (!query.trim()) {
-      setSearchResults(horrorGames);
-      return;
-    }
-    
-    const filtered = horrorGames.filter(game =>
-      game.title.toLowerCase().includes(query.toLowerCase()) ||
-      game.description.toLowerCase().includes(query.toLowerCase()) ||
-      game.genre.some(g => g.toLowerCase().includes(query.toLowerCase()))
-    );
-    setSearchResults(filtered);
-  };
-
-  const handleFilter = (filters: Record<string, unknown>) => {
-    // Implement filtering logic here
-    console.log('Filters:', filters);
-  };
-
-  // 筛选在线游戏和免费游戏
-  const onlineGames = horrorGames.filter(game => game.iframeUrl);
-  const freeGames = horrorGames.filter(game => !game.price || game.price === 0);
+  const allGames = useMemo(() => curatedWebGames, []);
+  const featured = useMemo(() => {
+    const bySlug = allGames.find(g => (g.canonicalSlug ?? g.id) === 'last-seen-online');
+    return bySlug || allGames[0] || null;
+  }, [allGames]);
+  const gridGames = useMemo(() => allGames.filter(g => g.id !== featured?.id), [allGames, featured]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-950 to-black">
+    <div className="relative min-h-screen bg-black">
+      {/* Horror background overlays */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-70"
+        style={{
+          backgroundImage:
+            'radial-gradient(80% 60% at 50% 0%, rgba(120,0,0,0.12), transparent),' +
+            'radial-gradient(40% 30% at 10% 80%, rgba(200,0,0,0.08), transparent),' +
+            'radial-gradient(35% 25% at 90% 70%, rgba(120,0,0,0.08), transparent)',
+        }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 mix-blend-overlay opacity-20"
+        style={{
+          backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,0,0,0.05) 0 2px, transparent 2px 6px)',
+        }}
+      />
+
       <Header />
-      
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-red-900/10 to-purple-900/10" />
-          
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <motion.div
-              className="text-center mb-16"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <motion.h1 
-                className="text-5xl md:text-7xl font-bold text-white mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.8 }}
-              >
-                Horror Games Online
-              </motion.h1>
-              
-              <motion.p 
-                className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.8 }}
-              >
-                Play the best free horror games online directly in your browser. No downloads required!
-              </motion.p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.8 }}
-              >
-                <SearchBar onSearch={handleSearch} onFilter={handleFilter} />
-              </motion.div>
-            </motion.div>
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-6 lg:py-8 relative">
+        {/* Hero */}
+        <motion.div className="mb-4 sm:mb-6 text-center" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-3 flex items-center justify-center gap-3">
+            <Skull className="w-8 h-8 md:w-10 md:h-10 text-red-600" />
+            <span>Play Horror Games Online</span>
+          </h1>
+          <p className="text-gray-300 text-base md:text-lg max-w-4xl mx-auto">
+            Click any game card to open its detail page and play in full view. Our curation focuses on lightweight, embeddable browser horror—no installs, no waiting. Discover short narratives, experimental atmospheres, and micro‑thrillers perfect for a quick scare.
+          </p>
+        </motion.div>
 
-            {/* Featured Games Section */}
-            <motion.div
-              className="mb-16"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.6 }}
-            >
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-bold text-white flex items-center space-x-3">
-                  <Globe className="text-purple-500" />
-                  <span>Featured Horror Games</span>
-                </h2>
+        {/* Featured random game */}
+        {featured ? (
+          <div className="mb-6">
+            <div className="relative w-full rounded-2xl overflow-hidden border border-gray-800 shadow-2xl">
+              <div className="relative aspect-[16/9] bg-black">
+                {featured.imageUrl ? (
+                  <img src={featured.imageUrl} alt={featured.title} className="absolute inset-0 w-full h-full object-cover opacity-50" />
+                ) : null}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
+                  <h2 className="text-2xl md:text-4xl font-extrabold text-white mb-2">{featured.title}</h2>
+                  <p className="text-gray-200 max-w-2xl mb-4 line-clamp-2">{featured.shortDescription || featured.genre.join(', ')}</p>
+                  <Link href={`/games/${featured.canonicalSlug ?? featured.id}`} className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-500">
+                    Play now →
+                  </Link>
+                </div>
               </div>
-
-              <div className="space-y-8">
-                {featuredGames.slice(0, 2).map((game, index) => (
-                  <motion.div
-                    key={game.id}
-                    initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2 * index, duration: 0.6 }}
-                  >
-                    <FeaturedGame 
-                      game={game} 
-                      onPlayClick={() => handlePlayGame(game)}
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-
-            {/* Platform Games Section */}
-            <motion.div
-              className="mb-16"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.0, duration: 0.6 }}
-            >
-              <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-bold text-white flex items-center space-x-3">
-                  <Play className="text-red-500" />
-                  <span>Top Horror Games by Platform</span>
-                </h2>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {horrorGames.slice(0, 6).map((game, index) => (
-                  <motion.div
-                    key={game.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 * index, duration: 0.5 }}
-                  >
-                    <GameCard 
-                      game={game} 
-                      onClick={() => handlePlayGame(game)}
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+            </div>
           </div>
-        </section>
+        ) : null}
+
+        {/* Dense grid without CTA button */}
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+          {gridGames.map((g, idx) => (
+            <motion.div
+              key={g.id}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.02 * idx }}
+              className="relative bg-gray-900/70 border border-gray-800 rounded-xl overflow-hidden hover:ring-1 hover:ring-red-700/40"
+            >
+              {/* Clickable overlay to go to detail page */}
+              <Link
+                href={`/games/${g.canonicalSlug ?? g.id}`}
+                className="absolute inset-0 z-20"
+                aria-label={`${g.title} details`}
+              />
+
+              <div className="relative aspect-video bg-black">
+                {g.imageUrl ? (
+                  <img
+                    src={g.imageUrl}
+                    alt={g.title}
+                    className="absolute inset-0 w-full h-full object-cover opacity-45"
+                  />
+                ) : null}
+
+                {/* Title overlay */}
+                <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-2 sm:p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-center">
+                  <div className="text-white text-sm sm:text-base font-semibold line-clamp-1">{g.title}</div>
+                  <div className="text-gray-400 text-xs line-clamp-1">{g.genre.slice(0, 2).join(', ')}</div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* Game Iframe Modal */}
-      {selectedGame && (
-        <GameIframe
-          url={selectedGame.iframeUrl ?? ''}
-          title={selectedGame.title ?? ''}
-          onClose={() => setSelectedGame(null)}
-        />
-      )}
+      <Footer />
     </div>
   );
 }
