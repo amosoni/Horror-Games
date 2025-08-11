@@ -1,7 +1,7 @@
 export default function Head() {
   const title = 'Xbox Horror Games Rankings — Best Xbox Horror Games';
   const description = 'Discover the top-rated horror games on Xbox. Explore the best Xbox Series X/S and Xbox One horror games ranked by rating and popularity.';
-  const url = 'https://horrorgamesonline.com/horror-games-on-xbox';
+  const url = 'https://horrorgames.games/horror-games-on-xbox';
   const image = '/og-image.jpg';
   const jsonLd = {
     '@context': 'https://schema.org',

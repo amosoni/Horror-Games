@@ -1,7 +1,7 @@
 export default function Head() {
   const title = 'Roblox Horror Games Rankings — Scary Roblox Games to Play';
   const description = 'Discover the top-rated horror games on Roblox. Explore the scariest multiplayer Roblox horror experiences ranked by rating and popularity.';
-  const url = 'https://horrorgamesonline.com/horror-games-on-roblox';
+  const url = 'https://horrorgames.games/horror-games-on-roblox';
   const image = '/og-image.jpg';
   const jsonLd = {
     '@context': 'https://schema.org',

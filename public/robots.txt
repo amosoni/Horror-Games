@@ -6,8 +6,6 @@ Disallow: /admin/
 Disallow: /api/
 Disallow: /_next/
 Disallow: /static/
-Disallow: /images/
-Disallow: /favicon.ico
 
 # 允许重要页面
 Allow: /horror-games-online
@@ -24,24 +22,21 @@ Allow: /game/
 Allow: /reviews
 Allow: /about
 
-# 爬虫延迟设置
+# 爬虫延迟设置（多数搜索引擎会忽略）
 Crawl-delay: 1
 
-# Sitemap
-Sitemap: https://horrorgamesonline.com/sitemap.xml
+# Sitemap（修正为正确域名）
+Sitemap: https://horrorgames.games/sitemap.xml
 
-# 特殊爬虫规则
+# 特殊爬虫规则（放行主流搜索引擎）
 User-agent: Googlebot
 Allow: /
-Crawl-delay: 0.5
 
 User-agent: Bingbot
 Allow: /
-Crawl-delay: 0.5
 
 User-agent: Slurp
 Allow: /
-Crawl-delay: 1
 
 # 禁止恶意爬虫
 User-agent: AhrefsBot

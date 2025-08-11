@@ -14,15 +14,23 @@ export function middleware(request: NextRequest) {
   res.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   
-  // 反爬虫头部
-  res.headers.set('X-Robots-Tag', 'noindex, nofollow');
+  // 允许生产环境索引，非生产环境不索引
+  const isProduction = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
+  res.headers.set('X-Robots-Tag', isProduction ? 'index, follow' : 'noindex, nofollow');
   
   // 检查 User-Agent
   const userAgent = request.headers.get('user-agent') || '';
-  const isBot = /bot|crawler|spider|crawling/i.test(userAgent);
+
+  // 放行主流搜索引擎爬虫（Google、Bing、Yahoo、DuckDuckGo、Yandex、Baidu 等）
+  const allowedSearchBots = /(googlebot|bingbot|slurp|duckduckbot|yandex(bot)?|baiduspider|sogou|exabot)/i;
+  const isAllowedSearchBot = allowedSearchBots.test(userAgent);
+
+  // 通用爬虫特征（用于拦截未知或恶意爬虫）
+  const genericBotPattern = /(bot|crawler|spider|crawling)/i;
+  const isGenericBot = genericBotPattern.test(userAgent);
   
-  // 检查是否是明显的爬虫
-  if (isBot) {
+  // 检查是否是明显的且不在白名单内的爬虫
+  if (isGenericBot && !isAllowedSearchBot) {
     return new NextResponse('Access denied for bots', { 
       status: 403,
       headers: {
@@ -32,13 +40,11 @@ export function middleware(request: NextRequest) {
     });
   }
   
-  // 检查请求频率（简单的 IP 检查）
+  // 简单的访问日志
   const ip = request.headers.get('x-forwarded-for') || 
              request.headers.get('x-real-ip') || 
              'unknown';
   const path = request.nextUrl.pathname;
-  
-  // 记录访问日志（可选）
   console.log(`[${new Date().toISOString()}] ${ip} - ${request.method} ${path} - ${userAgent.substring(0, 100)}`);
   
   return res;

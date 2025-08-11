@@ -8,6 +8,7 @@ import Footer from '../components/Footer';
 import Link from 'next/link';
 import { curatedWebGames } from '../data/games';
 import { Game } from '../types/game';
+import Image from 'next/image';
 
 export default function Page() {
   // Get featured game and grid games
@@ -61,7 +62,13 @@ export default function Page() {
                   <div className="relative w-full rounded-xl overflow-hidden border border-gray-700 shadow-lg">
                     <div className="relative aspect-[4/3] bg-gray-800">
                       {featured.imageUrl ? (
-                        <img src={featured.imageUrl} alt={featured.title} className="absolute inset-0 w-full h-full object-cover opacity-60" />
+                        <Image 
+                          src={featured.imageUrl} 
+                          alt={featured.title} 
+                          fill 
+                          sizes="(max-width: 1024px) 100vw, 66vw"
+                          className="object-cover opacity-60" 
+                        />
                       ) : null}
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
                         <h2 className="text-base md:text-xl font-extrabold text-white mb-1">{featured.title}</h2>
@@ -79,7 +86,13 @@ export default function Page() {
                     <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-red-500/60 hover:bg-gray-700/90">
                       <div className="relative aspect-[4/3] bg-gray-800">
                         {game.imageUrl ? (
-                          <img src={game.imageUrl} alt={game.title} className="absolute inset-0 w-full h-full object-cover opacity-70" />
+                          <Image 
+                            src={game.imageUrl} 
+                            alt={game.title} 
+                            fill 
+                            sizes="(max-width: 1024px) 100vw, 33vw"
+                            className="object-cover opacity-70" 
+                          />
                         ) : null}
                         <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
                           <h3 className="text-sm font-bold text-white mb-1">{game.title}</h3>
@@ -103,7 +116,13 @@ export default function Page() {
                 <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-red-500/60 hover:bg-gray-700/90">
                   <div className="relative aspect-[4/3] bg-gray-800">
                     {game.imageUrl ? (
-                      <img src={game.imageUrl} alt={game.title} className="absolute inset-0 w-full h-full object-cover opacity-70" />
+                      <Image 
+                        src={game.imageUrl} 
+                        alt={game.title} 
+                        fill 
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="object-cover opacity-70" 
+                      />
                     ) : null}
                     <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
                       <h3 className="text-sm font-bold text-white mb-1">{game.title}</h3>

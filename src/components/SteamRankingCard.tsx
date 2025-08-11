@@ -3,9 +3,9 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Play, ExternalLink, TrendingUp, Users, Clock } from 'lucide-react';
-import Link from 'next/link';
 import type { PlatformGame } from '../services/platformApi';
 import type { Game } from '../types/game';
+import Image from 'next/image';
 
 interface SteamRankingCardProps {
   game: PlatformGame | Game;
@@ -13,8 +13,11 @@ interface SteamRankingCardProps {
   onClick?: () => void;
 }
 
+type AnyGame = PlatformGame & Partial<Game> & Record<string, unknown>;
+
 export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCardProps) {
-  const [imageSrc, setImageSrc] = useState<string>((game as any).imageUrl || '');
+  const g = game as AnyGame;
+  const [imageSrc, setImageSrc] = useState<string>(String(g.imageUrl || ''));
   const [storeUrl, setStoreUrl] = useState<string | undefined>(undefined);
 
   const getRankColor = (rank: number) => {
@@ -43,17 +46,17 @@ export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCa
   };
 
   // 归一化字段
-  const title = (game as any).title ?? 'Unknown';
-  const shortDescription = (game as any).shortDescription ?? '';
-  const rating: number = Number((game as any).rating ?? 0);
-  const reviewCount: number = Number((game as any).reviewCount ?? 0);
-  const releaseDate: string = (game as any).releaseDate ?? '';
+  const title = String(g.title ?? 'Unknown');
+  const shortDescription = String(g.shortDescription ?? '');
+  const rating: number = Number(g.rating ?? 0);
+  const reviewCount: number = Number(g.reviewCount ?? 0);
+  const releaseDate: string = String(g.releaseDate ?? '');
   const releaseYear = releaseDate ? new Date(releaseDate).getFullYear() : 'N/A';
-  const price: number = Number((game as any).price ?? 0);
-  const genres: string[] = Array.isArray((game as any).genre) ? (game as any).genre : [];
-  const steamUrl: string | undefined = (game as any).steamUrl;
-  const iframeUrl: string | undefined = (game as any).iframeUrl;
-  const canonicalSlug: string | undefined = (game as any).canonicalSlug;
+  const price: number = Number(g.price ?? 0);
+  const genres: string[] = Array.isArray((g as any).genre) ? ((g as any).genre as string[]) : [];
+  const steamUrl: string | undefined = (g as any).steamUrl as string | undefined;
+  const iframeUrl: string | undefined = (g as any).iframeUrl as string | undefined;
+  const canonicalSlug: string | undefined = (g as any).canonicalSlug as string | undefined;
 
   // 生成游戏 slug（若有 canonicalSlug 则优先）
   const gameSlug = canonicalSlug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -71,7 +74,7 @@ export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCa
         }
         const res = await fetch(`/api/rawg/game?slug=${encodeURIComponent(gameSlug)}`, { cache: 'no-store' });
         if (!res.ok) return;
-        const data: any = await res.json();
+        const data: { storeLinks?: { url?: string }[]; steamUrl?: string } = await res.json();
         const first = data?.storeLinks?.[0]?.url || data?.steamUrl;
         if (first && !aborted) {
           setStoreUrl(first);
@@ -112,16 +115,23 @@ export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCa
         <div className="flex-shrink-0 relative">
           <div className="relative w-20 h-20 rounded-xl overflow-hidden shadow-lg bg-gray-800">
             {imageSrc ? (
-              <img
+              <Image
                 src={imageSrc}
                 alt={title}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                referrerPolicy="no-referrer"
-                crossOrigin="anonymous"
-                onError={handleImgError}
+                fill
+                sizes="(max-width: 640px) 80px, 120px"
+                className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                  onError={handleImgError}
               />
             ) : (
-              <img src={'https://placehold.co/80x80?text=Game'} alt={title} className="w-full h-full object-cover" />
+              <Image 
+                src={'https://placehold.co/80x80?text=Game'} 
+                alt={title} 
+                width={80} 
+                height={80} 
+                sizes="80px"
+                className="w-full h-full object-cover" 
+              />
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           </div>

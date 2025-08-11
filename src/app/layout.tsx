@@ -1,6 +1,7 @@
 import React from 'react';
 import '../index.css';
 import type { Metadata } from 'next';
+import I18nProvider from '../components/I18nProvider';
 
 export const metadata: Metadata = {
   title: 'Horror Games Online - Play Free Horror Games in Browser',
@@ -33,14 +34,14 @@ export const metadata: Metadata = {
     siteName: 'Horror Games Online',
     images: [
       { url: '/logo.svg', width: 512, height: 512, alt: 'Horror Games Online' },
-      { url: '/og-image.jpg', width: 1200, height: 630, alt: 'Horror Games Online' },
+      { url: '/og-image.svg', width: 1200, height: 630, alt: 'Horror Games Online' },
     ]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Horror Games Online - Play Free Horror Games in Browser',
     description: 'Play the best free horror games online directly in your browser. No downloads required!',
-    images: ['/logo.svg', '/og-image.jpg'],
+    images: ['/logo.svg', '/og-image.svg'],
     site: '@horrorgames'
   },
   robots: {
@@ -114,9 +115,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div className="min-h-screen bg-black text-white">
-          {children}
-        </div>
+        <I18nProvider>
+          <div className="min-h-screen bg-black text-white">
+            {children}
+          </div>
+        </I18nProvider>
       </body>
     </html>
   );

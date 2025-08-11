@@ -27,11 +27,46 @@ export interface ScrapingResult {
   scrapingTime: number;
 }
 
+// Helpers to auto-correct scraping
+function normalizeText(text: string | undefined): string {
+  return (text || '').replace(/\s+/g, ' ').trim();
+}
+
+function toAbsoluteUrl(src: string | undefined, base: string): string {
+  const s = (src || '').trim();
+  if (!s) return '';
+  if (s.startsWith('http://') || s.startsWith('https://')) return s;
+  if (s.startsWith('//')) return `https:${s}`;
+  try {
+    const u = new URL(s, base);
+    return u.href;
+  } catch {
+    return s;
+  }
+}
+
+function parsePrice(text: string | undefined): number {
+  const t = (text || '').toLowerCase();
+  if (t.includes('free') || t.includes('免费')) return 0;
+  const n = parseFloat(t.replace(/[^0-9.]/g, ''));
+  return Number.isFinite(n) ? n : 0;
+}
+
+function inferRatingFromSummary(summary: string | undefined): number {
+  const s = (summary || '').toLowerCase();
+  if (/overwhelmingly positive|特别好评|overwhelmingly\s+positive/.test(s)) return 4.8;
+  if (/very positive|好评如潮|very\s+positive/.test(s)) return 4.6;
+  if (/mostly positive|多半好评|mostly\s+positive/.test(s)) return 4.3;
+  if (/mixed|褒贬不一/.test(s)) return 3.5;
+  if (/mostly negative|多半差评/.test(s)) return 2.8;
+  return 4.0;
+}
+
 class WebScraper {
   private userAgents = [
-    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_4) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.4 Safari/605.1.15',
+    'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
   ];
 
   private getRandomUserAgent(): string {
@@ -44,18 +79,20 @@ class WebScraper {
         const response = await axios.get(url, {
           headers: {
             'User-Agent': this.getRandomUserAgent(),
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
-            'Accept-Encoding': 'gzip, deflate',
-            'Connection': 'keep-alive',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,application/json;q=0.8,*/*;q=0.7',
+            'Accept-Language': 'en-US,en;q=0.9',
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Referer': url,
             'Upgrade-Insecure-Requests': '1',
           },
-          timeout: 10000,
+          timeout: 15000,
+          validateStatus: (s) => s >= 200 && s < 500,
         });
-        return response.data;
+        return typeof response.data === 'string' ? response.data : JSON.stringify(response.data);
       } catch (error) {
         if (i === retries - 1) throw error;
-        await new Promise(resolve => setTimeout(resolve, 2000 * (i + 1)));
+        await new Promise(resolve => setTimeout(resolve, 1500 * (i + 1)));
       }
     }
     throw new Error('Failed to fetch after retries');
@@ -70,8 +107,8 @@ class WebScraper {
       const steamJsonUrl = 'https://store.steampowered.com/search/results/?query&norender=1&infinite=1&start=0&count=50&category1=998&term=horror';
       const jsonText = await this.fetchWithRetry(steamJsonUrl);
 
-      const data = typeof jsonText === 'string' ? JSON.parse(jsonText) : jsonText;
-      const html = data?.results_html ?? '';
+      const data: { results_html?: string } = typeof jsonText === 'string' ? JSON.parse(jsonText) : { results_html: String(jsonText || '') };
+      const html = data.results_html ?? '';
       if (!html) throw new Error('Empty results_html from Steam');
 
       const $ = cheerio.load(html);
@@ -79,9 +116,8 @@ class WebScraper {
       $('.search_result_row').each((index, element) => {
         if (index >= 25) return;
         const $el = $(element);
-        const title = $el.find('.search_name .title').text().trim();
-        const priceText = $el.find('.search_price').text().trim();
-        const price = priceText.includes('Free') ? 0 : parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
+        const title = normalizeText($el.find('.search_name .title').text());
+        const price = parsePrice($el.find('.search_price').text());
         let imageUrl = $el.find('.search_capsule img').attr('src') || '';
         const steamUrl = $el.attr('href') || '';
         const reviewSummary = $el.find('.search_review_summary').attr('data-tooltip-html') || '';
@@ -97,14 +133,7 @@ class WebScraper {
           imageUrl = `https://cdn.cloudflare.steamstatic.com/${path.replace('store_item_assets/', '')}`;
         }
 
-        // Rough rating inference from summary text
-        const rating = /Overwhelmingly Positive|Very Positive/i.test(reviewSummary)
-          ? 4.8
-          : /Mostly Positive/i.test(reviewSummary)
-          ? 4.3
-          : /Mixed/i.test(reviewSummary)
-          ? 3.5
-          : 4.0;
+        const rating = inferRatingFromSummary(reviewSummary);
 
         if (title) {
           games.push({
@@ -156,12 +185,16 @@ class WebScraper {
       const html = await this.fetchWithRetry(robloxUrl);
       const $ = cheerio.load(html);
 
-      $('.game-card-container').each((index, element) => {
+      const cards = $('.game-card-container');
+      const nodes = cards.length ? cards : $('[data-testid="game-card"], .game-card, .grid-item');
+
+      nodes.each((index, element) => {
         if (index >= 15) return;
 
         const $el = $(element);
-        const title = $el.find('.game-card-name').text().trim();
-        const imageUrl = $el.find('.game-card-thumb img').attr('src') || '';
+        const title = normalizeText($el.find('.game-card-name, [data-testid="game-name"]').text());
+        const imgSrc = $el.find('.game-card-thumb img, img[loading="lazy"], img').attr('src') || '';
+        const imageUrl = toAbsoluteUrl(imgSrc, 'https://www.roblox.com');
 
         if (title) {
           games.push({
@@ -169,7 +202,7 @@ class WebScraper {
             title,
             description: `A multiplayer horror game on Roblox. ${title} offers a terrifying experience for players.`,
             shortDescription: `Multiplayer horror on Roblox - ${title}`,
-            imageUrl: imageUrl.startsWith('http') ? imageUrl : `https://www.roblox.com${imageUrl}`,
+            imageUrl,
             rating: 4.0 + Math.random() * 1.0,
             reviewCount: Math.floor(Math.random() * 50000) + 1000,
             price: 0,
@@ -211,14 +244,18 @@ class WebScraper {
       const html = await this.fetchWithRetry(psUrl);
       const $ = cheerio.load(html);
 
-      $('.psw-product-tile').each((index, element) => {
+      const tiles = $('.psw-product-tile');
+      const nodes = tiles.length ? tiles : $('[data-qa="ems-sdk-grid#product-tile"], article');
+
+      nodes.each((index, element) => {
         if (index >= 15) return;
 
         const $el = $(element);
-        const title = $el.find('.psw-product-tile__title').text().trim();
-        const priceText = $el.find('.psw-price').text().trim();
-        const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
-        const imageUrl = $el.find('.psw-product-tile__img img').attr('src') || '';
+        const title = normalizeText($el.find('.psw-product-tile__title, [data-qa="ems-sdk-grid#product-name"]').text());
+        const priceText = $el.find('.psw-price, [data-qa="mfeCtaMain#offer0#finalPrice"]').text();
+        const price = parsePrice(priceText);
+        const imgSrc = $el.find('.psw-product-tile__img img, img').attr('src') || '';
+        const imageUrl = toAbsoluteUrl(imgSrc, 'https://store.playstation.com');
 
         if (title) {
           games.push({
@@ -226,7 +263,7 @@ class WebScraper {
             title,
             description: `A horror game available on PlayStation. ${title} delivers a terrifying gaming experience.`,
             shortDescription: `Horror game on PlayStation - ${title}`,
-            imageUrl: imageUrl.startsWith('http') ? imageUrl : `https://store.playstation.com${imageUrl}`,
+            imageUrl,
             rating: 4.0 + Math.random() * 1.0,
             reviewCount: Math.floor(Math.random() * 20000) + 500,
             price,
@@ -267,14 +304,17 @@ class WebScraper {
       const html = await this.fetchWithRetry(xboxUrl);
       const $ = cheerio.load(html);
 
-      $('.game-card').each((index, element) => {
+      const cards = $('.game-card');
+      const nodes = cards.length ? cards : $('[data-automation-id="gameProductCard"], article');
+
+      nodes.each((index, element) => {
         if (index >= 15) return;
 
         const $el = $(element);
-        const title = $el.find('.game-title').text().trim();
-        const priceText = $el.find('.game-price').text().trim();
-        const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
-        const imageUrl = $el.find('.game-image img').attr('src') || '';
+        const title = normalizeText($el.find('.game-title, [data-automation-id="productTitle"]').text());
+        const price = parsePrice($el.find('.game-price, [itemprop="price"]').text());
+        const imgSrc = $el.find('.game-image img, img').attr('src') || '';
+        const imageUrl = toAbsoluteUrl(imgSrc, 'https://www.xbox.com');
 
         if (title) {
           games.push({
@@ -282,7 +322,7 @@ class WebScraper {
             title,
             description: `A horror game available on Xbox. ${title} offers a terrifying gaming experience.`,
             shortDescription: `Horror game on Xbox - ${title}`,
-            imageUrl: imageUrl.startsWith('http') ? imageUrl : `https://www.xbox.com${imageUrl}`,
+            imageUrl,
             rating: 4.0 + Math.random() * 1.0,
             reviewCount: Math.floor(Math.random() * 15000) + 300,
             price,
@@ -323,14 +363,17 @@ class WebScraper {
       const html = await this.fetchWithRetry(nintendoUrl);
       const $ = cheerio.load(html);
 
-      $('.product-item').each((index, element) => {
+      const items = $('.product-item');
+      const nodes = items.length ? items : $('[data-test="productCard"], article');
+
+      nodes.each((index, element) => {
         if (index >= 15) return;
 
         const $el = $(element);
-        const title = $el.find('.product-title').text().trim();
-        const priceText = $el.find('.product-price').text().trim();
-        const price = parseFloat(priceText.replace(/[^0-9.]/g, '')) || 0;
-        const imageUrl = $el.find('.product-image img').attr('src') || '';
+        const title = normalizeText($el.find('.product-title, [data-test="productTitle"]').text());
+        const price = parsePrice($el.find('.product-price, [data-test="currentPrice"]').text());
+        const imgSrc = $el.find('.product-image img, img').attr('src') || '';
+        const imageUrl = toAbsoluteUrl(imgSrc, 'https://www.nintendo.com');
 
         if (title) {
           games.push({
@@ -338,7 +381,7 @@ class WebScraper {
             title,
             description: `A horror game available on Nintendo Switch. ${title} delivers a terrifying gaming experience.`,
             shortDescription: `Horror game on Nintendo Switch - ${title}`,
-            imageUrl: imageUrl.startsWith('http') ? imageUrl : `https://www.nintendo.com${imageUrl}`,
+            imageUrl,
             rating: 4.0 + Math.random() * 1.0,
             reviewCount: Math.floor(Math.random() * 10000) + 200,
             price,

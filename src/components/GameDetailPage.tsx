@@ -8,6 +8,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { horrorGames as localGames, curatedWebGames } from "../data/games";
 import { gameSeoBySlug } from "../data/gameSeo";
+import Image from 'next/image';
 
 function renderFormattedDescription(desc: string) {
   const normalized = (desc || '').replace(/\r\n/g, "\n").trim();
@@ -549,9 +550,16 @@ export default function GameDetailPage({ slug }: Props) {
                       href={`/games/${g.canonicalSlug ?? g.id}`}
                       className="group block rounded-lg overflow-hidden border border-gray-800 bg-gray-900/60 hover:bg-gray-900 transition-colors duration-200"
                     >
-                      <div className="relative aspect-video bg-black">
+                      <div className="relative aspect-[4/3]">
+                        {/* background image */}
                         {g.imageUrl ? (
-                          <img src={g.imageUrl} alt={g.title} className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                          <Image 
+                            src={g.imageUrl} 
+                            alt={g.title} 
+                            fill 
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                            className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" 
+                          />
                         ) : null}
                       </div>
                       <div className="p-3">

@@ -1,7 +1,7 @@
 export default function Head() {
   const title = 'Steam Horror Games Rankings — Best Horror Games on Steam';
   const description = 'Discover the top-rated horror games on Steam. From indie horror to AAA titles, explore our curated rankings of the best Steam horror games.';
-  const url = 'https://horrorgamesonline.com/horror-games-on-steam';
+  const url = 'https://horrorgames.games/horror-games-on-steam';
   const image = '/og-image.jpg';
   const jsonLd = {
     '@context': 'https://schema.org',

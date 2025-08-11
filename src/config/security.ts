@@ -16,7 +16,7 @@ export const SECURITY_CONFIG = {
     xXSSProtection: '1; mode=block',
     referrerPolicy: 'strict-origin-when-cross-origin',
     permissionsPolicy: 'camera=(), microphone=(), geolocation=()',
-    xRobotsTag: 'noindex, nofollow',
+    xRobotsTag: 'index, follow',
   },
 
   // 允许的域名

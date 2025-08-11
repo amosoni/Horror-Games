@@ -65,7 +65,7 @@ export async function generateMetadata({ params }: { params: Promise<RouteParams
   const extra = gameSeoBySlug[slugStr];
   const metaDescription = extra?.description || description;
   const image = detail?.background_image || detail?.background_image_additional || '/og-image.jpg';
-  const baseUrl = 'https://horrorgamesonline.com';
+  const baseUrl = 'https://horrorgames.games';
   const canonical = `${baseUrl}/games/${detail?.slug || slugStr}`;
   const isLocalPlayable = Boolean(localGames.find(g => (g.canonicalSlug ?? g.id) === slugStr && g.iframeUrl));
   const titleText = isLocalPlayable ? `${gameTitle} Online Game - Play Now` : `${gameTitle} - Horror Games Online`;
@@ -108,7 +108,7 @@ export default async function GamePage({ params }: { params: Promise<RouteParams
   const image = detail?.background_image || detail?.background_image_additional || '/og-image.jpg';
   const isLocalPlayable = Boolean(localGames.find(g => (g.canonicalSlug ?? g.id) === slugStr && g.iframeUrl));
   const extra = gameSeoBySlug[slugStr];
-  const baseUrl = 'https://horrorgamesonline.com';
+  const baseUrl = 'https://horrorgames.games';
   const canonical = `${baseUrl}/games/${detail?.slug || slugStr}`;
 
   const jsonLdBlocks = [] as any[];

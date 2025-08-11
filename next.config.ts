@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    remotePatterns: [
+      { protocol: 'https', hostname: 'images.pexels.com' },
+      { protocol: 'https', hostname: 'placehold.co' },
+    ],
+  },
 };
 
 export default withMDX(nextConfig);

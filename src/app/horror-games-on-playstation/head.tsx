@@ -1,7 +1,7 @@
 export default function Head() {
   const title = 'PlayStation Horror Games Rankings — Best PS5/PS4 Horror Games';
   const description = 'Discover the top-rated horror games on PlayStation. Explore the best PS5 and PS4 horror games ranked by rating and popularity.';
-  const url = 'https://horrorgamesonline.com/horror-games-on-playstation';
+  const url = 'https://horrorgames.games/horror-games-on-playstation';
   const image = '/og-image.jpg';
   const jsonLd = {
     '@context': 'https://schema.org',

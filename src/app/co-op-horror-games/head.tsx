@@ -1,7 +1,7 @@
 export default function Head() {
   const title = 'Co-op Horror Games — Best Multiplayer Horror Games';
   const description = 'Play horror games with friends in these multiplayer co-op experiences. Discover the best co-op horror games ranked by rating and popularity.';
-  const url = 'https://horrorgamesonline.com/co-op-horror-games';
+  const url = 'https://horrorgames.games/co-op-horror-games';
   const image = '/og-image.jpg';
   const jsonLd = {
     '@context': 'https://schema.org',

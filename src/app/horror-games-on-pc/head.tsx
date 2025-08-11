@@ -1,7 +1,7 @@
 export default function Head() {
   const title = 'PC Horror Games Rankings — Best Horror Games on PC';
   const description = 'Discover the top-rated horror games on PC. Explore our curated rankings of the best PC horror games from indie to AAA.';
-  const url = 'https://horrorgamesonline.com/horror-games-on-pc';
+  const url = 'https://horrorgames.games/horror-games-on-pc';
   const image = '/og-image.jpg';
   const jsonLd = {
     '@context': 'https://schema.org',
