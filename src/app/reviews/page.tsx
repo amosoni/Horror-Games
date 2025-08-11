@@ -69,10 +69,10 @@ export default function ReviewsPage() {
         <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
           {items.map(r => (
             <Link key={r.slug} href={`/reviews/${r.slug}`} className="bg-gray-900 rounded-2xl p-6 hover:bg-gray-800 transition-colors">
-              <div className="flex items-center space-x-2 mb-4">
-                <Star className="w-5 h-5 text-yellow-400 fill-current" />
+            <div className="flex items-center space-x-2 mb-4">
+              <Star className="w-5 h-5 text-yellow-400 fill-current" />
                 <span className="text-white font-bold">{r.rating}</span>
-                <span className="text-gray-400">/ 5.0</span>
+              <span className="text-gray-400">/ 5.0</span>
               </div>
               <h3 className="text-xl font-bold text-white mb-2">{r.title}</h3>
               <p className="text-gray-300 mb-4">{r.excerpt}</p>

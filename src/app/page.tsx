@@ -1,42 +1,39 @@
 "use client";
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Skull } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Link from 'next/link';
 import { curatedWebGames } from '../data/games';
+import { Game } from '../types/game';
 
 export default function Page() {
-  const allGames = useMemo(() => curatedWebGames, []);
-  const featured = useMemo(() => {
-    const bySlug = allGames.find(g => (g.canonicalSlug ?? g.id) === 'last-seen-online');
-    return bySlug || allGames[0] || null;
-  }, [allGames]);
-  const gridGames = useMemo(() => allGames.filter(g => g.id !== featured?.id), [allGames, featured]);
+  // Get featured game and grid games
+  const featured = curatedWebGames[0];
 
   return (
-    <div className="relative min-h-screen bg-black">
-      {/* Horror background overlays */}
+    <div className="relative min-h-screen bg-gray-900">
+      {/* Horror background overlays - reduced opacity for better visibility */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-70"
+        className="pointer-events-none absolute inset-0 opacity-40"
         style={{
           backgroundImage:
-            'radial-gradient(80% 60% at 50% 0%, rgba(120,0,0,0.12), transparent),' +
-            'radial-gradient(40% 30% at 10% 80%, rgba(200,0,0,0.08), transparent),' +
-            'radial-gradient(35% 25% at 90% 70%, rgba(120,0,0,0.08), transparent)',
+            'radial-gradient(80% 60% at 50% 0%, rgba(120,0,0,0.08), transparent),' +
+            'radial-gradient(40% 30% at 10% 80%, rgba(200,0,0,0.05), transparent),' +
+            'radial-gradient(35% 25% at 90% 70%, rgba(120,0,0,0.05), transparent)',
         }}
       />
       <div
-        className="pointer-events-none absolute inset-0 mix-blend-overlay opacity-20"
+        className="pointer-events-none absolute inset-0 mix-blend-overlay opacity-15"
         style={{
-          backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,0,0,0.05) 0 2px, transparent 2px 6px)',
+          backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,0,0,0.03) 0 2px, transparent 2px 6px)',
         }}
       />
 
       <Header />
-
+      
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-6 lg:py-8 relative">
         {/* Hero */}
         <motion.div className="mb-4 sm:mb-6 text-center" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
@@ -44,7 +41,7 @@ export default function Page() {
             <Skull className="w-8 h-8 md:w-10 md:h-10 text-red-600" />
             <span>Play Horror Games Online</span>
           </h1>
-          <p className="text-gray-300 text-base md:text-lg max-w-4xl mx-auto">
+          <p className="text-gray-200 text-base md:text-lg max-w-4xl mx-auto">
             Click any game card to open its detail page and play in full view. Our curation focuses on lightweight, embeddable browser horror—no installs, no waiting. Discover short narratives, experimental atmospheres, and micro‑thrillers perfect for a quick scare.
           </p>
         </motion.div>
@@ -52,65 +49,71 @@ export default function Page() {
         {/* Featured random game */}
         {featured ? (
           <div className="mb-2 text-center">
-            <h3 className="text-sm uppercase tracking-widest text-gray-400 mb-2">Featured Game</h3>
+            <h3 className="text-sm uppercase tracking-widest text-gray-300 mb-2">Featured Game</h3>
           </div>
         ) : null}
         {featured ? (
-          <div className="mb-6">
-            <div className="relative w-full rounded-2xl overflow-hidden border border-gray-800 shadow-2xl">
-              <div className="relative aspect-[16/9] bg-black">
-                {featured.imageUrl ? (
-                  <img src={featured.imageUrl} alt={featured.title} className="absolute inset-0 w-full h-full object-cover opacity-50" />
-                ) : null}
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-4">
-                  <h2 className="text-2xl md:text-4xl font-extrabold text-white mb-2">{featured.title}</h2>
-                  <p className="text-gray-200 max-w-2xl mb-4 line-clamp-2">{featured.shortDescription || featured.genre.join(', ')}</p>
-                  <Link href={`/games/${featured.canonicalSlug ?? featured.id}`} className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-500">
-                    Play now →
+          <div className="mb-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 w-full max-w-5xl mx-auto">
+              {/* Main featured game - takes 2/3 width */}
+              <div className="lg:col-span-2">
+                <Link href={`/games/${featured.canonicalSlug ?? featured.id}`}>
+                  <div className="relative w-full rounded-xl overflow-hidden border border-gray-700 shadow-lg">
+                    <div className="relative aspect-[4/3] bg-gray-800">
+                      {featured.imageUrl ? (
+                        <img src={featured.imageUrl} alt={featured.title} className="absolute inset-0 w-full h-full object-cover opacity-60" />
+                      ) : null}
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+                        <h2 className="text-base md:text-xl font-extrabold text-white mb-1">{featured.title}</h2>
+                        <p className="text-gray-100 max-w-md line-clamp-2 text-xs">{featured.shortDescription || featured.genre.join(', ')}</p>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+              
+              {/* Two side cards - take 1/3 width */}
+              <div className="lg:col-span-1 space-y-3">
+                {curatedWebGames.slice(1, 3).map((game: Game) => (
+                  <Link key={game.id} href={`/games/${game.canonicalSlug ?? game.id}`}>
+                    <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-red-500/60 hover:bg-gray-700/90">
+                      <div className="relative aspect-[4/3] bg-gray-800">
+                        {game.imageUrl ? (
+                          <img src={game.imageUrl} alt={game.title} className="absolute inset-0 w-full h-full object-cover opacity-70" />
+                        ) : null}
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                          <h3 className="text-sm font-bold text-white mb-1">{game.title}</h3>
+                          <p className="text-xs text-gray-200 line-clamp-2">{game.genre.join(', ')}</p>
+                        </div>
+                      </div>
+                    </div>
                   </Link>
-                </div>
+                ))}
               </div>
             </div>
           </div>
         ) : null}
 
-        {/* Dense grid without CTA button */}
-        <div className="mb-2 text-center">
-          <h3 className="text-sm uppercase tracking-widest text-gray-400">Browse Games</h3>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
-          {gridGames.map((g, idx) => (
-            <motion.div
-              key={g.id}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.02 * idx }}
-              className="relative bg-gray-900/70 border border-gray-800 rounded-xl overflow-hidden hover:ring-1 hover:ring-red-700/40"
-            >
-              {/* Clickable overlay to go to detail page */}
-              <Link
-                href={`/games/${g.canonicalSlug ?? g.id}`}
-                className="absolute inset-0 z-20"
-                aria-label={`${g.title} details`}
-              />
-
-              <div className="relative aspect-video bg-black">
-                {g.imageUrl ? (
-                  <img
-                    src={g.imageUrl}
-                    alt={g.title}
-                    className="absolute inset-0 w-full h-full object-cover opacity-45"
-                  />
-                ) : null}
-
-                {/* Title overlay */}
-                <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-2 sm:p-3 bg-gradient-to-t from-black/80 via-black/40 to-transparent text-center">
-                  <div className="text-white text-sm sm:text-base font-semibold line-clamp-1">{g.title}</div>
-                  <div className="text-gray-400 text-xs line-clamp-1">{g.genre.slice(0, 2).join(', ')}</div>
+        {/* Browse Games Section */}
+        <div className="mb-6">
+          <h2 className="text-xl font-bold text-center text-white mb-4">Browse Games</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full max-w-5xl mx-auto">
+            {curatedWebGames.slice(3).map((game: Game) => (
+              <Link key={game.id} href={`/games/${game.canonicalSlug ?? game.id}`}>
+                <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-red-500/60 hover:bg-gray-700/90">
+                  <div className="relative aspect-[4/3] bg-gray-800">
+                    {game.imageUrl ? (
+                      <img src={game.imageUrl} alt={game.title} className="absolute inset-0 w-full h-full object-cover opacity-70" />
+                    ) : null}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                      <h3 className="text-sm font-bold text-white mb-1">{game.title}</h3>
+                      <p className="text-xs text-gray-200 line-clamp-2">{game.genre.join(', ')}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 

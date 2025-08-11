@@ -63,15 +63,15 @@ export function useRawgGames(options?: {
     setError(null);
     try {
       const makeParams = (custom: Partial<Record<string, string>> = {}) => {
-        const params = new URLSearchParams({
-          ordering,
+      const params = new URLSearchParams({ 
+        ordering, 
           page: String(custom.page || page),
           page_size: String(custom.page_size || page_size),
-        });
-        if (genres) params.append('genres', genres);
-        if (tags) params.append('tags', tags);
-        if (platforms) params.append('platforms', platforms);
-        if (search) params.append('search', search);
+      });
+      if (genres) params.append('genres', genres);
+      if (tags) params.append('tags', tags);
+      if (platforms) params.append('platforms', platforms);
+      if (search) params.append('search', search);
         if (dates) params.append('dates', dates);
         return params;
       };

@@ -3,7 +3,7 @@ import { curatedWebSlugs } from '../data/games';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://horrorgames.games';
-
+  
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
     { url: `${baseUrl}/horror-games-on-steam`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
@@ -19,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const gamePages: MetadataRoute.Sitemap = curatedWebSlugs.map((slug) => ({
     url: `${baseUrl}/games/${slug}`,
-    lastModified: new Date(),
+      lastModified: new Date(),
     changeFrequency: 'daily',
     priority: 0.9,
   }));

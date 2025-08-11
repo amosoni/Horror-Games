@@ -1,14 +1,15 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://horrorgamesonline.com/sitemap.xml
-
-# Disallow admin areas
+# 禁止爬虫访问敏感页面
 Disallow: /admin/
 Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /images/
+Disallow: /favicon.ico
 
-# Allow important pages
+# 允许重要页面
 Allow: /horror-games-online
 Allow: /free-horror-games
 Allow: /horror-games-on-steam
@@ -21,4 +22,39 @@ Allow: /horror-games-multiplayer
 Allow: /horror-games-2025
 Allow: /game/
 Allow: /reviews
-Allow: /about 
+Allow: /about
+
+# 爬虫延迟设置
+Crawl-delay: 1
+
+# Sitemap
+Sitemap: https://horrorgamesonline.com/sitemap.xml
+
+# 特殊爬虫规则
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 1
+
+# 禁止恶意爬虫
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: / 
