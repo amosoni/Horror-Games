@@ -38,8 +38,9 @@ export default function CoOpHorrorGamesPage() {
     { value: 'popular', label: t('platform.popular'), icon: TrendingUp }
   ];
 
-  const title = 'Co-op Horror Games';
-  const description = 'Play horror games with friends in these multiplayer co-op experiences.';
+  // 页面标题和描述（用于SEO）
+  // const title = 'Co-op Horror Games';
+  // const description = 'Play horror games with friends in these multiplayer co-op experiences.';
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 to-black py-8">
@@ -68,7 +69,7 @@ export default function CoOpHorrorGamesPage() {
           {sortOptions.map(({ value, label, icon: Icon }) => (
             <button
               key={value}
-              onClick={() => setSortBy(value as any)}
+              onClick={() => setSortBy(value as 'rating' | 'newest' | 'popular')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 sortBy === value
                   ? 'bg-orange-600 text-white'

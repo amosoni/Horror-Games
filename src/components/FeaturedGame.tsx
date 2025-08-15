@@ -28,7 +28,7 @@ export default function FeaturedGame({ game, onPlayClick }: FeaturedGameProps) {
               <div className="flex items-center space-x-2 bg-black/60 rounded-full px-4 py-2">
                 <Star className="w-5 h-5 text-yellow-400 fill-current" />
                 <span className="text-white font-bold">{game.rating}</span>
-                <span className="text-gray-300">({game.reviewCount.toLocaleString()} {t('game.reviews')})</span>
+                <span className="text-gray-300">({game.reviewCount?.toLocaleString() || 0} {t('game.reviews')})</span>
               </div>
               <div className="flex items-center space-x-2 bg-black/60 rounded-full px-4 py-2">
                 <Calendar className="w-4 h-4 text-gray-400" />
@@ -39,7 +39,7 @@ export default function FeaturedGame({ game, onPlayClick }: FeaturedGameProps) {
             <p className="text-gray-300 text-lg mb-6 max-w-2xl">{game.description}</p>
             <div className="flex space-x-4">
               {game.iframeUrl && (
-                <motion.button className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-all duration-200 shadow-lg" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={(e) => { e.stopPropagation(); onPlayClick && onPlayClick(); }}>
+                <motion.button className="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-bold transition-all duration-200 shadow-lg" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={(e) => { e.stopPropagation(); if (onPlayClick) onPlayClick(); }}>
                   <Play className="w-5 h-5" />
                   <span>{t('home.playNow')}</span>
                 </motion.button>

@@ -1,9 +1,9 @@
 // 游戏平台API服务 - 使用真实爬虫
 import { WebScraper, ScrapedGame, ScrapingResult } from './webScraper';
 
-export interface PlatformGame extends ScrapedGame {}
+export type PlatformGame = ScrapedGame;
 
-export interface PlatformApiResponse extends ScrapingResult {}
+export type PlatformApiResponse = ScrapingResult;
 
 // 创建爬虫实例
 const scraper = new WebScraper();

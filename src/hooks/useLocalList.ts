@@ -9,14 +9,18 @@ export function useLocalList(storageKey: string) {
     try {
       const raw = localStorage.getItem(storageKey);
       if (raw) setItems(JSON.parse(raw));
-    } catch {}
+    } catch (error) {
+      console.error('Failed to load from localStorage:', error);
+    }
   }, [storageKey]);
 
   const persist = useCallback((next: string[]) => {
     setItems(next);
     try {
       localStorage.setItem(storageKey, JSON.stringify(next));
-    } catch {}
+    } catch (error) {
+      console.error('Failed to save to localStorage:', error);
+    }
   }, [storageKey]);
 
   const has = useCallback((id: string) => items.includes(id), [items]);

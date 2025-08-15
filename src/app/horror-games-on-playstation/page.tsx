@@ -105,7 +105,7 @@ export default function PlayStationGamesPage() {
             transition={{ delay: 0.4 }}
           >
             Discover the top-rated horror games on PlayStation. From PS5 to PS4, experience the most 
-            terrifying and critically acclaimed horror games on Sony's gaming platform with our curated rankings.
+            terrifying and critically acclaimed horror games on Sony&apos;s gaming platform with our curated rankings.
           </motion.p>
 
           <motion.div
@@ -182,7 +182,7 @@ export default function PlayStationGamesPage() {
           {sortOptions.map(({ value, label, icon: Icon }) => (
             <button
               key={value}
-              onClick={() => setSortBy(value as any)}
+              onClick={() => setSortBy(value as unknown)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 sortBy === value
                   ? 'bg-blue-600 text-white'

@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     if (action === 'scrape') {
       if (platforms && Array.isArray(platforms)) {
         // 抓取指定平台
-        const results: Record<string, any> = {};
+        const results: Record<string, unknown> = {};
         
         for (const platform of platforms) {
           try {

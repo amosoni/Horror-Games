@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect,useState } from 'react';
 import type { Game } from '../types/game';
 import type { RawgGame, RawgListResponse } from '../services/rawgApi';
 
@@ -86,7 +86,7 @@ export function useRawgGames(options?: {
         }
         const responses = await Promise.all(requests);
         const jsons: RawgListResponse<RawgGame>[] = await Promise.all(
-          responses.map((r) => r.ok ? r.json() : Promise.resolve({ results: [] } as any))
+          responses.map((r) => r.ok ? r.json() : Promise.resolve({ results: [] } as unknown))
         );
         const aggregated: RawgGame[] = jsons.flatMap(j => j.results || []);
         for (let i = aggregated.length - 1; i > 0; i--) {

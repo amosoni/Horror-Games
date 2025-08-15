@@ -1,5 +1,6 @@
 import React from 'react';
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { horrorGames } from '../../../data/games';
 import { gameSeoBySlug } from '../../../data/gameSeo';
 import GameDetailClient from './GameDetailClient';
@@ -60,9 +61,9 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
       <div className="min-h-screen bg-gradient-to-b from-gray-950 to-black flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold text-white mb-4">Game Not Found</h1>
-          <a href="/" className="text-red-400 hover:text-red-300">
+          <Link href="/" className="text-red-400 hover:text-red-300">
             ← Back to Home
-          </a>
+          </Link>
         </div>
       </div>
     );

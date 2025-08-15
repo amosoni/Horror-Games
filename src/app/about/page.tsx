@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Skull, Users, Globe, Star, Calendar, Mail, MessageSquare } from 'lucide-react';
+import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 
@@ -120,7 +121,7 @@ export default function AboutPage() {
             <p className="text-gray-300 mb-6">Press inquiries, partnerships or feedback—drop us a line.</p>
             <div className="flex items-center justify-center gap-4">
               <a href="mailto:soniceono@gmail.com" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700"><Mail className="w-4 h-4" /> soniceono@gmail.com</a>
-              <a href="/reviews" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-800 text-gray-200 hover:bg-gray-700"><MessageSquare className="w-4 h-4" /> Reviews</a>
+              <Link href="/reviews" className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gray-800 text-gray-200 hover:bg-gray-700"><MessageSquare className="w-4 h-4" /> Reviews</Link>
             </div>
           </div>
         </motion.div>

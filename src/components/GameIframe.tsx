@@ -24,7 +24,9 @@ export default function GameIframe({ url, title, onClose }: GameIframeProps) {
     setIsLoading(true);
     const iframe = document.querySelector('#game-iframe') as HTMLIFrameElement;
     if (iframe) {
-      iframe.src = iframe.src;
+      const currentSrc = iframe.src;
+      iframe.src = '';
+      iframe.src = currentSrc;
     }
   };
 

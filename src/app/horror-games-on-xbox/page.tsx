@@ -105,7 +105,7 @@ export default function XboxGamesPage() {
             transition={{ delay: 0.4 }}
           >
             Discover the top-rated horror games on Xbox. From Series X/S to Xbox One, experience the most 
-            terrifying and critically acclaimed horror games on Microsoft's gaming platform with our curated rankings.
+            terrifying and critically acclaimed horror games on Microsoft&apos;s gaming platform with our curated rankings.
           </motion.p>
 
           <motion.div
@@ -182,7 +182,7 @@ export default function XboxGamesPage() {
           {sortOptions.map(({ value, label, icon: Icon }) => (
             <button
               key={value}
-              onClick={() => setSortBy(value as any)}
+              onClick={() => setSortBy(value as unknown)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 sortBy === value
                   ? 'bg-green-600 text-white'

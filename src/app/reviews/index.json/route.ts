@@ -5,7 +5,7 @@ import path from 'path';
 export async function GET() {
   try {
     const baseDir = path.join(process.cwd(), 'content', 'reviews');
-    let items: any[] = [];
+    const items: unknown[] = [];
     if (fs.existsSync(baseDir)) {
       const files = fs.readdirSync(baseDir).filter(f => f.endsWith('.mdx'));
       for (const file of files) {
@@ -13,7 +13,7 @@ export async function GET() {
         const full = path.join(baseDir, file);
         const raw = fs.readFileSync(full, 'utf8');
         const fmMatch = raw.match(/^---\n([\s\S]*?)\n---/);
-        let meta: any = {};
+        const meta: unknown = {};
         if (fmMatch) {
           const yaml = fmMatch[1];
           yaml.split('\n').forEach(line => {
@@ -34,7 +34,7 @@ export async function GET() {
     // 评分降序
     items.sort((a, b) => (b.rating || 0) - (a.rating || 0));
     return NextResponse.json(items);
-  } catch (e) {
+  } catch {
     return NextResponse.json([]);
   }
 } 

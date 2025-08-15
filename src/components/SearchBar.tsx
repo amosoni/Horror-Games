@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Search, Filter } from 'lucide-react';
+import type { SearchFilters } from '../types/common';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
-  onFilter: (filters: any) => void;
+  onFilter?: (filters: SearchFilters) => void;
 }
 
-export default function SearchBar({ onSearch, onFilter }: SearchBarProps) {
+export default function SearchBar({ onSearch }: SearchBarProps) {
   const [query, setQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 

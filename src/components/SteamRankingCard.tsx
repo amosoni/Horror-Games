@@ -53,10 +53,10 @@ export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCa
   const releaseDate: string = String(g.releaseDate ?? '');
   const releaseYear = releaseDate ? new Date(releaseDate).getFullYear() : 'N/A';
   const price: number = Number(g.price ?? 0);
-  const genres: string[] = Array.isArray((g as any).genre) ? ((g as any).genre as string[]) : [];
-  const steamUrl: string | undefined = (g as any).steamUrl as string | undefined;
-  const iframeUrl: string | undefined = (g as any).iframeUrl as string | undefined;
-  const canonicalSlug: string | undefined = (g as any).canonicalSlug as string | undefined;
+  const genres: string[] = Array.isArray(g.genre) ? g.genre : [];
+  const steamUrl: string | undefined = g.steamUrl;
+  const iframeUrl: string | undefined = g.iframeUrl;
+  const canonicalSlug: string | undefined = g.canonicalSlug;
 
   // 生成游戏 slug（若有 canonicalSlug 则优先）
   const gameSlug = canonicalSlug || title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -80,7 +80,9 @@ export default function SteamRankingCard({ game, rank, onClick }: SteamRankingCa
           setStoreUrl(first);
           sessionStorage.setItem(cacheKey, JSON.stringify(first));
         }
-      } catch {}
+      } catch (error) {
+        console.error('Failed to load store URL:', error);
+      }
     }
     loadStore();
     return () => { aborted = true; };

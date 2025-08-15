@@ -7,7 +7,7 @@ import GameIframe from '../../components/GameIframe';
 import SearchBar from '../../components/SearchBar';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Star, TrendingUp, Users, Gamepad2, Trophy, Flame, Award, RefreshCw, AlertCircle } from 'lucide-react';
+import { Star, TrendingUp, Users, Gamepad2, Trophy, RefreshCw, AlertCircle } from 'lucide-react';
 import { useRawgRobloxHorror } from '../../hooks/useRawgGames';
 import type { Game } from '../../types/game';
 
@@ -146,7 +146,7 @@ export default function RobloxGamesPage() {
           {sortOptions.map(({ value, label, icon: Icon }) => (
             <button
               key={value}
-              onClick={() => setSortBy(value as any)}
+              onClick={() => setSortBy(value as 'rating' | 'newest' | 'popular')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 sortBy === value
                   ? 'bg-red-600 text-white'

@@ -104,14 +104,14 @@ export default async function GamePage({ params }: { params: Promise<RouteParams
   const slugStr = Array.isArray(slug) ? slug[0] ?? '' : slug ?? '';
 
   const detail = await getSeoGame(slugStr);
-  const gameTitle = detail?.name || slugStr;
+  // const gameTitle = detail?.name || slugStr;
   const image = detail?.background_image || detail?.background_image_additional || '/og-image.jpg';
   const isLocalPlayable = Boolean(localGames.find(g => (g.canonicalSlug ?? g.id) === slugStr && g.iframeUrl));
   const extra = gameSeoBySlug[slugStr];
   const baseUrl = 'https://horrorgames.games';
   const canonical = `${baseUrl}/games/${detail?.slug || slugStr}`;
 
-  const jsonLdBlocks = [] as any[];
+  const jsonLdBlocks = [] as unknown[];
   if (detail) {
     jsonLdBlocks.push({
       '@context': 'https://schema.org',

@@ -93,14 +93,14 @@ export async function GET(req: NextRequest) {
 
     // Fallback A: fetch detail directly by slug (RAWG supports /games/{slug})
     if (!pick) {
-      detail = await fetchRawgGameDetailFlexible(slug).catch(() => null as any);
+      detail = await fetchRawgGameDetailFlexible(slug).catch(() => null as unknown);
     }
 
     // Fallback B: strip trailing year (e.g., -2023) and try again
     if (!pick && !detail) {
       const noYear = slug.replace(/-(19|20)\d{2}$/, '');
       if (noYear !== slug) {
-        detail = await fetchRawgGameDetailFlexible(noYear).catch(() => null as any);
+        detail = await fetchRawgGameDetailFlexible(noYear).catch(() => null as unknown);
       }
     }
 
@@ -112,7 +112,7 @@ export async function GET(req: NextRequest) {
         name: detail.name,
         background_image: detail.background_image || null,
         background_image_additional: detail.background_image_additional || null,
-      } as any;
+      } as unknown;
     }
 
     if (!pick) {
@@ -126,17 +126,17 @@ export async function GET(req: NextRequest) {
 
     // Fetch screenshots and stores in parallel to reduce latency
     const [shots, storesResp] = await Promise.all([
-      fetchRawgScreenshots(pick.id).catch(() => ({ results: [] } as any)),
-      fetchRawgGameStores(pick.id).catch(() => ({ results: [] } as any)),
+      fetchRawgScreenshots(pick.id).catch(() => ({ results: [] } as unknown)),
+      fetchRawgGameStores(pick.id).catch(() => ({ results: [] } as unknown)),
     ]);
 
     const steamStore = detail.stores?.find((s) => s.store.slug === 'steam');
     const descriptionRaw = (detail.description_raw || '').trim();
     const shortDescription = descriptionRaw.slice(0, 160);
 
-    const storeLinks: { label: string; url: string }[] = ((storesResp && (storesResp as any).results) ? (storesResp as any).results : [])
-      .filter((s: any) => s && typeof s.url === 'string' && s.store && typeof s.store.name === 'string')
-      .map((s: any) => ({ label: String(s.store.name), url: String(s.url) }));
+    const storeLinks: { label: string; url: string }[] = ((storesResp && (storesResp as unknown).results) ? (storesResp as unknown).results : [])
+      .filter((s: unknown) => s && typeof s.url === 'string' && s.store && typeof s.store.name === 'string')
+      .map((s: unknown) => ({ label: String(s.store.name), url: String(s.url) }));
 
     // sort platform priority
     const order = ['steam', 'playstation', 'xbox', 'gog', 'epic-games'];
@@ -184,7 +184,7 @@ export async function GET(req: NextRequest) {
       metacritic: detail.metacritic ?? undefined,
       storeLinks,
       canonicalSlug,
-      screenshots: Array.isArray(shots.results) ? shots.results.map((s: any) => String(s.image)).filter(Boolean) : [],
+      screenshots: Array.isArray(shots.results) ? shots.results.map((s: unknown) => String(s.image)).filter(Boolean) : [],
     };
 
     return new Response(JSON.stringify(mapped), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' } });

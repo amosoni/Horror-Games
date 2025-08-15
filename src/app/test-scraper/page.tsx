@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import { 
   Globe, 
   Zap, 
-  Play, 
   RefreshCw, 
   CheckCircle, 
   XCircle,
@@ -15,7 +14,7 @@ import {
 } from 'lucide-react';
 
 interface ScrapingResult {
-  games: any[];
+  games: unknown[];
   total: number;
   platform: string;
   lastUpdated: string;
@@ -264,7 +263,7 @@ export default function TestScraperPage() {
                     <div className="mt-4 pt-4 border-t border-gray-700/50">
                       <h4 className="text-sm font-bold text-gray-300 mb-2">Sample Games:</h4>
                       <div className="space-y-1">
-                        {result.games.slice(0, 3).map((game: any, index: number) => (
+                        {result.games.slice(0, 3).map((game: unknown, index: number) => (
                           <div key={index} className="text-xs text-gray-400 truncate">
                             {game.title}
                           </div>

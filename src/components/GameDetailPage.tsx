@@ -125,7 +125,7 @@ export default function GameDetailPage({ slug }: Props) {
         );
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        const data: Game = await res.json();
+        const data = await res.json() as Game;
         if (!aborted) setGame(data);
       } catch (e) {
         if (!aborted)

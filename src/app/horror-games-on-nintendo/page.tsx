@@ -104,7 +104,7 @@ export default function NintendoGamesPage() {
             transition={{ delay: 0.4 }}
           >
             Discover the top-rated horror games on Nintendo Switch. Experience the most 
-            terrifying and critically acclaimed horror games on Nintendo's portable platform with our curated rankings.
+            terrifying and critically acclaimed horror games on Nintendo&apos;s portable platform with our curated rankings.
           </motion.p>
 
           <motion.div
@@ -181,7 +181,7 @@ export default function NintendoGamesPage() {
           {sortOptions.map(({ value, label, icon: Icon }) => (
             <button
               key={value}
-              onClick={() => setSortBy(value as any)}
+              onClick={() => setSortBy(value as unknown)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 sortBy === value
                   ? 'bg-red-600 text-white'

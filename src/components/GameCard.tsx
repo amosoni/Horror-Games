@@ -11,7 +11,7 @@ interface GameCardProps {
 }
 
 export default function GameCard({ game, onClick }: GameCardProps) {
-  const [src, setSrc] = useState(game.imageUrl || '');
+  const [src] = useState(game.imageUrl || '');
   const [storeUrl, setStoreUrl] = useState<string | undefined>(undefined);
   const slug = game.canonicalSlug || game.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
@@ -33,13 +33,15 @@ export default function GameCard({ game, onClick }: GameCardProps) {
         }
         const res = await fetch(`/api/rawg/game?slug=${encodeURIComponent(slug)}`, { cache: 'no-store' });
         if (!res.ok) return;
-        const data: any = await res.json();
+        const data = await res.json() as { storeLinks?: Array<{ url: string }>; steamUrl?: string };
         const first = data?.storeLinks?.[0]?.url || data?.steamUrl;
         if (first && !aborted) {
           setStoreUrl(first);
           sessionStorage.setItem(cacheKey, JSON.stringify(first));
         }
-      } catch {}
+      } catch (error) {
+        console.error('Failed to load store URL:', error);
+      }
     }
     loadStore();
     return () => { aborted = true; };

@@ -49,7 +49,7 @@ function buildQuery(params: Record<string, string | number | boolean | undefined
   return searchParams.toString();
 }
 
-export async function rawgFetch<T>(path: string, params: Record<string, any> = {}): Promise<T> {
+export async function rawgFetch<T>(path: string, params: Record<string, string | number | boolean | undefined | null> = {}): Promise<T> {
   // 尝试多种方式读取环境变量
   const apiKey = process.env.RAWG_API_KEY || 
                  process.env.NEXT_PUBLIC_RAWG_API_KEY || 

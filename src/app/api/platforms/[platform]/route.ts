@@ -16,7 +16,7 @@ export async function GET(
       });
     }
 
-    let data: any;
+    let data: unknown;
 
     if (platform.toLowerCase() === 'all') {
       data = await PlatformApiFactory.getAllPlatformsData();
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
       });
     }
 
-    const results: Record<string, any> = {};
+    const results: Record<string, unknown> = {};
 
     await Promise.all(
       platforms.map(async (platform: string) => {

@@ -11,7 +11,7 @@ import {
   Clock, 
   CheckCircle, 
   XCircle,
-  Activity,
+  // Activity,
   TrendingUp,
   Globe,
   Zap
@@ -34,7 +34,7 @@ interface SyncResult {
 }
 
 interface ScrapingResult {
-  games: any[];
+  games: unknown[];
   total: number;
   platform: string;
   lastUpdated: string;
@@ -85,14 +85,17 @@ export default function SyncManagementPage() {
         setScrapingResults(results);
         
         // 转换结果为显示格式
-        const displayResults: SyncResult[] = Object.entries(results).map(([platform, result]: [string, any]) => ({
-          platform,
-          success: !result.error,
-          gamesCount: result.games?.length || 0,
-          lastUpdated: result.lastUpdated || new Date().toISOString(),
-          error: result.error,
-          scrapingTime: result.scrapingTime
-        }));
+        const displayResults: SyncResult[] = Object.entries(results).map(([platform, result]) => {
+          const typedResult = result as ScrapingResult;
+          return {
+            platform,
+            success: !typedResult.error,
+            gamesCount: typedResult.games?.length || 0,
+            lastUpdated: typedResult.lastUpdated || new Date().toISOString(),
+            error: typedResult.error,
+            scrapingTime: typedResult.scrapingTime
+          };
+        });
         
         setLastResults(displayResults);
         await fetchSyncStatus();

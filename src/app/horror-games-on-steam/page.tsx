@@ -56,11 +56,11 @@ export default function SteamGamesPage() {
     { value: 'popular', label: 'Most Popular', icon: TrendingUp }
   ];
 
-  // 格式化最后更新时间
-  const formatLastUpdated = (timestamp: string) => {
-    const date = new Date(timestamp);
-    return date.toLocaleString();
-  };
+  // 格式化最后更新时间（暂时未使用）
+  // const formatLastUpdated = (timestamp: string) => {
+  //   const date = new Date(timestamp);
+  //   return date.toLocaleString();
+  // };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 via-gray-900 to-black">
@@ -98,7 +98,7 @@ export default function SteamGamesPage() {
             transition={{ delay: 0.4 }}
           >
             Discover the top-rated horror games on Steam. From indie horror to AAA titles, experience the most 
-            terrifying and critically acclaimed games on the world's largest gaming platform with our curated rankings.
+            terrifying and critically acclaimed games on the world&apos;s largest gaming platform with our curated rankings.
           </motion.p>
 
           <motion.div
@@ -175,7 +175,7 @@ export default function SteamGamesPage() {
           {sortOptions.map(({ value, label, icon: Icon }) => (
             <button
               key={value}
-              onClick={() => setSortBy(value as any)}
+              onClick={() => setSortBy(value as 'rating' | 'newest' | 'popular')}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 sortBy === value
                   ? 'bg-orange-600 text-white'

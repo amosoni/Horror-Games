@@ -124,10 +124,11 @@ export function usePlatformData(options: UsePlatformDataOptions = {}) {
       const combinedGames: PlatformGame[] = [];
       let totalGames = 0;
       
-      Object.values(allData).forEach((platformData: any) => {
-        if (platformData.games) {
-          combinedGames.push(...platformData.games);
-          totalGames += platformData.total || 0;
+      Object.values(allData).forEach((platformData: unknown) => {
+        const typedData = platformData as { games?: PlatformGame[]; total?: number };
+        if (typedData.games) {
+          combinedGames.push(...typedData.games);
+          totalGames += typedData.total || 0;
         }
       });
 
