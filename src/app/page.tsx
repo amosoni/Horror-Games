@@ -111,6 +111,32 @@ export default function Page() {
         <div className="mb-6">
           <h2 className="text-xl font-bold text-center text-white mb-4">Browse Games</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full max-w-5xl mx-auto">
+            {/* Granny Game Card */}
+            <Link href="/granny">
+              <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-red-500/60 hover:bg-gray-700/90">
+                <div className="relative aspect-[4/3] bg-gray-800">
+                  <Image 
+                    src="/Horror-Granny.jpg" 
+                    alt="Granny - Horror Survival Game" 
+                    fill 
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-block bg-red-600 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                      FEATURED
+                    </span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                    <h3 className="text-sm font-bold text-white mb-1">Granny</h3>
+                    <p className="text-xs text-gray-200 line-clamp-2">Survival Horror</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+            
+            {/* Other Games */}
             {curatedWebGames.slice(3).map((game: Game) => (
               <Link key={game.id} href={`/games/${game.canonicalSlug ?? game.id}`}>
                 <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-red-500/60 hover:bg-gray-700/90">
@@ -132,6 +158,93 @@ export default function Page() {
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+
+        {/* Featured Game: Granny */}
+        <div className="mb-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-white mb-2">Featured Horror Game</h2>
+            <p className="text-gray-300">Experience the terrifying survival horror game</p>
+          </div>
+          <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-lg p-8 text-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="text-left">
+                <h3 className="text-2xl font-bold text-white mb-4">Granny - Survival Horror</h3>
+                <p className="text-gray-200 mb-6 leading-relaxed">
+                  Can you escape from the mysterious house without waking up Granny? 
+                  Play this terrifying survival horror game online for free! Experience 
+                  the ultimate stealth challenge with atmospheric horror elements.
+                </p>
+                <div className="flex flex-wrap gap-3 mb-6">
+                  <span className="inline-block bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    Survival Horror
+                  </span>
+                  <span className="inline-block bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    Stealth Gameplay
+                  </span>
+                  <span className="inline-block bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    Puzzle Solving
+                  </span>
+                </div>
+                <Link 
+                  href="/granny" 
+                  className="inline-block bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                >
+                  Play Granny Now
+                </Link>
+              </div>
+              <div className="relative">
+                <div className="relative aspect-[4/3] bg-gray-800 rounded-lg overflow-hidden border-2 border-red-500/30">
+                  <Image 
+                    src="/Horror-Granny.jpg" 
+                    alt="Granny - Horror Survival Game" 
+                    fill 
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 to-transparent" />
+                  <div className="absolute top-4 left-4">
+                    <span className="inline-block bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                      FEATURED
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h4 className="text-lg font-bold text-white mb-2">Granny</h4>
+                    <p className="text-sm text-gray-200">Survival Horror Adventure</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Blog Section */}
+        <div className="mb-6">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-bold text-white mb-2">Latest Horror Gaming News</h2>
+            <p className="text-gray-300">Stay updated with the latest horror gaming news and insights</p>
+          </div>
+          <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-lg p-6 text-center">
+            <h3 className="text-xl font-bold text-white mb-3">Silent Hill F: New Silent Hill Game 2025</h3>
+            <p className="text-gray-200 mb-4">
+              Discover everything you need to know about the latest installment in the iconic survival horror series. 
+              Learn about the new Japanese setting, gameplay mechanics, and release date.
+            </p>
+            <Link 
+              href="/blog/silent-hill-f" 
+              className="inline-block bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+            >
+              Read Full Article
+            </Link>
+          </div>
+          <div className="text-center mt-4">
+            <Link 
+              href="/blog" 
+              className="text-red-400 hover:text-red-300 transition-colors font-semibold"
+            >
+              View All Articles →
+            </Link>
           </div>
         </div>
       </div>

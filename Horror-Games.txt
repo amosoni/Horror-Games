@@ -10,3 +10,4 @@
 10.Midnight Mansion：https://html-classic.itch.zone/html/13574890/index.html
 11.Descent：https://html-classic.itch.zone/html/4990523/index.html?v=1732313735
 12.Teeth of Glass：https://html-classic.itch.zone/html/12149740/index.html
+13.Horror Granny：<iframe src='https://www.miniplay.com/embed/horror-granny' style='width:100%;height:100%;' frameborder='0' allowfullscreen></iframe>

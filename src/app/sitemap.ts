@@ -6,6 +6,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   
   const staticPages: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
+    { url: `${baseUrl}/blog`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/granny`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/horror-games-on-steam`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/horror-games-on-playstation`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/horror-games-on-xbox`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
@@ -17,6 +19,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.4 },
   ];
 
+  const blogPages: MetadataRoute.Sitemap = [
+    { url: `${baseUrl}/blog/silent-hill-f`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+  ];
+
   const gamePages: MetadataRoute.Sitemap = curatedWebSlugs.map((slug) => ({
     url: `${baseUrl}/games/${slug}`,
       lastModified: new Date(),
@@ -24,5 +30,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.9,
   }));
 
-  return [...staticPages, ...gamePages];
+  return [...staticPages, ...blogPages, ...gamePages];
 } 
