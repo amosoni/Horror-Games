@@ -128,20 +128,20 @@ export default function SilentHillFPage() {
       <Header />
 
       {/* Hero Section */}
-      <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-16">
+      <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div className="text-center lg:text-left">
-                <div className="mb-6">
-                  <span className="inline-block bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-full mb-4">
-                    EXCLUSIVE COVERAGE
-                  </span>
-                </div>
-                <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">
-                  Silent Hill F
-                </h1>
-                <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+                            <div className="mb-4">
+              <span className="inline-block bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded-full mb-3">
+                EXCLUSIVE COVERAGE
+              </span>
+            </div>
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">
+              Silent Hill F
+            </h1>
+            <p className="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
                   The Next Chapter in the Iconic Survival Horror Series
                 </p>
                 <div className="flex flex-wrap justify-center lg:justify-start gap-4 text-sm text-gray-400">
@@ -178,7 +178,7 @@ export default function SilentHillFPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-12">
+      <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Table of Contents */}
           <div className="bg-gray-800 rounded-lg p-6 mb-8 border border-gray-700">
@@ -204,6 +204,20 @@ export default function SilentHillFPage() {
               <p className="text-gray-300 mb-6 leading-relaxed">
                 Unlike previous entries that focused on the titular town of Silent Hill, this game transports players to a rural Japanese village during the 1960s. This setting change opens up new possibilities for horror storytelling while paying homage to Japanese horror cinema and folklore.
               </p>
+              
+              <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 mb-6">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-white mb-2">Silent Hill F on Steam</h3>
+                    <p className="text-gray-300 text-sm">
+                      Add Silent Hill F to your Steam wishlist and get notified when it&apos;s available for purchase.
+                    </p>
+                  </div>
+                  <a href="https://store.steampowered.com/app/2947440/SILENT_HILL_f/" target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors whitespace-nowrap">
+                    View on Steam
+                  </a>
+                </div>
+              </div>
             </section>
 
             <section id="setting">
@@ -444,6 +458,9 @@ export default function SilentHillFPage() {
               <Link href="/" className="bg-white text-red-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                 Explore More Horror Games
               </Link>
+              <a href="https://store.steampowered.com/app/2947440/SILENT_HILL_f/" target="_blank" rel="noopener noreferrer" className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                Silent Hill F on Steam
+              </a>
               <Link href="/blog" className="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors">
                 Read More Articles
               </Link>

@@ -116,7 +116,7 @@ export default function Page() {
               <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-red-500/60 hover:bg-gray-700/90">
                 <div className="relative aspect-[4/3] bg-gray-800">
                   <Image 
-                    src="/Horror-Granny.jpg" 
+                    src="/images/Horror-Granny.jpg" 
                     alt="Granny - Horror Survival Game" 
                     fill 
                     sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
@@ -162,21 +162,20 @@ export default function Page() {
         </div>
 
         {/* Featured Game: Granny */}
-        <div className="mb-6">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-white mb-2">Featured Horror Game</h2>
-            <p className="text-gray-300">Experience the terrifying survival horror game</p>
+        <div className="mb-4">
+          <div className="text-center mb-4">
+            <h2 className="text-xl font-bold text-white mb-2">Featured Horror Game</h2>
+            <p className="text-gray-300 text-sm">Experience the terrifying survival horror game</p>
           </div>
-          <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-lg p-8 text-center">
+          <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-lg p-6 text-center">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
               <div className="text-left">
-                <h3 className="text-2xl font-bold text-white mb-4">Granny - Survival Horror</h3>
-                <p className="text-gray-200 mb-6 leading-relaxed">
+                <h3 className="text-xl font-bold text-white mb-3">Granny - Survival Horror</h3>
+                <p className="text-gray-200 mb-4 leading-relaxed text-sm">
                   Can you escape from the mysterious house without waking up Granny? 
-                  Play this terrifying survival horror game online for free! Experience 
-                  the ultimate stealth challenge with atmospheric horror elements.
+                  Play this terrifying survival horror game online for free!
                 </p>
-                <div className="flex flex-wrap gap-3 mb-6">
+                <div className="flex flex-wrap gap-2 mb-4">
                   <span className="inline-block bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
                     Survival Horror
                   </span>
@@ -197,7 +196,7 @@ export default function Page() {
               <div className="relative">
                 <div className="relative aspect-[4/3] bg-gray-800 rounded-lg overflow-hidden border-2 border-red-500/30">
                   <Image 
-                    src="/Horror-Granny.jpg" 
+                    src="/images/Horror-Granny.jpg" 
                     alt="Granny - Horror Survival Game" 
                     fill 
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -220,10 +219,10 @@ export default function Page() {
         </div>
 
         {/* Blog Section */}
-        <div className="mb-6">
-          <div className="text-center mb-6">
-            <h2 className="text-2xl font-bold text-white mb-2">Latest Horror Gaming News</h2>
-            <p className="text-gray-300">Stay updated with the latest horror gaming news and insights</p>
+        <div className="mb-4">
+          <div className="text-center mb-4">
+            <h2 className="text-xl font-bold text-white mb-2">Latest Horror Gaming News</h2>
+            <p className="text-gray-300 text-sm">Stay updated with the latest horror gaming news and insights</p>
           </div>
           <div className="bg-gradient-to-r from-red-600 to-red-800 rounded-lg p-6 text-center">
             <h3 className="text-xl font-bold text-white mb-3">Silent Hill F: New Silent Hill Game 2025</h3>

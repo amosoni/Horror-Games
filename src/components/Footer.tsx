@@ -34,6 +34,7 @@ export default function Footer() {
           <div className="text-white font-semibold mb-3">Site</div>
           <ul className="space-y-1">
             <li><Link href="/about" className="hover:text-white">About</Link></li>
+            <li><Link href="/blog" className="hover:text-white">Blog</Link></li>
             <li><Link href="/reviews" className="hover:text-white">Reviews</Link></li>
             <li><Link href="/sitemap.xml" className="hover:text-white">Sitemap</Link></li>
             <li><Link href="/robots.txt" className="hover:text-white">Robots</Link></li>

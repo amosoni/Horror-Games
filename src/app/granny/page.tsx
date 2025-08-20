@@ -46,13 +46,13 @@ export default function GrannyPage() {
       <Header />
 
       {/* Hero Section */}
-      <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-12 overflow-hidden">
+      <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-8 overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0 opacity-20">
           <Image 
-            src="/Horror-Granny.jpg" 
+            src="/images/Horror-Granny.jpg" 
             alt="Granny Background" 
-            fill 
+            fill
             className="object-cover"
             priority
           />
@@ -61,15 +61,15 @@ export default function GrannyPage() {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="mb-6">
-              <span className="inline-block bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-full mb-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+              <h1 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">
+                Granny
+              </h1>
+              <span className="inline-block bg-red-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
                 FREE TO PLAY
               </span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-red-400 to-red-600 bg-clip-text text-transparent">
-              Granny
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 leading-relaxed">
+            <p className="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
               Can you escape from the mysterious house without waking up Granny?
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-400">
@@ -91,10 +91,10 @@ export default function GrannyPage() {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-12">
+      <main className="container mx-auto px-4 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Game Player */}
-          <section className="mb-12">
+          <section className="mb-8">
             <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
               <h2 className="text-2xl font-bold mb-4 text-center">Play Granny Online</h2>
               <div className="relative w-full aspect-video bg-gray-900 rounded-lg overflow-hidden border border-gray-600">
@@ -116,19 +116,18 @@ export default function GrannyPage() {
           </section>
 
           {/* Game Information */}
-          <section className="mb-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <section className="mb-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div>
-                <h2 className="text-3xl font-bold mb-6 text-red-400">About Granny</h2>
-                <div className="space-y-4 text-gray-300">
+                <h2 className="text-2xl font-bold mb-4 text-red-400">About Granny</h2>
+                <div className="space-y-3 text-gray-300">
                   <p>
                     Granny is a first-person survival horror game that puts your stealth and puzzle-solving skills to the ultimate test. 
                     You find yourself trapped in a mysterious house with only one goal: escape without being caught by the terrifying Granny.
                   </p>
                   <p>
                     The game features multiple difficulty levels, each offering a unique challenge. You&apos;ll need to search for items, 
-                    solve puzzles, and navigate through the house while avoiding detection. Every sound you make could alert Granny 
-                    to your presence, so you must move carefully and think strategically.
+                    solve puzzles, and navigate through the house while avoiding detection.
                   </p>
                   <p>
                     With its atmospheric horror elements, jump scares, and challenging gameplay, Granny has become one of the most 
