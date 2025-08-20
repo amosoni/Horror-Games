@@ -93,26 +93,26 @@ export async function GET(req: NextRequest) {
 
     // Fallback A: fetch detail directly by slug (RAWG supports /games/{slug})
     if (!pick) {
-      detail = await fetchRawgGameDetailFlexible(slug).catch(() => null as unknown);
+      detail = await fetchRawgGameDetailFlexible(slug).catch(() => null);
     }
 
     // Fallback B: strip trailing year (e.g., -2023) and try again
     if (!pick && !detail) {
       const noYear = slug.replace(/-(19|20)\d{2}$/, '');
       if (noYear !== slug) {
-        detail = await fetchRawgGameDetailFlexible(noYear).catch(() => null as unknown);
+        detail = await fetchRawgGameDetailFlexible(noYear).catch(() => null);
       }
     }
 
     // If we have detail from fallback, synthesize a minimal pick
     if (!pick && detail) {
       pick = {
-        id: detail.id as unknown as number,
+        id: detail.id as number,
         slug: detail.slug || slug,
         name: detail.name,
         background_image: detail.background_image || null,
         background_image_additional: detail.background_image_additional || null,
-      } as unknown;
+      };
     }
 
     if (!pick) {
@@ -126,8 +126,8 @@ export async function GET(req: NextRequest) {
 
     // Fetch screenshots and stores in parallel to reduce latency
     const [shots, storesResp] = await Promise.all([
-      fetchRawgScreenshots(pick.id).catch(() => ({ results: [] } as unknown)),
-      fetchRawgGameStores(pick.id).catch(() => ({ results: [] } as unknown)),
+      fetchRawgScreenshots(pick.id).catch(() => ({ results: [] })),
+      fetchRawgGameStores(pick.id).catch(() => ({ results: [] })),
     ]);
 
     const steamStore = detail.stores?.find((s) => s.store.slug === 'steam');

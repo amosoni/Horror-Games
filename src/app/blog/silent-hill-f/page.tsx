@@ -305,7 +305,7 @@ export default function SilentHillFPage() {
 
               <h3 className="text-2xl font-bold mb-4 text-gray-200">Release Information</h3>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                While an exact release date hasn't been announced, Silent Hill F is expected to launch in 2025. The game is being developed for multiple platforms, ensuring that fans across different gaming systems can experience this new chapter in the Silent Hill saga.
+                While an exact release date hasn&apos;t been announced, Silent Hill F is expected to launch in 2025. The game is being developed for multiple platforms, ensuring that fans across different gaming systems can experience this new chapter in the Silent Hill saga.
               </p>
             </section>
 

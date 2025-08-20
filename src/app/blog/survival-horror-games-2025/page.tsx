@@ -2,7 +2,7 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Calendar, Clock, ArrowLeft, ExternalLink } from 'lucide-react';
+import { Calendar, Clock, ExternalLink } from 'lucide-react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
@@ -43,16 +43,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://horrorgames.games/blog/survival-horror-games-2025',
   },
-  authors: [{ name: 'Horror Games Hub' }],
-  publisher: 'Horror Games Online',
-  category: 'Game Guides',
-  article: {
-    publishedTime: '2025-01-10T00:00:00Z',
-    modifiedTime: '2025-01-10T00:00:00Z',
-    author: 'Horror Games Hub',
-    section: 'Game Guides',
-    tags: ['Survival Horror', '2025 Games', 'Game Guides', 'Horror Gaming'],
-  },
+
 };
 
 export default function SurvivalHorrorGames2025Page() {

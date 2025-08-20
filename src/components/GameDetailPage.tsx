@@ -514,7 +514,7 @@ export default function GameDetailPage({ slug }: Props) {
                     className="w-4 h-4 text-red-600 bg-gray-800 border-gray-700 rounded focus:ring-red-500"
                   />
                   <label htmlFor="agree" className="text-gray-300 text-sm">
-                    I'd read and agree to the terms and conditions.
+                    I&apos;d read and agree to the terms and conditions.
                   </label>
                 </div>
                 <button
