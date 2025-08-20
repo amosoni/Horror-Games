@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest } from 'next/server';
 import { fetchRawgGameDetail, searchRawgGamesOnce, type RawgGameDetail, fetchRawgScreenshots, fetchRawgGameStores, fetchRawgGameDetailFlexible } from '../../../../services/rawgApi';
 import { horrorGames as localGames } from '../../../../data/games';
@@ -134,9 +135,9 @@ export async function GET(req: NextRequest) {
     const descriptionRaw = (detail.description_raw || '').trim();
     const shortDescription = descriptionRaw.slice(0, 160);
 
-    const storeLinks: { label: string; url: string }[] = ((storesResp && (storesResp as unknown).results) ? (storesResp as unknown).results : [])
-      .filter((s: unknown) => s && typeof s.url === 'string' && s.store && typeof s.store.name === 'string')
-      .map((s: unknown) => ({ label: String(s.store.name), url: String(s.url) }));
+    const storeLinks: { label: string; url: string }[] = ((storesResp && Array.isArray((storesResp as any).results)) ? (storesResp as any).results : [])
+      .filter((s: any) => s && typeof s.url === 'string' && s.store && typeof s.store.name === 'string')
+      .map((s: any) => ({ label: String(s.store.name), url: String(s.url) }));
 
     // sort platform priority
     const order = ['steam', 'playstation', 'xbox', 'gog', 'epic-games'];
@@ -146,7 +147,7 @@ export async function GET(req: NextRequest) {
       return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
     });
 
-    const imageUrl = detail.background_image || detail.background_image_additional || shots.results?.[0]?.image || pick.background_image || '';
+    const imageUrl = detail.background_image || detail.background_image_additional || (shots as any).results?.[0]?.image || pick.background_image || '';
 
     const canonicalSlug = detail.slug || pick.slug;
 
@@ -184,7 +185,7 @@ export async function GET(req: NextRequest) {
       metacritic: detail.metacritic ?? undefined,
       storeLinks,
       canonicalSlug,
-      screenshots: Array.isArray(shots.results) ? shots.results.map((s: unknown) => String(s.image)).filter(Boolean) : [],
+      screenshots: Array.isArray((shots as any).results) ? (shots as any).results.map((s: any) => String(s.image)).filter(Boolean) : [],
     };
 
     return new Response(JSON.stringify(mapped), { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' } });

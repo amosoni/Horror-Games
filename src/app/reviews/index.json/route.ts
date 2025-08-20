@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
@@ -13,7 +14,7 @@ export async function GET() {
         const full = path.join(baseDir, file);
         const raw = fs.readFileSync(full, 'utf8');
         const fmMatch = raw.match(/^---\n([\s\S]*?)\n---/);
-        const meta: unknown = {};
+        const meta: any = {};
         if (fmMatch) {
           const yaml = fmMatch[1];
           yaml.split('\n').forEach(line => {
@@ -32,7 +33,7 @@ export async function GET() {
       }
     }
     // 评分降序
-    items.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+    items.sort((a: any, b: any) => (b.rating || 0) - (a.rating || 0));
     return NextResponse.json(items);
   } catch {
     return NextResponse.json([]);

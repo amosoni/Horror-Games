@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import SteamRankingCard from '../../components/SteamRankingCard';
@@ -182,7 +183,7 @@ export default function PlayStationGamesPage() {
           {sortOptions.map(({ value, label, icon: Icon }) => (
             <button
               key={value}
-              onClick={() => setSortBy(value as unknown)}
+              onClick={() => setSortBy(value as any)}
               className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 sortBy === value
                   ? 'bg-blue-600 text-white'

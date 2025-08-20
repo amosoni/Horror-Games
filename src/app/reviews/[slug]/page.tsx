@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from 'fs';
 import path from 'path';
 import { notFound } from 'next/navigation';
@@ -19,10 +20,10 @@ export default async function ReviewPage({ params }: { params: Promise<{ slug: s
     <div className="min-h-screen bg-gradient-to-b from-gray-950 to-black">
       <Header />
       <article className="container mx-auto px-4 sm:px-6 lg:px-8 py-10 prose prose-invert max-w-3xl">
-        <h1>{(meta as unknown).title || slug}</h1>
-        {(meta as unknown).rating ? <p><strong>Rating:</strong> {(meta as unknown).rating} / 5</p> : null}
-        {(meta as unknown).author || (meta as unknown).date ? (
-          <p className="text-sm text-gray-400">{(meta as unknown).author}{(meta as unknown).author && (meta as unknown).date ? ' · ' : ''}{(meta as unknown).date}</p>
+        <h1>{(meta as any).title || slug}</h1>
+        {(meta as any).rating ? <p><strong>Rating:</strong> {(meta as any).rating} / 5</p> : null}
+        {(meta as any).author || (meta as any).date ? (
+          <p className="text-sm text-gray-400">{(meta as any).author}{(meta as any).author && (meta as any).date ? ' · ' : ''}{(meta as any).date}</p>
         ) : null}
         <MDXRemote source={content} options={{
           mdxOptions: {
