@@ -5,25 +5,16 @@ import I18nProvider from '../components/I18nProvider';
 
 export const metadata: Metadata = {
   title: 'Horror Games Online - Play Free Horror Games in Browser',
-  description: 'Play the best free horror games online directly in your browser. No downloads required! Discover survival horror, psychological horror, and jump scare games on Steam, PlayStation, Xbox, PC, and Roblox.',
+  description: 'Play the best free horror games online directly in your browser. No downloads required! Discover survival horror, psychological horror, and jump scare games.',
   keywords: [
     'horror games online',
     'free horror games', 
-    'horror games free',
-    'play horror games',
-    'online horror games',
-    'browser horror games',
-    'horror games on steam',
-    'horror games on roblox',
-    'horror games pc',
-    'horror games ps5',
-    'horror games multiplayer',
-    'horror games to play with friends',
-    'horror games 2025',
-    'horror games unblocked',
+    'horror games browser',
     'survival horror',
     'psychological horror',
-    'jump scare games'
+    'jump scare games',
+    'horror games steam',
+    'horror games multiplayer'
   ].join(', '),
   metadataBase: new URL('https://horrorgames.games'),
   openGraph: {
@@ -40,7 +31,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Horror Games Online - Play Free Horror Games in Browser',
-    description: 'Play the best free horror games online directly in your browser. No downloads required!',
+    description: 'Play the best free horror games online directly in your browser. No downloads required! Discover survival horror, psychological horror, and jump scare games.',
     images: ['/logo.svg', '/og-image.svg'],
     site: '@horrorgames'
   },
@@ -83,6 +74,8 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#000000" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="robots" content="index, follow" />
+        <meta httpEquiv="X-Robots-Tag" content="index, follow" />
 
         {/* Google tag (gtag.js) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-7QH42Q9P3L"></script>
