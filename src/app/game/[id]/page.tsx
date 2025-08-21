@@ -2,13 +2,14 @@ import React from 'react';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { horrorGames } from '../../../data/games';
+import { halloweenGames } from '../../../data/halloweenGames';
 import { gameSeoBySlug } from '../../../data/gameSeo';
 import GameDetailClient from './GameDetailClient';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const game = horrorGames.find(g => g.id === id);
+  const game = horrorGames.find(g => g.id === id) || halloweenGames.find(g => g.id === id);
   const gameSeo = gameSeoBySlug[id as keyof typeof gameSeoBySlug];
   
   if (!game) {
@@ -53,7 +54,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
 export default async function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const game = horrorGames.find(g => g.id === id);
+  const game = horrorGames.find(g => g.id === id) || halloweenGames.find(g => g.id === id);
   const gameSeo = gameSeoBySlug[id as keyof typeof gameSeoBySlug];
 
   if (!game) {

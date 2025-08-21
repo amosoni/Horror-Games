@@ -13,6 +13,7 @@ export default function Header() {
   const navigationItems = [
     { path: '/', label: 'Home' },
     { path: '/granny', label: 'Granny' },
+    { path: '/halloween-games', label: 'Halloween Games' },
     { path: '/horror-games-on-steam', label: 'Steam' },
     { path: '/horror-games-on-playstation', label: 'PlayStation' },
     { path: '/horror-games-on-xbox', label: 'Xbox' },

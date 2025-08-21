@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import GameDetailPage from '../../../components/GameDetailPage';
 import { fetchRawgGameDetailFlexible, searchRawgGamesOnce, type RawgGameDetail } from '../../../services/rawgApi';
 import { horrorGames as localGames } from '../../../data/games';
+import { halloweenGames } from '../../../data/halloweenGames';
 import type { Game as LocalGame } from '../../../types/game';
 import { gameSeoBySlug } from '../../../data/gameSeo';
 
@@ -13,7 +14,8 @@ interface RouteParams {
 
 async function getSeoGame(slugStr: string): Promise<RawgGameDetail | null> {
   // Short-circuit with local data if available
-  const local = localGames.find((g: LocalGame) => (g.canonicalSlug ?? g.id) === slugStr);
+  const local = localGames.find((g: LocalGame) => (g.canonicalSlug ?? g.id) === slugStr) || 
+                halloweenGames.find((g: LocalGame) => (g.canonicalSlug ?? g.id) === slugStr);
   if (local) {
     return {
       id: Number.NaN,
@@ -67,7 +69,8 @@ export async function generateMetadata({ params }: { params: Promise<RouteParams
   const image = detail?.background_image || detail?.background_image_additional || '/og-image.jpg';
   const baseUrl = 'https://horrorgames.games';
   const canonical = `${baseUrl}/games/${detail?.slug || slugStr}`;
-  const isLocalPlayable = Boolean(localGames.find(g => (g.canonicalSlug ?? g.id) === slugStr && g.iframeUrl));
+  const isLocalPlayable = Boolean((localGames.find(g => (g.canonicalSlug ?? g.id) === slugStr && g.iframeUrl)) || 
+                                (halloweenGames.find(g => (g.canonicalSlug ?? g.id) === slugStr && g.iframeUrl)));
   const titleText = isLocalPlayable ? `${gameTitle} Online Game - Play Now` : `${gameTitle} - Horror Games Online`;
 
   return {
@@ -106,7 +109,8 @@ export default async function GamePage({ params }: { params: Promise<RouteParams
   const detail = await getSeoGame(slugStr);
   // const gameTitle = detail?.name || slugStr;
   const image = detail?.background_image || detail?.background_image_additional || '/og-image.jpg';
-  const isLocalPlayable = Boolean(localGames.find(g => (g.canonicalSlug ?? g.id) === slugStr && g.iframeUrl));
+  const isLocalPlayable = Boolean((localGames.find(g => (g.canonicalSlug ?? g.id) === slugStr && g.iframeUrl)) || 
+                                (halloweenGames.find(g => (g.canonicalSlug ?? g.id) === slugStr && g.iframeUrl)));
   const extra = gameSeoBySlug[slugStr];
   const baseUrl = 'https://horrorgames.games';
   const canonical = `${baseUrl}/games/${detail?.slug || slugStr}`;

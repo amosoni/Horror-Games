@@ -136,6 +136,31 @@ export default function Page() {
               </div>
             </Link>
             
+            {/* Halloween Games Category Card */}
+            <Link href="/halloween-games">
+              <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-orange-500/60 hover:bg-gray-700/90">
+                <div className="relative aspect-[4/3] bg-gray-800">
+                  <Image 
+                    src="/images/Halloween Games/Haunted-School.avif" 
+                    alt="Halloween Horror Games Collection" 
+                    fill 
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-600/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute top-3 left-3">
+                    <span className="inline-block bg-orange-600 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                      🎃 HALLOWEEN
+                    </span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                    <h3 className="text-sm font-bold text-white mb-1">Halloween Games</h3>
+                    <p className="text-xs text-gray-200 line-clamp-2">Spooky Collection</p>
+                  </div>
+                </div>
+              </div>
+            </Link>
+            
             {/* Other Games */}
             {curatedWebGames.slice(3).map((game: Game) => (
               <Link key={game.id} href={`/games/${game.canonicalSlug ?? game.id}`}>
@@ -161,6 +186,63 @@ export default function Page() {
           </div>
         </div>
 
+        {/* Halloween Games Special Section */}
+        <div className="mb-6">
+          <div className="text-center mb-4">
+            <h2 className="text-xl font-bold text-white mb-2">🎃 Halloween Horror Special 🎃</h2>
+            <p className="text-gray-300 text-sm">Get ready for the spookiest season with our curated collection</p>
+          </div>
+          <div className="bg-gradient-to-r from-orange-600 via-red-600 to-purple-600 rounded-lg p-6 text-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="text-left">
+                <h3 className="text-xl font-bold text-white mb-3">Halloween Horror Games Collection</h3>
+                <p className="text-gray-200 mb-4 leading-relaxed text-sm">
+                  Experience the ultimate Halloween scare with our specially curated collection of horror games. 
+                  From haunted schools to creepy houses, these games will give you the perfect Halloween atmosphere!
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    Haunted Schools
+                  </span>
+                  <span className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    Creepy Houses
+                  </span>
+                  <span className="inline-block bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    Survival Horror
+                  </span>
+                </div>
+                <Link 
+                  href="/halloween-games" 
+                  className="inline-block bg-white text-orange-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                >
+                  Explore Halloween Games
+                </Link>
+              </div>
+              <div className="relative">
+                <div className="relative aspect-[4/3] bg-gray-800 rounded-lg overflow-hidden border-2 border-white/30">
+                  <Image 
+                    src="/images/Halloween Games/Haunted-School.avif" 
+                    alt="Halloween Horror Games Collection" 
+                    fill 
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-br from-orange-600/20 to-purple-600/20" />
+                  <div className="absolute top-4 left-4">
+                    <span className="inline-block bg-orange-600 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                      🎃 HALLOWEEN SPECIAL 🎃
+                    </span>
+                  </div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <h4 className="text-lg font-bold text-white mb-2">Halloween Collection</h4>
+                    <p className="text-sm text-gray-200">Spooky Horror Games</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Featured Game: Granny */}
         <div className="mb-4">
           <div className="text-center mb-4">
@@ -182,7 +264,7 @@ export default function Page() {
                   <span className="inline-block bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
                     Stealth Gameplay
                   </span>
-                  <span className="inline-block bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                  <span className="inline-block bg-white text-xs font-semibold px-3 py-1 rounded-full">
                     Puzzle Solving
                   </span>
                 </div>

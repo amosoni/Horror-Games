@@ -7,6 +7,7 @@ import { Star, Calendar, User, Tag, MessageCircle, Eye, Gamepad2 } from "lucide-
 import Header from "./Header";
 import Footer from "./Footer";
 import { horrorGames as localGames, curatedWebGames } from "../data/games";
+import { halloweenGames } from "../data/halloweenGames";
 import { gameSeoBySlug } from "../data/gameSeo";
 import Image from 'next/image';
 
@@ -93,6 +94,8 @@ export default function GameDetailPage({ slug }: Props) {
 
   // Local web game (for online playable embeds)
   const localWebGame = localGames.find(
+    g => g.iframeUrl && ((g.canonicalSlug && g.canonicalSlug === slug) || g.id === slug)
+  ) || halloweenGames.find(
     g => g.iframeUrl && ((g.canonicalSlug && g.canonicalSlug === slug) || g.id === slug)
   );
   const recommendedWeb = curatedWebGames
