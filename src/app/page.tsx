@@ -300,6 +300,50 @@ export default function Page() {
           </div>
         </div>
 
+        {/* 9.12 New Games Section */}
+        <div className="mb-6">
+          <div className="text-center mb-4">
+            <h2 className="text-xl font-bold text-white mb-2">🎮 New Games Added 9.12</h2>
+            <p className="text-gray-300 text-sm">Fresh horror experiences just added to our collection</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full max-w-5xl mx-auto">
+            {curatedWebGames.slice(12, 28).map((game: Game) => (
+              <Link key={game.id} href={`/games/${game.canonicalSlug ?? game.id}`}>
+                <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-green-500/60 hover:bg-gray-700/90">
+                  <div className="relative aspect-[4/3] bg-gray-800">
+                    {game.imageUrl ? (
+                      <Image 
+                        src={game.imageUrl} 
+                        alt={game.title} 
+                        fill 
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        className="object-cover opacity-70" 
+                      />
+                    ) : null}
+                    <div className="absolute top-2 left-2">
+                      <span className="inline-block bg-green-600 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                        NEW
+                      </span>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-2">
+                      <h3 className="text-sm font-bold text-white mb-1">{game.title}</h3>
+                      <p className="text-xs text-gray-200 line-clamp-2">{game.genre.join(', ')}</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <div className="text-center mt-4">
+            <Link 
+              href="/games" 
+              className="text-green-400 hover:text-green-300 transition-colors font-semibold"
+            >
+              View All Games →
+            </Link>
+          </div>
+        </div>
+
         {/* Blog Section */}
         <div className="mb-4">
           <div className="text-center mb-4">

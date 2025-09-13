@@ -96,7 +96,7 @@ export default function XboxGamesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Xbox Horror Games Rankings
+            Xbox Horror Games of 2025 Rankings
           </motion.h1>
           
           <motion.p 
@@ -105,8 +105,8 @@ export default function XboxGamesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            Discover the top-rated horror games on Xbox. From Series X/S to Xbox One, experience the most 
-            terrifying and critically acclaimed horror games on Microsoft&apos;s gaming platform with our curated rankings.
+            Discover the top-rated horror games of 2025 on Xbox. From Series X/S to Xbox One, experience the most 
+            terrifying and critically acclaimed horror games of 2025 on Microsoft&apos;s gaming platform with our curated rankings.
           </motion.p>
 
           <motion.div
@@ -251,7 +251,7 @@ export default function XboxGamesPage() {
             <div className="flex items-center justify-center mb-12">
               <div className="flex items-center space-x-4 bg-gradient-to-r from-green-600/20 to-emerald-600/20 backdrop-blur-sm rounded-2xl px-8 py-4 border border-green-500/30">
                 <Trophy className="text-green-500 w-8 h-8" />
-                <h2 className="text-4xl font-bold text-white">Xbox Horror Games Rankings</h2>
+                <h2 className="text-4xl font-bold text-white">Xbox Horror Games of 2025 Rankings</h2>
               </div>
             </div>
 

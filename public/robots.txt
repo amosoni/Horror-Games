@@ -18,7 +18,6 @@ Allow: /horror-games-on-pc
 Allow: /horror-games-on-roblox
 Allow: /horror-games-multiplayer
 Allow: /horror-games-2025
-Allow: /game/
 Allow: /reviews
 Allow: /about
 

@@ -17,7 +17,32 @@ export const halloweenGames: Game[] = [
     iframeUrl: 'https://games.crazygames.com/en_US/haunted-school---horror-game/index.html',
     price: 0,
     featured: true,
-    tags: ['haunted-school', 'survival-horror', 'jump-scares', 'halloween']
+    tags: ['haunted-school', 'survival-horror', 'jump-scares', 'halloween', 'supernatural', 'school'],
+    gameplayDescription: 'Haunted School is a survival horror adventure game where players must navigate through a terrifying haunted school filled with supernatural entities and jump scares. Players must explore dark corridors, solve puzzles, and survive the night while avoiding dangerous spirits and supernatural threats.',
+    storyDescription: 'In this atmospheric horror experience, players find themselves trapped in a haunted school where supernatural entities lurk in every corner. The school has a dark history filled with tragic events and mysterious occurrences. Players must uncover the truth behind the hauntings while surviving the night and escaping before the spirits claim them.',
+    keyFeatures: [
+      'Survival horror gameplay',
+      'Haunted school atmosphere',
+      'Supernatural entity encounters',
+      'Jump scare elements',
+      'School environment exploration',
+      'Puzzle solving mechanics',
+      'Night survival challenge',
+      'Atmospheric horror design'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'T for Teen',
+    languages: ['English'],
+    playTime: '2-3 hours',
+    difficulty: 'Medium',
+    achievements: 10,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play Haunted School - navigate through a terrifying haunted school filled with supernatural entities and jump scares. Survive the night and escape before the spirits claim you.',
+    metaKeywords: ['haunted school', 'horror game', 'survival horror', 'school', 'supernatural', 'jump scares', 'web game', 'atmospheric'],
+    canonicalSlug: 'haunted-school'
   },
   {
     id: 'horror-tale',
@@ -36,7 +61,32 @@ export const halloweenGames: Game[] = [
     trailerUrl: '/videos/Horror-Tale.mp4',
     price: 0,
     featured: true,
-    tags: ['narrative-horror', 'adventure', 'story-driven', 'halloween']
+    tags: ['narrative-horror', 'adventure', 'story-driven', 'halloween', 'mansion', 'choices'],
+    gameplayDescription: 'Horror Tale is a narrative-driven horror adventure game where every choice matters and shapes the story. Players explore a mysterious mansion, interact with characters, and make decisions that affect the outcome of the game. The branching storylines create multiple paths and endings based on player choices.',
+    storyDescription: 'In this chilling narrative experience, players find themselves in a mysterious mansion with a dark past. As they explore the mansion, they uncover secrets about its previous inhabitants and the tragic events that occurred there. Every decision made by the player has consequences, leading to different story branches and multiple possible endings.',
+    keyFeatures: [
+      'Branching narrative storylines',
+      'Choice-driven gameplay mechanics',
+      'Multiple possible endings',
+      'Mysterious mansion exploration',
+      'Character interaction system',
+      'Atmospheric horror storytelling',
+      'Consequence-based decisions',
+      'Immersive narrative experience'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'T for Teen',
+    languages: ['English'],
+    playTime: '3-4 hours',
+    difficulty: 'Easy',
+    achievements: 8,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play Horror Tale - a narrative-driven horror game where every choice matters. Uncover dark secrets in a mysterious mansion and face the consequences of your actions.',
+    metaKeywords: ['horror tale', 'horror game', 'narrative horror', 'adventure', 'choices', 'mansion', 'story-driven', 'web game', 'atmospheric'],
+    canonicalSlug: 'horror-tale'
   },
   {
     id: '911-prey',
@@ -54,7 +104,32 @@ export const halloweenGames: Game[] = [
     iframeUrl: 'https://games.crazygames.com/en_US/911-prey/index.html',
     price: 0,
     featured: false,
-    tags: ['survival-horror', 'thriller', '911', 'halloween']
+    tags: ['survival-horror', 'thriller', '911', 'halloween', 'prey', 'escape'],
+    gameplayDescription: '911: Prey is an intense survival horror game where players become the prey after answering a mysterious 911 call. Players must navigate through dangerous environments, avoid deadly threats, and find a way to escape before it\'s too late. The game features tense survival mechanics and thrilling chase sequences.',
+    storyDescription: 'In this survival horror experience, players answer a mysterious 911 call that leads them into a deadly trap. As the prey, they must use their wits and survival instincts to navigate through dangerous situations while being hunted by unknown threats. The game explores themes of desperation, survival, and the consequences of answering the wrong call.',
+    keyFeatures: [
+      'Intense survival horror gameplay',
+      'Mysterious 911 call premise',
+      'Prey vs predator mechanics',
+      'Thrilling chase sequences',
+      'Dangerous environment navigation',
+      'Escape-focused objectives',
+      'Tense survival atmosphere',
+      'Multiple threat encounters'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'T for Teen',
+    languages: ['English'],
+    playTime: '1.5-2 hours',
+    difficulty: 'Hard',
+    achievements: 6,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play 911: Prey - survival horror where you become the prey after answering a mysterious 911 call. Escape before it\'s too late in this intense thriller.',
+    metaKeywords: ['911 prey', 'horror game', 'survival horror', 'thriller', '911', 'prey', 'escape', 'web game', 'atmospheric'],
+    canonicalSlug: '911-prey'
   },
   {
     id: '911-cannibal',
@@ -72,7 +147,32 @@ export const halloweenGames: Game[] = [
     iframeUrl: 'https://games.crazygames.com/en_US/911-cannibal/index.html',
     price: 0,
     featured: false,
-    tags: ['survival-horror', 'cannibal', 'thriller', 'halloween']
+    tags: ['survival-horror', 'cannibal', 'thriller', 'halloween', 'sequel', 'entity'],
+    gameplayDescription: '911: Cannibal is a terrifying sequel to 911: Prey where players face an even more horrifying threat - a cannibalistic entity that hunts them through the night. Players must use advanced survival tactics, avoid detection, and find a way to escape before becoming the entity\'s next meal.',
+    storyDescription: 'In this intense survival horror sequel, players find themselves facing a cannibalistic entity that is even more dangerous than the previous threats. The entity hunts through the night, and players must use all their survival skills to avoid detection and escape. The game explores themes of desperation, survival, and the horror of being hunted by a cannibalistic predator.',
+    keyFeatures: [
+      'Terrifying cannibalistic entity',
+      'Advanced survival mechanics',
+      'Night hunting gameplay',
+      'Stealth and avoidance tactics',
+      'Intense chase sequences',
+      'Sequel to 911: Prey',
+      'Cannibal horror elements',
+      'Desperate survival atmosphere'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'M for Mature',
+    languages: ['English'],
+    playTime: '2-2.5 hours',
+    difficulty: 'Hard',
+    achievements: 7,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play 911: Cannibal - face a cannibalistic entity in this terrifying survival horror sequel. Survive the night and escape the cannibal\'s hunt.',
+    metaKeywords: ['911 cannibal', 'horror game', 'survival horror', 'cannibal', 'thriller', 'sequel', 'entity', 'web game', 'atmospheric'],
+    canonicalSlug: '911-cannibal'
   },
   {
     id: 'fnaf-shooter',
@@ -91,7 +191,32 @@ export const halloweenGames: Game[] = [
     trailerUrl: '/videos/FNaF-Shooter.mp4',
     price: 0,
     featured: true,
-    tags: ['fnaf', 'shooter', 'action-horror', 'halloween']
+    tags: ['fnaf', 'shooter', 'action-horror', 'halloween', 'animatronic', 'weapons'],
+    gameplayDescription: 'FNaF Shooter is an action shooter game based on the popular Five Nights at Freddy\'s franchise. Players take on the role of a security guard who must defend themselves against animatronic horrors using various weapons. The game features intense shooting action, survival mechanics, and the iconic FNaF atmosphere.',
+    storyDescription: 'In this action-packed horror experience, players find themselves in the world of Five Nights at Freddy\'s, but this time they can fight back. As a security guard, players must use weapons to defend themselves against the animatronic characters that have come to life. The game explores the familiar FNaF universe with a new action-oriented approach.',
+    keyFeatures: [
+      'FNaF franchise action shooter',
+      'Weapon-based combat system',
+      'Animatronic enemy encounters',
+      'Survival horror elements',
+      'Multiple weapon types',
+      'Night survival mechanics',
+      'FNaF atmosphere and characters',
+      'Intense shooting action'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'T for Teen',
+    languages: ['English'],
+    playTime: '2-3 hours',
+    difficulty: 'Medium',
+    achievements: 12,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play FNaF Shooter - action shooter based on Five Nights at Freddy\'s. Defend yourself against animatronic horrors with various weapons.',
+    metaKeywords: ['fnaf shooter', 'horror game', 'action shooter', 'fnaf', 'animatronic', 'weapons', 'survival', 'web game', 'atmospheric'],
+    canonicalSlug: 'fnaf-shooter'
   },
   {
     id: 'creepy-granny-scream-scary-freddy',
@@ -109,7 +234,32 @@ export const halloweenGames: Game[] = [
     iframeUrl: 'https://games.crazygames.com/en_US/creepy-granny-scream-scary-freddy/index.html',
     price: 0,
     featured: false,
-    tags: ['granny', 'freddy-krueger', 'nightmare', 'halloween']
+    tags: ['granny', 'freddy-krueger', 'nightmare', 'halloween', 'survival', 'entities'],
+    gameplayDescription: 'Creepy Granny Scream: Scary Freddy is a nightmare survival game that combines elements from both Granny and Freddy Krueger horror franchises. Players must navigate through a nightmare world where both entities hunt them down, using stealth and survival tactics to avoid detection and escape.',
+    storyDescription: 'In this terrifying nightmare experience, players find themselves trapped in a world where both Granny and Freddy Krueger exist as deadly threats. The nightmare world combines elements from both horror franchises, creating an even more terrifying survival experience. Players must use their wits and survival skills to escape before either entity catches them.',
+    keyFeatures: [
+      'Granny and Freddy Krueger combination',
+      'Nightmare world exploration',
+      'Dual entity threat system',
+      'Stealth survival mechanics',
+      'Horror franchise crossover',
+      'Nightmare atmosphere',
+      'Escape-focused objectives',
+      'Terrifying entity encounters'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'T for Teen',
+    languages: ['English'],
+    playTime: '1.5-2 hours',
+    difficulty: 'Hard',
+    achievements: 8,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play Creepy Granny Scream: Scary Freddy - nightmare survival game combining Granny and Freddy Krueger elements. Escape the ultimate horror.',
+    metaKeywords: ['creepy granny scream scary freddy', 'horror game', 'nightmare survival', 'granny', 'freddy krueger', 'entities', 'web game', 'atmospheric'],
+    canonicalSlug: 'creepy-granny-scream-scary-freddy'
   },
   {
     id: 'c-virus-game-outbreak',
@@ -127,7 +277,32 @@ export const halloweenGames: Game[] = [
     iframeUrl: 'https://games.crazygames.com/en_US/c-virus-game-outbreak/index.html',
     price: 0,
     featured: false,
-    tags: ['zombie', 'apocalypse', 'survival', 'halloween']
+    tags: ['zombie', 'apocalypse', 'survival', 'halloween', 'virus', 'infected'],
+    gameplayDescription: 'C-Virus Game: Outbreak is a zombie apocalypse survival horror game where players must survive in a world overrun by the infected. Players must use strategy and quick thinking to avoid becoming one of the infected while navigating through dangerous environments and managing limited resources.',
+    storyDescription: 'In this zombie apocalypse experience, players find themselves in a world where a mysterious virus has turned most of the population into infected zombies. As one of the few survivors, players must use their wits and survival skills to navigate through the dangerous world while avoiding the infected and finding a way to survive the outbreak.',
+    keyFeatures: [
+      'Zombie apocalypse survival gameplay',
+      'Strategic resource management',
+      'Infected enemy encounters',
+      'Survival horror elements',
+      'Virus outbreak theme',
+      'Tactical combat mechanics',
+      'Resource scarcity challenges',
+      'Apocalyptic atmosphere'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'T for Teen',
+    languages: ['English'],
+    playTime: '2-3 hours',
+    difficulty: 'Medium',
+    achievements: 9,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play C-Virus Game: Outbreak - zombie apocalypse survival horror. Use strategy and quick thinking to survive in a world overrun by the infected.',
+    metaKeywords: ['c virus game outbreak', 'horror game', 'zombie apocalypse', 'survival horror', 'virus', 'infected', 'strategy', 'web game', 'atmospheric'],
+    canonicalSlug: 'c-virus-game-outbreak'
   },
   {
     id: 'house-of-celestina',
@@ -145,7 +320,32 @@ export const halloweenGames: Game[] = [
     iframeUrl: 'https://games.crazygames.com/en_US/house-of-celestina/index.html',
     price: 0,
     featured: false,
-    tags: ['haunted-mansion', 'exploration', 'supernatural', 'halloween']
+    tags: ['haunted-mansion', 'exploration', 'supernatural', 'halloween', 'mansion', 'secrets'],
+    gameplayDescription: 'House of Celestina is a haunted mansion exploration game where players must navigate through the mysterious House of Celestina while uncovering its dark secrets. Players must avoid supernatural entities that lurk within the mansion while solving puzzles and discovering the truth about the house\'s dark past.',
+    storyDescription: 'In this atmospheric horror experience, players explore the mysterious House of Celestina, a haunted mansion with a dark and tragic past. As players navigate through the mansion, they uncover secrets about the house\'s previous inhabitants and the supernatural events that occurred there. The game explores themes of mystery, horror, and the supernatural.',
+    keyFeatures: [
+      'Haunted mansion exploration',
+      'Supernatural entity encounters',
+      'Dark secret discovery',
+      'Atmospheric horror design',
+      'Mansion environment navigation',
+      'Puzzle solving elements',
+      'Supernatural horror themes',
+      'Mystery investigation gameplay'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'T for Teen',
+    languages: ['English'],
+    playTime: '2-3 hours',
+    difficulty: 'Medium',
+    achievements: 10,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play House of Celestina - explore a haunted mansion with dark secrets and supernatural entities. Uncover the mysteries of the House of Celestina.',
+    metaKeywords: ['house of celestina', 'horror game', 'haunted mansion', 'exploration', 'supernatural', 'mansion', 'secrets', 'web game', 'atmospheric'],
+    canonicalSlug: 'house-of-celestina'
   },
   {
     id: 'silent-house',
@@ -163,7 +363,32 @@ export const halloweenGames: Game[] = [
     iframeUrl: 'https://games.crazygames.com/en_US/silent-house/index.html',
     price: 0,
     featured: false,
-    tags: ['psychological-horror', 'stealth', 'silence', 'halloween']
+    tags: ['psychological-horror', 'stealth', 'silence', 'halloween', 'house', 'survival'],
+    gameplayDescription: 'Silent House is a psychological horror game where silence is your enemy and every sound could be your last. Players must navigate through a deadly house using stealth and wit to survive. The game features tense stealth mechanics and psychological horror elements that create an atmosphere of constant tension.',
+    storyDescription: 'In this psychological horror experience, players find themselves trapped in a house where silence is not just golden - it\'s essential for survival. The house is filled with deadly threats that are attracted to sound, forcing players to move carefully and quietly. The game explores themes of fear, survival, and the psychological impact of constant danger.',
+    keyFeatures: [
+      'Psychological horror atmosphere',
+      'Stealth-based gameplay mechanics',
+      'Silence-focused survival',
+      'Tense house navigation',
+      'Sound-based threat system',
+      'Psychological tension building',
+      'Stealth survival elements',
+      'Atmospheric horror design'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'T for Teen',
+    languages: ['English'],
+    playTime: '1.5-2 hours',
+    difficulty: 'Hard',
+    achievements: 7,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play Silent House - psychological horror where silence is your enemy. Navigate through a deadly house using stealth and wit to survive.',
+    metaKeywords: ['silent house', 'horror game', 'psychological horror', 'stealth', 'silence', 'house', 'survival', 'web game', 'atmospheric'],
+    canonicalSlug: 'silent-house'
   },
   {
     id: 'ann',
@@ -181,6 +406,31 @@ export const halloweenGames: Game[] = [
     iframeUrl: 'https://games.crazygames.com/en_US/ann/index.html',
     price: 0,
     featured: false,
-    tags: ['atmospheric-horror', 'short-game', 'entity', 'halloween']
+    tags: ['atmospheric-horror', 'short-game', 'entity', 'halloween', 'mysterious', 'reality'],
+    gameplayDescription: 'Ann is a short but intense horror experience featuring the mysterious entity known as Ann. Players must face their fears in this atmospheric horror game that challenges their perception of reality. The game features psychological horror elements and atmospheric storytelling that creates a deeply unsettling experience.',
+    storyDescription: 'In this atmospheric horror experience, players encounter the mysterious entity known as Ann, whose presence challenges their understanding of reality. The game explores themes of fear, perception, and the unknown through atmospheric storytelling and psychological horror elements. Players must confront their deepest fears while trying to understand the nature of Ann.',
+    keyFeatures: [
+      'Mysterious entity encounters',
+      'Atmospheric horror storytelling',
+      'Psychological horror elements',
+      'Reality-questioning narrative',
+      'Short but intense experience',
+      'Fear confrontation mechanics',
+      'Atmospheric sound design',
+      'Unsettling visual elements'
+    ],
+    systemRequirements: {
+      minimum: 'Web browser with JavaScript enabled, 1GB RAM',
+      recommended: 'Modern web browser, 2GB RAM'
+    },
+    ageRating: 'T for Teen',
+    languages: ['English'],
+    playTime: '30-45 minutes',
+    difficulty: 'Easy',
+    achievements: 4,
+    lastUpdated: '2024-01-15',
+    metaDescription: 'Play Ann - short but intense horror experience featuring the mysterious entity Ann. Face your fears in this atmospheric horror game.',
+    metaKeywords: ['ann', 'horror game', 'atmospheric horror', 'entity', 'mysterious', 'short game', 'reality', 'web game', 'psychological'],
+    canonicalSlug: 'ann'
   }
 ]; 

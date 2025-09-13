@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import type { Game } from "../types/game";
-import { Star, Calendar, User, Tag, MessageCircle, Eye, Gamepad2 } from "lucide-react";
+import { Star, Calendar, User, Tag, MessageCircle, Eye, Gamepad2, ThumbsUp, Trash2, Send } from "lucide-react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { horrorGames as localGames, curatedWebGames } from "../data/games";
 import { halloweenGames } from "../data/halloweenGames";
 import { gameSeoBySlug } from "../data/gameSeo";
 import Image from 'next/image';
+// Modal removed; inline only
 
 function renderFormattedDescription(desc: string) {
   const normalized = (desc || '').replace(/\r\n/g, "\n").trim();
@@ -76,6 +77,18 @@ function renderFormattedDescription(desc: string) {
   return <div>{nodes}</div>;
 }
 
+interface Comment {
+  id: string;
+  gameId: string;
+  userName: string;
+  userEmail: string;
+  content: string;
+  rating: number;
+  date: string;
+  helpful: number;
+  replies?: Comment[];
+}
+
 interface Props {
   slug: string;
 }
@@ -87,23 +100,160 @@ export default function GameDetailPage({ slug }: Props) {
   const [commentName, setCommentName] = useState('');
   const [commentEmail, setCommentEmail] = useState('');
   const [commentContent, setCommentContent] = useState('');
+  const [commentRating, setCommentRating] = useState(5);
   const [commentAgreed, setCommentAgreed] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [commentsLoading, setCommentsLoading] = useState(false);
+  const [commentSubmitting, setCommentSubmitting] = useState(false);
+  const [commentError, setCommentError] = useState<string | null>(null);
+  const [commentSuccess, setCommentSuccess] = useState<string | null>(null);
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [iframeError, setIframeError] = useState(false);
   const extra = gameSeoBySlug[slug];
+  const [iframeCount, setIframeCount] = useState<number | null>(null);
+
+  // Per-slug style overrides to minimize visual split for tricky sources
+  const containerOverride: { aspectRatio?: string; fixedHeightVh?: number } =
+    slug === 'nightmare-kart' ? { aspectRatio: '16 / 10' } :
+    slug === 'soul-roulette' ? { aspectRatio: '16 / 10' } :
+    slug === 'sprunki-fall-edition' ? { fixedHeightVh: 68 } :
+    slug === 'creepy-cave-cave-in' ? { aspectRatio: '4 / 3' } :
+    {};
 
   // Local web game (for online playable embeds)
-  const localWebGame = localGames.find(
-    g => g.iframeUrl && ((g.canonicalSlug && g.canonicalSlug === slug) || g.id === slug)
-  ) || halloweenGames.find(
-    g => g.iframeUrl && ((g.canonicalSlug && g.canonicalSlug === slug) || g.id === slug)
-  );
+  const localWebGame = useMemo(() => {
+    return localGames.find(
+      g => g.iframeUrl && ((g.canonicalSlug && g.canonicalSlug === slug) || g.id === slug)
+    ) || halloweenGames.find(
+      g => g.iframeUrl && ((g.canonicalSlug && g.canonicalSlug === slug) || g.id === slug)
+    );
+  }, [slug]);
+  
   const recommendedWeb = curatedWebGames
     .filter(g => (g.canonicalSlug ?? g.id) !== slug)
     .slice(0, 8);
 
   // Generate random play count for demo purposes
   const playCount = Math.floor(Math.random() * 100000) + 10000;
+
+  // 加载评论
+  const loadComments = useCallback(async () => {
+    if (!game) return;
+    
+    setCommentsLoading(true);
+    try {
+      const response = await fetch(`/api/comments?gameId=${game.id}`);
+      const data = await response.json();
+      if (response.ok) {
+        setComments(data.comments || []);
+      } else {
+        console.error('Failed to load comments:', data.error);
+      }
+    } catch (error) {
+      console.error('Error loading comments:', error);
+    } finally {
+      setCommentsLoading(false);
+    }
+  }, [game]);
+
+  // 提交评论
+  const submitComment = async () => {
+    if (!game || !commentName || !commentEmail || !commentContent || !commentAgreed) {
+      setCommentError('Please fill in all fields and agree to terms.');
+      return;
+    }
+
+    setCommentSubmitting(true);
+    setCommentError(null);
+    setCommentSuccess(null);
+
+    try {
+      const response = await fetch('/api/comments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          gameId: game.id,
+          userName: commentName,
+          userEmail: commentEmail,
+          content: commentContent,
+          rating: commentRating,
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setCommentSuccess(data.message);
+        setCommentName('');
+        setCommentEmail('');
+        setCommentContent('');
+        setCommentRating(5);
+        setCommentAgreed(false);
+        // 重新加载评论
+        loadComments();
+      } else {
+        setCommentError(data.error || 'Failed to submit comment');
+      }
+    } catch {
+      setCommentError('Network error. Please try again.');
+    } finally {
+      setCommentSubmitting(false);
+    }
+  };
+
+  // 点赞评论
+  const likeComment = async (commentId: string) => {
+    try {
+      const response = await fetch('/api/comments', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          commentId,
+          action: 'helpful',
+        }),
+      });
+
+      if (response.ok) {
+        // 更新本地评论状态
+        setComments(prev => 
+          prev.map(comment => 
+            comment.id === commentId 
+              ? { ...comment, helpful: comment.helpful + 1 }
+              : comment
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error liking comment:', error);
+    }
+  };
+
+  // 删除评论
+  const deleteComment = async (commentId: string) => {
+    if (!confirm('Are you sure you want to delete this comment?')) return;
+
+    try {
+      const response = await fetch(`/api/comments?commentId=${commentId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        setComments(prev => prev.filter(comment => comment.id !== commentId));
+      } else {
+        const data = await response.json();
+        alert(data.error || 'Failed to delete comment');
+      }
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      alert('Network error. Please try again.');
+    }
+  };
+
+  // Keep host page scroll enabled; iframe scroll is disabled via attribute below
 
   useEffect(() => {
     let aborted = false;
@@ -144,6 +294,22 @@ export default function GameDetailPage({ slug }: Props) {
       aborted = true;
     };
   }, [slug, localWebGame]);
+
+  // 当游戏加载完成后加载评论
+  useEffect(() => {
+    if (game) {
+      loadComments();
+    }
+  }, [game, loadComments]);
+
+  useEffect(() => {
+    // Count iframes within the playable section to rule out duplicate mounts
+    const section = document.getElementById('playable-section');
+    if (section) {
+      const count = section.querySelectorAll('iframe').length;
+      setIframeCount(count);
+    }
+  }, []);
 
   if (loading) {
     return (
@@ -210,112 +376,86 @@ export default function GameDetailPage({ slug }: Props) {
 
         {/* Online playable area */}
         {localWebGame ? (
-          <section className="mb-10">
-            {(() => {
-              const url = String(localWebGame.iframeUrl || '');
-              const isItch = /itch\.io|itch\.zone/i.test(url);
-              return (
-                <div className="relative w-full overflow-hidden rounded-xl border border-gray-800 bg-black aspect-video">
-                  {isItch ? (
-                    <iframe
-                      src={url}
-                      className="absolute inset-0 w-full h-full"
-                      loading="lazy"
-                      allow="autoplay; fullscreen"
-                      title={localWebGame.title}
-                      onLoad={() => setIframeLoaded(true)}
-                      onError={() => setIframeError(true)}
-                    />
-                  ) : (
-                    <iframe
-                      src={url}
-                      className="absolute inset-0 w-full h-full"
-                      loading="lazy"
-                      allow="autoplay; fullscreen"
-                      referrerPolicy="no-referrer"
-                      sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
-                      title={localWebGame.title}
-                      onLoad={() => setIframeLoaded(true)}
-                      onError={() => setIframeError(true)}
-                    />
-                  )}
-                  
-                  {/* Loading overlay */}
-                  {!iframeLoaded && !iframeError && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
-                      <div className="text-center text-white">
-                        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
-                        <p className="text-lg font-semibold">Loading Game...</p>
-                        <p className="text-sm text-gray-300 mt-2">Please wait</p>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Error overlay */}
-                  {iframeError && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
-                      <div className="text-center text-white">
-                        <div className="text-red-500 text-6xl mb-4">⚠️</div>
-                        <p className="text-lg font-semibold mb-2">Game Loading Failed</p>
-                        <p className="text-sm text-gray-300 mb-4">itch.io may be protecting game content</p>
-                        <div className="space-y-2">
-                          <a 
-                            href={url} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="inline-block px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-                          >
-                            Open Game in New Window
-                          </a>
-                          <button 
-                            onClick={() => {
-                              setIframeError(false);
-                              setIframeLoaded(false);
-                              // 强制重新加载 iframe
-                              const iframe = document.querySelector('iframe');
-                              if (iframe) {
-                                const currentSrc = iframe.src;
-                                iframe.src = '';
-                                setTimeout(() => {
-                                  iframe.src = currentSrc;
-                                }, 100);
-                              }
-                            }}
-                            className="block w-full px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
-                          >
-                            Retry Loading
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Fallback content if iframe fails */}
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-900 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    <div className="text-center text-white">
-                      <p className="text-lg font-semibold mb-2">Game Loading...</p>
-                      <p className="text-sm text-gray-300 mb-4">If the game cannot load, try refreshing the page</p>
-                      <div className="space-y-2">
-                        <a 
-                          href={url} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="inline-block px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-                        >
-                          Open Game in New Window
-                        </a>
-                        <button 
-                          onClick={() => window.location.reload()}
-                          className="block w-full px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
-                        >
-                          Refresh Page
-                        </button>
-                      </div>
+          <section className="mb-10" id="playable-section">
+            <div
+              className="relative w-full overflow-hidden rounded-xl border border-gray-800 bg-black"
+              style={
+                containerOverride.fixedHeightVh
+                  ? { width: '100%', height: `${containerOverride.fixedHeightVh}vh` }
+                  : { width: '100%', aspectRatio: containerOverride.aspectRatio || '16 / 9' }
+              }
+            >
+              <iframe
+                data-testid="game-iframe"
+                key={`game-iframe-${localWebGame.id}`}
+                src={localWebGame.iframeUrl}
+                className="w-full h-full border-0"
+                loading="lazy"
+                allow="autoplay; fullscreen"
+                referrerPolicy="no-referrer"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation"
+                title={localWebGame.title}
+                onLoad={() => setIframeLoaded(true)}
+                onError={() => setIframeError(true)}
+                scrolling="no"
+                style={{ width: '100%', height: '100%', border: '0', overflow: 'hidden' }}
+              />
+
+              {typeof iframeCount === 'number' && (
+                <div className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
+                  iframes: {iframeCount}
+                </div>
+              )}
+
+              {/* Loading overlay */}
+              {!iframeLoaded && !iframeError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+                  <div className="text-center text-white">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-500 mx-auto mb-4"></div>
+                    <p className="text-lg font-semibold">Loading Game...</p>
+                    <p className="text-sm text-gray-300 mt-2">Please wait</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Error overlay */}
+              {iframeError && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+                  <div className="text-center text-white">
+                    <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                    <p className="text-lg font-semibold mb-2">Game Loading Failed</p>
+                    <p className="text-sm text-gray-300 mb-4">The game may not be available</p>
+                    <div className="space-y-2">
+                      <a 
+                        href={localWebGame.iframeUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-block px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                      >
+                        Open Game in New Window
+                      </a>
+                      <button 
+                        onClick={() => {
+                          setIframeError(false);
+                          setIframeLoaded(false);
+                          const iframe = document.querySelector('iframe');
+                          if (iframe) {
+                            const currentSrc = (iframe as HTMLIFrameElement).src;
+                            (iframe as HTMLIFrameElement).src = '';
+                            setTimeout(() => {
+                              (iframe as HTMLIFrameElement).src = currentSrc;
+                            }, 100);
+                          }
+                        }}
+                        className="block w-full px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-lg transition-colors"
+                      >
+                        Retry Loading
+                      </button>
                     </div>
                   </div>
                 </div>
-              );
-            })()}
+              )}
+            </div>
           </section>
         ) : null}
 
@@ -380,6 +520,98 @@ export default function GameDetailPage({ slug }: Props) {
             <div className="bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl p-6">
               <h2 className="text-2xl font-bold text-white mb-4">About This Game</h2>
               {renderFormattedDescription(game.description || '')}
+              
+              {/* SEO enriched content from game object */}
+              {localWebGame && (
+                <div className="mt-6 space-y-6">
+                  {game.gameplayDescription && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">Gameplay</h3>
+                      <p className="text-gray-200 leading-relaxed">{game.gameplayDescription}</p>
+                    </div>
+                  )}
+                  
+                  {game.storyDescription && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">Story</h3>
+                      <p className="text-gray-200 leading-relaxed">{game.storyDescription}</p>
+                    </div>
+                  )}
+
+                  {game.keyFeatures && game.keyFeatures.length > 0 && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">Key Features</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        {game.keyFeatures.map((feature: string, index: number) => (
+                          <div key={index} className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                            <span className="text-gray-300">{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {game.systemRequirements && (
+                    <div>
+                      <h3 className="text-xl font-semibold text-white mb-2">System Requirements</h3>
+                      <div className="space-y-2">
+                        {game.systemRequirements.minimum && (
+                          <div>
+                            <span className="text-gray-400 font-medium">Minimum: </span>
+                            <span className="text-gray-300">{game.systemRequirements.minimum}</span>
+                          </div>
+                        )}
+                        {game.systemRequirements.recommended && (
+                          <div>
+                            <span className="text-gray-400 font-medium">Recommended: </span>
+                            <span className="text-gray-300">{game.systemRequirements.recommended}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {game.ageRating && (
+                      <div>
+                        <span className="text-gray-400 font-medium">Age Rating: </span>
+                        <span className="text-gray-300">{game.ageRating}</span>
+                      </div>
+                    )}
+                    {game.languages && game.languages.length > 0 && (
+                      <div>
+                        <span className="text-gray-400 font-medium">Languages: </span>
+                        <span className="text-gray-300">{game.languages.join(', ')}</span>
+                      </div>
+                    )}
+                    {game.playTime && (
+                      <div>
+                        <span className="text-gray-400 font-medium">Play Time: </span>
+                        <span className="text-gray-300">{game.playTime}</span>
+                      </div>
+                    )}
+                    {game.difficulty && (
+                      <div>
+                        <span className="text-gray-400 font-medium">Difficulty: </span>
+                        <span className="text-gray-300">{game.difficulty}</span>
+                      </div>
+                    )}
+                    {game.achievements && (
+                      <div>
+                        <span className="text-gray-400 font-medium">Achievements: </span>
+                        <span className="text-gray-300">{game.achievements}</span>
+                      </div>
+                    )}
+                    {game.lastUpdated && (
+                      <div>
+                        <span className="text-gray-400 font-medium">Last Updated: </span>
+                        <span className="text-gray-300">{game.lastUpdated}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
               
               {/* SEO enriched blocks for local games */}
               {localWebGame && extra && (
@@ -482,60 +714,161 @@ export default function GameDetailPage({ slug }: Props) {
             <div className="bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl p-6">
               <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
                 <MessageCircle className="w-5 h-5 mr-2" />
-                Leave a Comment
+                Comments ({comments.length})
               </h3>
-              <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={commentName}
-                    onChange={(e) => setCommentName(e.target.value)}
-                    className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={commentEmail}
-                    onChange={(e) => setCommentEmail(e.target.value)}
-                    className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500"
-                  />
+
+              {/* 评论列表 */}
+              {commentsLoading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto"></div>
+                  <p className="text-gray-400 mt-2">Loading comments...</p>
                 </div>
-                <textarea
-                  placeholder="Content"
-                  value={commentContent}
-                  onChange={(e) => setCommentContent(e.target.value)}
-                  rows={4}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500"
-                />
-                <div className="flex items-center space-x-2">
-                  <input
-                    type="checkbox"
-                    id="agree"
-                    checked={commentAgreed}
-                    onChange={(e) => setCommentAgreed(e.target.checked)}
-                    className="w-4 h-4 text-red-600 bg-gray-800 border-gray-700 rounded focus:ring-red-500"
-                  />
-                  <label htmlFor="agree" className="text-gray-300 text-sm">
-                    I&apos;d read and agree to the terms and conditions.
-                  </label>
+              ) : comments.length > 0 ? (
+                <div className="space-y-4 mb-6">
+                  {comments.map((comment) => (
+                    <div key={comment.id} className="bg-gray-800/50 border border-gray-700 rounded-lg p-4">
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+                            <span className="text-white text-sm font-semibold">
+                              {comment.userName.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold">{comment.userName}</p>
+                            <div className="flex items-center space-x-2">
+                              <div className="flex text-yellow-400">
+                                {[...Array(5)].map((_, i) => (
+                                  <Star key={i} className={`w-4 h-4 ${i < comment.rating ? 'fill-current' : 'text-gray-600'}`} />
+                                ))}
+                              </div>
+                              <span className="text-gray-400 text-sm">
+                                {new Date(comment.date).toLocaleDateString()}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => deleteComment(comment.id)}
+                          className="text-gray-400 hover:text-red-500 transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                      <p className="text-gray-200 mb-3">{comment.content}</p>
+                      <div className="flex items-center space-x-4">
+                        <button
+                          onClick={() => likeComment(comment.id)}
+                          className="flex items-center space-x-1 text-gray-400 hover:text-red-500 transition-colors"
+                        >
+                          <ThumbsUp className="w-4 h-4" />
+                          <span className="text-sm">{comment.helpful}</span>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <button
-                  onClick={() => {
-                    if (commentName && commentEmail && commentContent && commentAgreed) {
-                      alert('Comment submitted successfully!');
-                      setCommentName('');
-                      setCommentEmail('');
-                      setCommentContent('');
-                      setCommentAgreed(false);
-                    } else {
-                      alert('Please fill in all fields and agree to terms.');
-                    }
-                  }}
-                  className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors duration-200"
-                >
-                  Comment
-                </button>
+              ) : (
+                <div className="text-center py-8 text-gray-400">
+                  <MessageCircle className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                  <p>No comments yet. Be the first to share your thoughts!</p>
+                </div>
+              )}
+
+              {/* 评论表单 */}
+              <div className="border-t border-gray-700 pt-6">
+                <h4 className="text-lg font-semibold text-white mb-4">Leave a Comment</h4>
+                
+                {/* 错误和成功消息 */}
+                {commentError && (
+                  <div className="mb-4 p-3 bg-red-900/50 border border-red-700 rounded-lg text-red-200">
+                    {commentError}
+                  </div>
+                )}
+                {commentSuccess && (
+                  <div className="mb-4 p-3 bg-green-900/50 border border-green-700 rounded-lg text-green-200">
+                    {commentSuccess}
+                  </div>
+                )}
+
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      value={commentName}
+                      onChange={(e) => setCommentName(e.target.value)}
+                      className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Your Email"
+                      value={commentEmail}
+                      onChange={(e) => setCommentEmail(e.target.value)}
+                      className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500"
+                    />
+                  </div>
+                  
+                  {/* 评分 */}
+                  <div>
+                    <label className="block text-gray-300 text-sm mb-2">Rating</label>
+                    <div className="flex space-x-1">
+                      {[1, 2, 3, 4, 5].map((rating) => (
+                        <button
+                          key={rating}
+                          type="button"
+                          onClick={() => setCommentRating(rating)}
+                          className={`p-1 ${
+                            rating <= commentRating 
+                              ? 'text-yellow-400' 
+                              : 'text-gray-600 hover:text-yellow-300'
+                          }`}
+                        >
+                          <Star className="w-6 h-6" />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <textarea
+                    placeholder="Share your thoughts about this game..."
+                    value={commentContent}
+                    onChange={(e) => setCommentContent(e.target.value)}
+                    rows={4}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-red-500"
+                  />
+                  
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="agree"
+                      checked={commentAgreed}
+                      onChange={(e) => setCommentAgreed(e.target.checked)}
+                      className="w-4 h-4 text-red-600 bg-gray-800 border-gray-700 rounded focus:ring-red-500"
+                    />
+                    <label htmlFor="agree" className="text-gray-300 text-sm">
+                      I agree to the terms and conditions
+                    </label>
+                  </div>
+                  
+                  <button
+                    onClick={submitComment}
+                    disabled={commentSubmitting}
+                    className="px-6 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors duration-200 flex items-center space-x-2"
+                  >
+                    {commentSubmitting ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" />
+                        <span>Submit Comment</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

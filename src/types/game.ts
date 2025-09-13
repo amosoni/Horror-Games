@@ -21,6 +21,24 @@ export interface Game {
   storeLinks?: { label: string; url: string }[];
   canonicalSlug?: string;
   screenshots?: string[];
+  // SEO and content fields
+  gameplayDescription?: string;
+  storyDescription?: string;
+  keyFeatures?: string[];
+  systemRequirements?: {
+    minimum?: string;
+    recommended?: string;
+  };
+  ageRating?: string;
+  languages?: string[];
+  playTime?: string;
+  difficulty?: 'Easy' | 'Medium' | 'Hard' | 'Very Hard';
+  multiplayerMode?: string;
+  achievements?: number;
+  dlcCount?: number;
+  lastUpdated?: string;
+  metaDescription?: string;
+  metaKeywords?: string[];
 }
 
 export interface Platform {

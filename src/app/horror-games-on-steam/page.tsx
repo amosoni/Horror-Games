@@ -88,7 +88,7 @@ export default function SteamGamesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            Steam Horror Games Rankings
+            Steam Horror Games of 2025 Rankings
           </motion.h1>
           
           <motion.p 
@@ -97,8 +97,8 @@ export default function SteamGamesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            Discover the top-rated horror games on Steam. From indie horror to AAA titles, experience the most 
-            terrifying and critically acclaimed games on the world&apos;s largest gaming platform with our curated rankings.
+            Discover the top-rated horror games of 2025 on Steam. From indie horror to AAA titles, experience the most 
+            terrifying and critically acclaimed horror games of 2025 on the world&apos;s largest gaming platform with our curated rankings.
           </motion.p>
 
           <motion.div
@@ -243,7 +243,7 @@ export default function SteamGamesPage() {
             <div className="flex items-center justify-center mb-12">
               <div className="flex items-center space-x-4 bg-gradient-to-r from-orange-600/20 to-red-600/20 backdrop-blur-sm rounded-2xl px-8 py-4 border border-orange-500/30">
                 <Trophy className="text-orange-500 w-8 h-8" />
-                <h2 className="text-4xl font-bold text-white">Steam Horror Games Rankings</h2>
+                <h2 className="text-4xl font-bold text-white">Steam Horror Games of 2025 Rankings</h2>
               </div>
             </div>
 
