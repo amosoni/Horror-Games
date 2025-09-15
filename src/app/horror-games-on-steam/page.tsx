@@ -97,8 +97,10 @@ export default function SteamGamesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            Discover the top-rated horror games of 2025 on Steam. From indie horror to AAA titles, experience the most 
-            terrifying and critically acclaimed horror games of 2025 on the world&apos;s largest gaming platform with our curated rankings.
+            Discover the top-rated horror games of 2025 on Steam. From indie horror masterpieces to AAA blockbusters, 
+            experience the most terrifying and critically acclaimed horror games of 2025 on the world&apos;s largest gaming platform. 
+            Our comprehensive rankings feature psychological horror, survival horror, jump scare games, and atmospheric 
+            indie titles that will keep you on the edge of your seat.
           </motion.p>
 
           <motion.div
@@ -232,6 +234,63 @@ export default function SteamGamesPage() {
           </motion.div>
         )}
 
+        {/* Steam Horror Categories */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1 }}
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-6">Steam Horror Game Categories of 2025</h2>
+            <p className="text-gray-300 text-lg max-w-4xl mx-auto">
+              Explore the diverse world of horror gaming on Steam with our curated categories featuring the best games in each genre.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div className="bg-gradient-to-br from-red-900/30 to-red-700/20 backdrop-blur-sm rounded-xl p-6 border border-red-500/30">
+              <h3 className="text-xl font-bold text-white mb-3">Psychological Horror</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Mind-bending experiences that play with your psyche. Games like Silent Hill, Layers of Fear, and Visage.
+              </p>
+              <div className="text-orange-400 text-sm font-medium">
+                {filteredGames.filter(g => g.genre.includes('Psychological')).length} Games
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-sm rounded-xl p-6 border border-purple-500/30">
+              <h3 className="text-xl font-bold text-white mb-3">Survival Horror</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Resource management meets terror. Resident Evil, Dead Space, and The Forest series.
+              </p>
+              <div className="text-orange-400 text-sm font-medium">
+                {filteredGames.filter(g => g.genre.includes('Survival')).length} Games
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-green-900/30 to-green-700/20 backdrop-blur-sm rounded-xl p-6 border border-green-500/30">
+              <h3 className="text-xl font-bold text-white mb-3">Indie Horror</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Creative indie developers pushing boundaries. Amnesia, Outlast, and Five Nights at Freddy's.
+              </p>
+              <div className="text-orange-400 text-sm font-medium">
+                {filteredGames.filter(g => g.genre.includes('Indie')).length} Games
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-blue-900/30 to-blue-700/20 backdrop-blur-sm rounded-xl p-6 border border-blue-500/30">
+              <h3 className="text-xl font-bold text-white mb-3">Jump Scare Games</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Heart-pounding moments and sudden frights. Slender: The Eight Pages, Granny, and Baldi's Basics.
+              </p>
+              <div className="text-orange-400 text-sm font-medium">
+                {filteredGames.filter(g => g.genre.includes('Jump Scare')).length} Games
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Games Rankings */}
         {!loading && !error && (
           <motion.div
@@ -245,6 +304,13 @@ export default function SteamGamesPage() {
                 <Trophy className="text-orange-500 w-8 h-8" />
                 <h2 className="text-4xl font-bold text-white">Steam Horror Games of 2025 Rankings</h2>
               </div>
+            </div>
+            
+            <div className="text-center mb-8">
+              <p className="text-gray-300 text-lg max-w-4xl mx-auto">
+                Our expert-curated rankings feature the most critically acclaimed and player-loved horror games on Steam. 
+                Each game is evaluated based on user ratings, critical reception, gameplay innovation, and overall impact on the horror genre.
+              </p>
             </div>
 
             <div className="space-y-6 max-w-6xl mx-auto">
@@ -284,6 +350,103 @@ export default function SteamGamesPage() {
             </p>
           </motion.div>
         )}
+
+        {/* Steam Platform Features */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4 }}
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-6">Why Choose Steam for Horror Games?</h2>
+            <p className="text-gray-300 text-lg max-w-4xl mx-auto">
+              Steam offers the best platform for horror gaming with exclusive features, community integration, and the largest selection of horror titles.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="bg-gradient-to-br from-orange-900/20 to-red-900/20 backdrop-blur-sm rounded-xl p-8 border border-orange-500/30">
+              <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <Trophy className="text-white w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4 text-center">Largest Horror Library</h3>
+              <p className="text-gray-300 text-center">
+                Access to thousands of horror games from indie developers to major studios. Steam's vast library ensures you'll never run out of terrifying experiences.
+              </p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 backdrop-blur-sm rounded-xl p-8 border border-blue-500/30">
+              <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <Star className="text-white w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4 text-center">Community Reviews</h3>
+              <p className="text-gray-300 text-center">
+                Read authentic player reviews and ratings to find your perfect horror game. Steam's community helps you discover hidden gems and avoid disappointing titles.
+              </p>
+            </div>
+            
+            <div className="bg-gradient-to-br from-green-900/20 to-teal-900/20 backdrop-blur-sm rounded-xl p-8 border border-green-500/30">
+              <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mb-6 mx-auto">
+                <RefreshCw className="text-white w-8 h-8" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-4 text-center">Regular Updates</h3>
+              <p className="text-gray-300 text-center">
+                Automatic updates, cloud saves, and mod support. Steam keeps your horror games updated and your progress safe across all devices.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Top Steam Horror Recommendations */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.6 }}
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-6">Must-Play Steam Horror Games of 2025</h2>
+            <p className="text-gray-300 text-lg max-w-4xl mx-auto">
+              Our handpicked selection of the most essential horror games available on Steam. These titles represent the pinnacle of horror gaming excellence.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+              <h3 className="text-lg font-bold text-white mb-3">Psychological Horror Classics</h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Silent Hill 2 (Enhanced Edition)</li>
+                <li>• Layers of Fear 2</li>
+                <li>• Visage</li>
+                <li>• The Medium</li>
+                <li>• Observer: System Redux</li>
+              </ul>
+            </div>
+            
+            <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+              <h3 className="text-lg font-bold text-white mb-3">Survival Horror Masterpieces</h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Resident Evil 4 Remake</li>
+                <li>• Dead Space Remake</li>
+                <li>• The Forest</li>
+                <li>• Subnautica</li>
+                <li>• Green Hell</li>
+              </ul>
+            </div>
+            
+            <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50">
+              <h3 className="text-lg font-bold text-white mb-3">Indie Horror Gems</h3>
+              <ul className="text-gray-300 text-sm space-y-2">
+                <li>• Amnesia: The Bunker</li>
+                <li>• Outlast Trials</li>
+                <li>• Phasmophobia</li>
+                <li>• Lethal Company</li>
+                <li>• The Outlast Trinity</li>
+              </ul>
+            </div>
+          </div>
+        </motion.div>
       </div>
       <Footer />
       {/* Game Iframe Modal */}

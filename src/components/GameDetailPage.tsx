@@ -494,7 +494,36 @@ export default function GameDetailPage({ slug }: Props) {
             {/* Platform */}
             <div className="flex items-center space-x-2 text-gray-300">
               <Gamepad2 className="w-5 h-5" />
-              <span>{game.platform.join(', ')}</span>
+              <div className="flex flex-wrap gap-2">
+                {game.platform.map((platform, index) => {
+                  const platformLinks: Record<string, string> = {
+                    'Steam': '/horror-games-on-steam',
+                    'PlayStation': '/horror-games-on-playstation',
+                    'Xbox': '/horror-games-on-xbox',
+                    'Nintendo Switch': '/horror-games-on-nintendo',
+                    'PC': '/horror-games-on-pc',
+                    'Roblox': '/horror-games-on-roblox',
+                    'Web': '#'
+                  };
+                  
+                  const platformLink = platformLinks[platform] || '#';
+                  const isWeb = platform === 'Web';
+                  
+                  return (
+                    <Link
+                      key={index}
+                      href={platformLink}
+                      className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-200 ${
+                        isWeb 
+                          ? 'bg-gray-700 text-gray-300 cursor-default' 
+                          : 'bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 hover:text-blue-200 border border-blue-500/30'
+                      }`}
+                    >
+                      {platform}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Technology */}
@@ -707,6 +736,203 @@ export default function GameDetailPage({ slug }: Props) {
                     {tag.toLowerCase()}
                   </span>
                 ))}
+              </div>
+            </div>
+
+            {/* Download Links */}
+            {((game.storeLinks && game.storeLinks.length > 0) || game.steamUrl) && (
+              <div className="bg-gradient-to-br from-green-900/30 to-emerald-900/20 backdrop-blur-sm border border-green-500/30 rounded-xl p-6">
+                <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                  <svg className="w-5 h-5 mr-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Download & Purchase Links
+                </h3>
+                <p className="text-gray-300 mb-6">
+                  Get this game from official stores and platforms. Click any link below to purchase or download.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Steam Link */}
+                  {game.steamUrl && (
+                    <a
+                      href={game.steamUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group bg-gradient-to-r from-orange-800/20 to-red-800/20 border border-orange-500/30 rounded-lg p-4 hover:border-orange-400/50 hover:bg-orange-800/30 transition-all duration-200"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-orange-600 rounded-lg flex items-center justify-center group-hover:bg-orange-500 transition-colors">
+                          <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+                            <path d="M12 6l-4 4h3v4h2v-4h3l-4-4z"/>
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-white group-hover:text-orange-300 transition-colors">
+                            Steam
+                          </h4>
+                          <p className="text-gray-400 text-sm">Official Store</p>
+                        </div>
+                        <div className="ml-auto">
+                          <svg className="w-4 h-4 text-gray-400 group-hover:text-orange-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </div>
+                      </div>
+                    </a>
+                  )}
+                  
+                  {/* Other Store Links */}
+                  {game.storeLinks && game.storeLinks.map((link, index) => (
+                    <a
+                      key={index}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group bg-gradient-to-r from-green-800/20 to-emerald-800/20 border border-green-500/30 rounded-lg p-4 hover:border-green-400/50 hover:bg-green-800/30 transition-all duration-200"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center group-hover:bg-green-500 transition-colors">
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-white group-hover:text-green-300 transition-colors">
+                            {link.label}
+                          </h4>
+                          <p className="text-gray-400 text-sm">Official Store</p>
+                        </div>
+                        <div className="ml-auto">
+                          <svg className="w-4 h-4 text-gray-400 group-hover:text-green-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                  
+                  {/* Web Game Link */}
+                  {game.iframeUrl && (
+                    <a
+                      href={game.iframeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group bg-gradient-to-r from-blue-800/20 to-cyan-800/20 border border-blue-500/30 rounded-lg p-4 hover:border-blue-400/50 hover:bg-blue-800/30 transition-all duration-200"
+                    >
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center group-hover:bg-blue-500 transition-colors">
+                          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </div>
+                        <div>
+                          <h4 className="font-semibold text-white group-hover:text-blue-300 transition-colors">
+                            Play Online
+                          </h4>
+                          <p className="text-gray-400 text-sm">Direct Play Link</p>
+                        </div>
+                        <div className="ml-auto">
+                          <svg className="w-4 h-4 text-gray-400 group-hover:text-blue-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                          </svg>
+                        </div>
+                      </div>
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Platform Recommendations */}
+            <div className="bg-gradient-to-br from-gray-900/80 to-gray-800/60 backdrop-blur-sm border border-gray-700 rounded-xl p-6">
+              <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
+                <Gamepad2 className="w-5 h-5 mr-2 text-blue-400" />
+                Explore More Horror Games by Platform
+              </h3>
+              <p className="text-gray-300 mb-6">
+                Discover the best horror games on each platform with our curated rankings and recommendations.
+              </p>
+              
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                <Link 
+                  href="/horror-games-on-steam" 
+                  className="group bg-gradient-to-br from-orange-900/30 to-red-900/20 border border-orange-500/30 rounded-lg p-4 hover:border-orange-400/50 transition-all duration-200"
+                >
+                  <div className="flex items-center space-x-3 mb-2">
+                    <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center">
+                      <Gamepad2 className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="font-semibold text-white group-hover:text-orange-300">Steam</span>
+                  </div>
+                  <p className="text-gray-300 text-sm">Largest horror library with indie gems and AAA titles</p>
+                </Link>
+                
+                <Link 
+                  href="/horror-games-on-playstation" 
+                  className="group bg-gradient-to-br from-blue-900/30 to-purple-900/20 border border-blue-500/30 rounded-lg p-4 hover:border-blue-400/50 transition-all duration-200"
+                >
+                  <div className="flex items-center space-x-3 mb-2">
+                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                      <Gamepad2 className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="font-semibold text-white group-hover:text-blue-300">PlayStation</span>
+                  </div>
+                  <p className="text-gray-300 text-sm">Exclusive titles and VR horror experiences</p>
+                </Link>
+                
+                <Link 
+                  href="/horror-games-on-xbox" 
+                  className="group bg-gradient-to-br from-green-900/30 to-teal-900/20 border border-green-500/30 rounded-lg p-4 hover:border-green-400/50 transition-all duration-200"
+                >
+                  <div className="flex items-center space-x-3 mb-2">
+                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
+                      <Gamepad2 className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="font-semibold text-white group-hover:text-green-300">Xbox</span>
+                  </div>
+                  <p className="text-gray-300 text-sm">Game Pass horror games and exclusive content</p>
+                </Link>
+                
+                <Link 
+                  href="/horror-games-on-nintendo" 
+                  className="group bg-gradient-to-br from-red-900/30 to-pink-900/20 border border-red-500/30 rounded-lg p-4 hover:border-red-400/50 transition-all duration-200"
+                >
+                  <div className="flex items-center space-x-3 mb-2">
+                    <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
+                      <Gamepad2 className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="font-semibold text-white group-hover:text-red-300">Nintendo Switch</span>
+                  </div>
+                  <p className="text-gray-300 text-sm">Portable horror gaming and indie favorites</p>
+                </Link>
+                
+                <Link 
+                  href="/horror-games-on-pc" 
+                  className="group bg-gradient-to-br from-cyan-900/30 to-blue-900/20 border border-cyan-500/30 rounded-lg p-4 hover:border-cyan-400/50 transition-all duration-200"
+                >
+                  <div className="flex items-center space-x-3 mb-2">
+                    <div className="w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center">
+                      <Gamepad2 className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="font-semibold text-white group-hover:text-cyan-300">PC</span>
+                  </div>
+                  <p className="text-gray-300 text-sm">Mod support and high-end graphics</p>
+                </Link>
+                
+                <Link 
+                  href="/horror-games-on-roblox" 
+                  className="group bg-gradient-to-br from-pink-900/30 to-purple-900/20 border border-pink-500/30 rounded-lg p-4 hover:border-pink-400/50 transition-all duration-200"
+                >
+                  <div className="flex items-center space-x-3 mb-2">
+                    <div className="w-8 h-8 bg-pink-600 rounded-full flex items-center justify-center">
+                      <Gamepad2 className="w-4 h-4 text-white" />
+                    </div>
+                    <span className="font-semibold text-white group-hover:text-pink-300">Roblox</span>
+                  </div>
+                  <p className="text-gray-300 text-sm">User-created horror experiences and multiplayer</p>
+                </Link>
               </div>
             </div>
 

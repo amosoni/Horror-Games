@@ -105,8 +105,9 @@ export default function PlayStationGamesPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            Discover the top-rated horror games of 2025 on PlayStation. From PS5 to PS4, experience the most 
-            terrifying and critically acclaimed horror games of 2025 on Sony&apos;s gaming platform with our curated rankings.
+            Discover the top-rated horror games of 2025 on PlayStation. From PS5 exclusives to PS4 classics, experience the most 
+            terrifying and critically acclaimed horror games of 2025 on Sony&apos;s gaming platform. Our comprehensive rankings feature 
+            PlayStation Studios exclusives, third-party masterpieces, and indie horror gems optimized for PlayStation hardware.
           </motion.p>
 
           <motion.div
@@ -239,6 +240,63 @@ export default function PlayStationGamesPage() {
             </div>
           </motion.div>
         )}
+
+        {/* PlayStation Horror Categories */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1 }}
+        >
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-6">PlayStation Horror Game Categories of 2025</h2>
+            <p className="text-gray-300 text-lg max-w-4xl mx-auto">
+              Explore PlayStation's diverse horror library with our curated categories featuring exclusive titles and third-party masterpieces.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div className="bg-gradient-to-br from-blue-900/30 to-blue-700/20 backdrop-blur-sm rounded-xl p-6 border border-blue-500/30">
+              <h3 className="text-xl font-bold text-white mb-3">PS5 Exclusives</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Next-gen horror experiences built for PlayStation 5. The Last of Us Part II, Returnal, and Demon's Souls.
+              </p>
+              <div className="text-blue-400 text-sm font-medium">
+                {filteredGames.filter(g => g.platform.includes('PlayStation 5')).length} Games
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-purple-900/30 to-purple-700/20 backdrop-blur-sm rounded-xl p-6 border border-purple-500/30">
+              <h3 className="text-xl font-bold text-white mb-3">PS4 Classics</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Timeless horror masterpieces. Bloodborne, Until Dawn, and The Evil Within series.
+              </p>
+              <div className="text-blue-400 text-sm font-medium">
+                {filteredGames.filter(g => g.platform.includes('PlayStation 4')).length} Games
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-red-900/30 to-red-700/20 backdrop-blur-sm rounded-xl p-6 border border-red-500/30">
+              <h3 className="text-xl font-bold text-white mb-3">VR Horror</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Immersive horror in virtual reality. Resident Evil 7 VR, Until Dawn: Rush of Blood, and The Persistence.
+              </p>
+              <div className="text-blue-400 text-sm font-medium">
+                {filteredGames.filter(g => g.platform.includes('PlayStation VR')).length} Games
+              </div>
+            </div>
+            
+            <div className="bg-gradient-to-br from-green-900/30 to-green-700/20 backdrop-blur-sm rounded-xl p-6 border border-green-500/30">
+              <h3 className="text-xl font-bold text-white mb-3">Indie Horror</h3>
+              <p className="text-gray-300 text-sm mb-4">
+                Creative indie developers on PlayStation. Little Nightmares, Inside, and Limbo.
+              </p>
+              <div className="text-blue-400 text-sm font-medium">
+                {filteredGames.filter(g => g.genre.includes('Indie')).length} Games
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Games Rankings */}
         {!loading && !error && (

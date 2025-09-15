@@ -132,6 +132,26 @@ export const featuredGames: Game[] = [
 ];
 
 export const horrorGames: Game[] = [
+  // Tyl3R5 - 添加本地描述以避免中文内容问题
+  {
+    id: 'tyl3r5',
+    title: 'Tyl3R5',
+    description: 'A unique horror game experience featuring atmospheric storytelling and engaging gameplay mechanics. Tyl3R5 offers players a distinctive perspective on the horror genre with its creative art style and immersive narrative. Navigate through mysterious environments and uncover the dark secrets hidden within this captivating horror adventure.',
+    shortDescription: 'Atmospheric horror game with unique art style and engaging storytelling.',
+    platform: ['Web'],
+    genre: ['Horror', 'Adventure', 'Atmospheric'],
+    rating: 4.0,
+    reviewCount: 0,
+    releaseDate: '2024-01-01',
+    developer: 'Community',
+    publisher: 'Community',
+    imageUrl: '/images/tyl3r5.png',
+    iframeUrl: 'https://horrorgames.io/tyl3r5.embed',
+    price: 0,
+    featured: false,
+    tags: ['web', 'horror', 'adventure', 'atmospheric', 'storytelling'],
+    canonicalSlug: 'tyl3r5'
+  },
   ...featuredGames,
   {
     id: 'spooky-maze',
@@ -6270,7 +6290,8 @@ export const curatedWebSlugs: string[] = [
   'flicker',
   'gaslit-office',
   'arsonate-game',
-  'evil-neighbor-2'
+  'evil-neighbor-2',
+  'tyl3r5'
 ];
 
 // Ordered curated games array

@@ -60,7 +60,8 @@ export async function rawgFetch<T>(path: string, params: Record<string, string |
   }
 
   const baseUrl = 'https://api.rawg.io/api';
-  const query = buildQuery({ key: apiKey, ...params });
+  // 强制使用英文语言参数
+  const query = buildQuery({ key: apiKey, language: 'en', ...params });
   const url = `${baseUrl}${path}?${query}`;
 
   const res = await fetch(url, {

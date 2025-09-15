@@ -133,7 +133,27 @@ export async function GET(req: NextRequest) {
 
     const steamStore = detail.stores?.find((s) => s.store.slug === 'steam');
     const descriptionRaw = (detail.description_raw || '').trim();
-    const shortDescription = descriptionRaw.slice(0, 160);
+    
+    // 更智能的中文内容处理
+    let filteredDescription = descriptionRaw;
+    
+    // 如果描述主要是中文（超过70%），则处理
+    const chineseChars = (descriptionRaw.match(/[\u4e00-\u9fff]/g) || []).length;
+    const totalChars = descriptionRaw.length;
+    const chineseRatio = totalChars > 0 ? chineseChars / totalChars : 0;
+    
+    if (chineseRatio > 0.7) {
+      // 尝试提取英文部分
+      const englishParts = descriptionRaw.split(/[\u4e00-\u9fff]+/).filter(part => part.trim().length > 10);
+      if (englishParts.length > 0) {
+        filteredDescription = englishParts.join(' ').trim();
+      } else {
+        // 如果完全没有英文内容，提供一个通用的描述
+        filteredDescription = `A horror game experience. This game features atmospheric horror elements and engaging gameplay mechanics. The game offers a unique perspective on the horror genre with its distinctive art style and immersive storytelling.`;
+      }
+    }
+    
+    const shortDescription = filteredDescription.slice(0, 160);
 
     const storeLinks: { label: string; url: string }[] = ((storesResp && Array.isArray((storesResp as any).results)) ? (storesResp as any).results : [])
       .filter((s: any) => s && typeof s.url === 'string' && s.store && typeof s.store.name === 'string')
@@ -166,7 +186,7 @@ export async function GET(req: NextRequest) {
     const mapped: Game = {
       id: String(detail.id),
       title: detail.name,
-      description: descriptionRaw,
+      description: filteredDescription,
       shortDescription,
       platform: detail.platforms?.map(p => p.platform.name) ?? [],
       genre: detail.genres?.map(g => g.name) ?? [],
