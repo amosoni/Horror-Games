@@ -251,7 +251,7 @@ export default function PlayStationGamesPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-6">PlayStation Horror Game Categories of 2025</h2>
             <p className="text-gray-300 text-lg max-w-4xl mx-auto">
-              Explore PlayStation's diverse horror library with our curated categories featuring exclusive titles and third-party masterpieces.
+              Explore PlayStation&apos;s diverse horror library with our curated categories featuring exclusive titles and third-party masterpieces.
             </p>
           </div>
           
@@ -259,7 +259,7 @@ export default function PlayStationGamesPage() {
             <div className="bg-gradient-to-br from-blue-900/30 to-blue-700/20 backdrop-blur-sm rounded-xl p-6 border border-blue-500/30">
               <h3 className="text-xl font-bold text-white mb-3">PS5 Exclusives</h3>
               <p className="text-gray-300 text-sm mb-4">
-                Next-gen horror experiences built for PlayStation 5. The Last of Us Part II, Returnal, and Demon's Souls.
+                Next-gen horror experiences built for PlayStation 5. The Last of Us Part II, Returnal, and Demon&apos;s Souls.
               </p>
               <div className="text-blue-400 text-sm font-medium">
                 {filteredGames.filter(g => g.platform.includes('PlayStation 5')).length} Games

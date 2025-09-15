@@ -272,7 +272,7 @@ export default function SteamGamesPage() {
             <div className="bg-gradient-to-br from-green-900/30 to-green-700/20 backdrop-blur-sm rounded-xl p-6 border border-green-500/30">
               <h3 className="text-xl font-bold text-white mb-3">Indie Horror</h3>
               <p className="text-gray-300 text-sm mb-4">
-                Creative indie developers pushing boundaries. Amnesia, Outlast, and Five Nights at Freddy's.
+                Creative indie developers pushing boundaries. Amnesia, Outlast, and Five Nights at Freddy&apos;s.
               </p>
               <div className="text-orange-400 text-sm font-medium">
                 {filteredGames.filter(g => g.genre.includes('Indie')).length} Games
@@ -282,7 +282,7 @@ export default function SteamGamesPage() {
             <div className="bg-gradient-to-br from-blue-900/30 to-blue-700/20 backdrop-blur-sm rounded-xl p-6 border border-blue-500/30">
               <h3 className="text-xl font-bold text-white mb-3">Jump Scare Games</h3>
               <p className="text-gray-300 text-sm mb-4">
-                Heart-pounding moments and sudden frights. Slender: The Eight Pages, Granny, and Baldi's Basics.
+                Heart-pounding moments and sudden frights. Slender: The Eight Pages, Granny, and Baldi&apos;s Basics.
               </p>
               <div className="text-orange-400 text-sm font-medium">
                 {filteredGames.filter(g => g.genre.includes('Jump Scare')).length} Games
@@ -372,7 +372,7 @@ export default function SteamGamesPage() {
               </div>
               <h3 className="text-xl font-bold text-white mb-4 text-center">Largest Horror Library</h3>
               <p className="text-gray-300 text-center">
-                Access to thousands of horror games from indie developers to major studios. Steam's vast library ensures you'll never run out of terrifying experiences.
+                Access to thousands of horror games from indie developers to major studios. Steam&apos;s vast library ensures you&apos;ll never run out of terrifying experiences.
               </p>
             </div>
             
@@ -382,7 +382,7 @@ export default function SteamGamesPage() {
               </div>
               <h3 className="text-xl font-bold text-white mb-4 text-center">Community Reviews</h3>
               <p className="text-gray-300 text-center">
-                Read authentic player reviews and ratings to find your perfect horror game. Steam's community helps you discover hidden gems and avoid disappointing titles.
+                Read authentic player reviews and ratings to find your perfect horror game. Steam&apos;s community helps you discover hidden gems and avoid disappointing titles.
               </p>
             </div>
             
