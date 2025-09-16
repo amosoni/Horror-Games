@@ -130,7 +130,7 @@ export default function GameDetailPage({ slug }: Props) {
   }, [slug]);
   
   const recommendedWeb = curatedWebGames
-    .filter(g => (g.canonicalSlug ?? g.id) !== slug)
+    .filter(g => (g.canonicalSlug ?? g.id) !== slug && g.iframeUrl) // Only show iframe games
     .slice(0, 8);
 
   // Generate random play count for demo purposes

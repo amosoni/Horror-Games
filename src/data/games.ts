@@ -6290,8 +6290,7 @@ export const curatedWebSlugs: string[] = [
   'flicker',
   'gaslit-office',
   'arsonate-game',
-  'evil-neighbor-2',
-  'tyl3r5'
+  'evil-neighbor-2'
 ];
 
 // Ordered curated games array

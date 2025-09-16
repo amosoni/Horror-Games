@@ -11,8 +11,9 @@ import { Game } from '../types/game';
 import Image from 'next/image';
 
 export default function Page() {
-  // Get featured game and grid games
-  const featured = curatedWebGames[0];
+  // Get featured game and grid games (only iframe games)
+  const iframeGames = curatedWebGames.filter(g => g.iframeUrl);
+  const featured = iframeGames[0];
 
   return (
     <div className="relative min-h-screen bg-gray-900">
@@ -162,7 +163,7 @@ export default function Page() {
             </Link>
             
             {/* Other Games */}
-            {curatedWebGames.slice(3).map((game: Game) => (
+            {iframeGames.slice(3).map((game: Game) => (
               <Link key={game.id} href={`/games/${game.canonicalSlug ?? game.id}`}>
                 <div className="relative rounded-lg overflow-hidden border border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:ring-2 hover:ring-red-500/60 hover:bg-gray-700/90">
                   <div className="relative aspect-[4/3] bg-gray-800">
