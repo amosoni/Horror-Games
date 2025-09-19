@@ -5,8 +5,6 @@ import { motion } from 'framer-motion';
 import SteamRankingCard from '../../components/SteamRankingCard';
 import GameIframe from '../../components/GameIframe';
 import SearchBar from '../../components/SearchBar';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { Star, TrendingUp, Users, Gamepad2, Trophy, RefreshCw, AlertCircle } from 'lucide-react';
 import { useRawgRobloxHorror } from '../../hooks/useRawgGames';
 import type { Game } from '../../types/game';
@@ -90,8 +88,6 @@ export default function RobloxGamesPage() {
           })
         }}
       />
-      <Header />
-      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <motion.div
@@ -306,7 +302,6 @@ export default function RobloxGamesPage() {
         </motion.div>
 
       </div>
-      <Footer />
       {/* Game Iframe Modal */}
       {selectedGame && (
         <GameIframe

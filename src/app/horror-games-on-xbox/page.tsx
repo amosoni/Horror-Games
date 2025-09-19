@@ -6,8 +6,6 @@ import { motion } from 'framer-motion';
 import SteamRankingCard from '../../components/SteamRankingCard';
 import GameIframe from '../../components/GameIframe';
 import SearchBar from '../../components/SearchBar';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { Gamepad2, TrendingUp, Clock, Star, Trophy, Flame, Award, RefreshCw, AlertCircle } from 'lucide-react';
 import { useRawgXboxHorror } from '../../hooks/useRawgGames';
 import type { Game } from '../../types/game';
@@ -109,8 +107,6 @@ export default function XboxGamesPage() {
           })
         }}
       />
-      <Header />
-      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero Section */}
         <motion.div
@@ -364,7 +360,6 @@ export default function XboxGamesPage() {
           }}
         />
       </div>
-      <Footer />
       {/* Game Iframe Modal */}
       {selectedGame && (
         <GameIframe

@@ -4,13 +4,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Skull, Users, Globe, Star, Calendar, Mail, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 to-black">
-      <Header />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Hero */}
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
@@ -126,7 +123,6 @@ export default function AboutPage() {
           </div>
         </motion.div>
       </div>
-      <Footer />
     </div>
   );
 } 

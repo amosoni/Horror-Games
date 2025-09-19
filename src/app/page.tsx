@@ -3,8 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Skull } from 'lucide-react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Link from 'next/link';
 import { curatedWebGames } from '../data/games';
 import { Game } from '../types/game';
@@ -70,8 +68,6 @@ export default function Page() {
         }}
       />
 
-      <Header />
-      
       <div className="container mx-auto px-3 sm:px-4 lg:px-6 py-6 lg:py-8 relative">
         {/* Hero */}
         <motion.div className="mb-4 sm:mb-6 text-center" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
@@ -425,8 +421,6 @@ export default function Page() {
           }}
         />
       </div>
-
-      <Footer />
     </div>
   );
 }

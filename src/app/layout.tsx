@@ -3,6 +3,8 @@ import Script from 'next/script';
 import '../index.css';
 import type { Metadata } from 'next';
 import I18nProvider from '../components/I18nProvider';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://horrorgames.games';
 
@@ -99,31 +101,32 @@ export default function RootLayout({
         </Script>
         
         {/* Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "Horror Games Online",
-              "url": "https://horrorgames.games",
-              "description": "Play the best free horror games online directly in your browser",
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://horrorgames.games/search?q={search_term_string}",
-                "query-input": "required name=search_term_string"
-              },
-              "icons": [
-                { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml" }
-              ]
-            })
-          }}
-        />
+        <Script id="ld-website" type="application/ld+json" strategy="beforeInteractive">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Horror Games Online",
+            "url": "https://horrorgames.games",
+            "description": "Play the best free horror games online directly in your browser",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://horrorgames.games/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            },
+            "icons": [
+              { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml" }
+            ]
+          })}
+        </Script>
       </head>
       <body>
         <I18nProvider>
           <div className="min-h-screen bg-black text-white">
-            {children}
+            <Header />
+            <main>
+              {children}
+            </main>
+            <Footer />
           </div>
         </I18nProvider>
       </body>

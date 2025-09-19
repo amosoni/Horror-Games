@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Calendar, User, Link as LinkIcon } from 'lucide-react';
 import Link from 'next/link';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { useRawgLatestHorror } from '../../hooks/useRawgGames';
 import type { Game } from '../../types/game';
 
@@ -71,7 +69,6 @@ export default function ReviewsPage() {
           })
         }}
       />
-      <Header />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Horror Game Reviews</h1>
@@ -122,7 +119,6 @@ export default function ReviewsPage() {
           ))}
         </motion.div>
       </div>
-      <Footer />
     </div>
   );
 } 

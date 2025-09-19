@@ -3,8 +3,6 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Star, Users, Calendar, Gamepad2, AlertTriangle } from 'lucide-react';
-import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 
 export const metadata: Metadata = {
   title: 'Play Granny Online - Free Horror Survival Game | Horror Games Online',
@@ -43,8 +41,6 @@ export const metadata: Metadata = {
 export default function GrannyPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Header />
-
       {/* Hero Section */}
       <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-8 overflow-hidden">
         {/* Background Image */}
@@ -287,8 +283,6 @@ export default function GrannyPage() {
           </section>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 } 
