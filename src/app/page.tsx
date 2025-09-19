@@ -17,6 +17,42 @@ export default function Page() {
 
   return (
     <div className="relative min-h-screen bg-gray-900">
+      {/* BreadcrumbList JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://horrorgames.games/" }
+            ]
+          })
+        }}
+      />
+      {/* ItemList JSON-LD (featured+grid subset) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Horror Games Online — Featured",
+            "numberOfItems": Math.min(20, iframeGames.length),
+            "itemListElement": iframeGames.slice(0, 20).map((g, i) => ({
+              "@type": "ListItem",
+              "position": i + 1,
+              "item": {
+                "@type": "VideoGame",
+                "name": g.title,
+                "url": `https://horrorgames.games/games/${g.canonicalSlug ?? g.id}`,
+                "genre": g.genre,
+                "aggregateRating": g.rating ? { "@type": "AggregateRating", "ratingValue": g.rating, "ratingCount": g.reviewCount || 0 } : undefined
+              }
+            }))
+          })
+        }}
+      />
       {/* Horror background overlays - reduced opacity for better visibility */}
       <div
         className="pointer-events-none absolute inset-0 opacity-40"
@@ -373,6 +409,21 @@ export default function Page() {
             </Link>
           </div>
         </div>
+        {/* FAQ JSON-LD (homepage) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                { "@type": "Question", "name": "Can I play horror games online without downloading?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Many titles on our site are browser‑playable. Open a game page and start instantly." }},
+                { "@type": "Question", "name": "Are these games free?", "acceptedAnswer": { "@type": "Answer", "text": "We tag free and demo content clearly. See our Free Horror Games page for a curated list." }},
+                { "@type": "Question", "name": "How do you choose featured games?", "acceptedAnswer": { "@type": "Answer", "text": "We combine user ratings, review counts, freshness, and manual curation for quality and variety." }}
+              ]
+            })
+          }}
+        />
       </div>
 
       <Footer />

@@ -3,6 +3,8 @@ import '../index.css';
 import type { Metadata } from 'next';
 import I18nProvider from '../components/I18nProvider';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://horrorgames.games';
+
 export const metadata: Metadata = {
   title: 'Horror Games Online - Play Free Horror Games in Browser',
   description: 'Play the best free horror games online directly in your browser. No downloads required! Discover survival horror, psychological horror, and jump scare games.',
@@ -16,12 +18,12 @@ export const metadata: Metadata = {
     'horror games steam',
     'horror games multiplayer'
   ].join(', '),
-  metadataBase: new URL('https://horrorgames.games'),
+  metadataBase: new URL(siteUrl),
   openGraph: {
     title: 'Horror Games Online - Play Free Horror Games in Browser',
     description: 'Play the best free horror games online directly in your browser. No downloads required! Discover survival horror, psychological horror, and jump scare games.',
     type: 'website',
-    url: 'https://horrorgames.games/',
+    url: siteUrl + '/',
     siteName: 'Horror Games Online',
     images: [
       { url: '/logo.svg', width: 512, height: 512, alt: 'Horror Games Online' },
@@ -49,7 +51,7 @@ export const metadata: Metadata = {
   verification: {
     google: 'your-google-verification-code',
   },
-  alternates: { canonical: 'https://horrorgames.games/' },
+  alternates: { canonical: siteUrl + '/' },
   authors: [{ name: 'Horror Games Hub' }],
   creator: 'Horror Games Hub',
   publisher: 'Horror Games Hub',
@@ -84,8 +86,8 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7QH42Q9P3L"></script>
+        {/* Google tag (gtag.js) using next/script */}
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=G-7QH42Q9P3L`}></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-7QH42Q9P3L');`,

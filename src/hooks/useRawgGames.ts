@@ -6,6 +6,7 @@ import type { RawgGame, RawgListResponse } from '../services/rawgApi';
 
 function mapRawgToGame(rawg: RawgGame): Game {
   const steamStore = rawg.stores?.find((s) => s.store.slug === 'steam');
+  const firstStoreUrl = rawg.stores?.[0]?.url || steamStore?.url;
   return {
     id: String(rawg.id),
     title: rawg.name,
@@ -21,7 +22,7 @@ function mapRawgToGame(rawg: RawgGame): Game {
     imageUrl: rawg.background_image ?? 'https://placehold.co/600x400?text=Game',
     trailerUrl: undefined,
     iframeUrl: undefined,
-    steamUrl: steamStore ? undefined : undefined,
+    steamUrl: steamStore?.url || undefined,
     price: 0,
     featured: false,
     tags: rawg.tags?.map((t) => t.name) ?? [],

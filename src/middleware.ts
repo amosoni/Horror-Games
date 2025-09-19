@@ -21,8 +21,8 @@ export function middleware(request: NextRequest) {
   // 检查 User-Agent
   const userAgent = request.headers.get('user-agent') || '';
 
-  // 放行主流搜索引擎爬虫（Google、Bing、Yahoo、DuckDuckGo、Yandex、Baidu 等）
-  const allowedSearchBots = /(googlebot|bingbot|slurp|duckduckbot|yandex(bot)?|baiduspider|sogou|exabot)/i;
+  // 放行主流搜索引擎爬虫（Google、Bing、Yahoo、DuckDuckGo、Yandex、Baidu 等）以及常见SEO审计工具
+  const allowedSearchBots = /(googlebot|bingbot|slurp|duckduckbot|yandex(bot)?|baiduspider|sogou|exabot|ahrefsbot|semrush(bot)?|mj12bot|seznambot|dotbot|rogerbot|facebookexternalhit|linkedinbot|twitterbot)/i;
   const isAllowedSearchBot = allowedSearchBots.test(userAgent);
 
   // 通用爬虫特征（用于拦截未知或恶意爬虫）

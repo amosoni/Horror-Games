@@ -37,6 +37,43 @@ export default function MultiplayerGamesPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 to-black py-8">
+      {/* BreadcrumbList JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://horrorgames.games/" },
+              { "@type": "ListItem", "position": 2, "name": "Multiplayer Horror Games", "item": "https://horrorgames.games/horror-games-multiplayer" }
+            ]
+          })
+        }}
+      />
+      {/* ItemList JSON-LD (top 20) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Multiplayer Horror Games",
+            "numberOfItems": Math.min(20, sortedGames.length),
+            "itemListElement": sortedGames.slice(0, 20).map((g, i) => ({
+              "@type": "ListItem",
+              "position": i + 1,
+              "item": {
+                "@type": "VideoGame",
+                "name": g.title,
+                "url": `https://horrorgames.games/games/${g.canonicalSlug || g.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`,
+                "genre": g.genre,
+                "aggregateRating": g.rating ? { "@type": "AggregateRating", "ratingValue": g.rating, "ratingCount": g.reviewCount || 0 } : undefined
+              }
+            }))
+          })
+        }}
+      />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -49,7 +86,7 @@ export default function MultiplayerGamesPage() {
             <span>Multiplayer Horror Games</span>
           </h1>
           <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Play horror games with friends! Discover the best multiplayer and co-op horror experiences.
+            Play horror games with friends! We curate the best multiplayer and co-op horror experiences, updated weekly based on player reviews and community feedback.
           </p>
         </motion.div>
 
@@ -94,6 +131,39 @@ export default function MultiplayerGamesPage() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Related Topics Links */}
+        <motion.div
+          className="mt-20 border-t border-gray-800 pt-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          <h3 className="text-2xl font-bold text-white mb-6">Related Topics</h3>
+          <div className="flex flex-wrap gap-3">
+            <a href="/horror-games-online" className="px-4 py-2 rounded-xl bg-gray-800/80 text-gray-200 border border-gray-700 hover:bg-gray-700">Horror Games Online</a>
+            <a href="/free-horror-games" className="px-4 py-2 rounded-xl bg-gray-800/80 text-gray-200 border border-gray-700 hover:bg-gray-700">Free Horror Games</a>
+            <a href="/co-op-horror-games" className="px-4 py-2 rounded-xl bg-gray-800/80 text-gray-200 border border-gray-700 hover:bg-gray-700">Co-op Horror</a>
+            <a href="/horror-games-on-steam" className="px-4 py-2 rounded-xl bg-gray-800/80 text-gray-200 border border-gray-700 hover:bg-gray-700">Horror Games on Steam</a>
+            <a href="/psychological-horror-games" className="px-4 py-2 rounded-xl bg-gray-800/80 text-gray-200 border border-gray-700 hover:bg-gray-700">Psychological Horror</a>
+          </div>
+        </motion.div>
+
+        {/* FAQ JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              "mainEntity": [
+                { "@type": "Question", "name": "What makes a good multiplayer horror game?", "acceptedAnswer": { "@type": "Answer", "text": "Strong cooperative mechanics, shared scares, and balanced difficulty that works for 2-4 players." }},
+                { "@type": "Question", "name": "Can I play these with random players?", "acceptedAnswer": { "@type": "Answer", "text": "Most support matchmaking, but playing with friends usually provides the best experience." }},
+                { "@type": "Question", "name": "Are there free multiplayer horror games?", "acceptedAnswer": { "@type": "Answer", "text": "Yes! Check our Free Horror Games page for free multiplayer options." }}
+              ]
+            })
+          }}
+        />
 
         {sortedGames.length === 0 && (
           <div className="text-center py-16">

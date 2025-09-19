@@ -33,6 +33,44 @@ export default function ReviewsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 to-black">
+      {/* BreadcrumbList JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://horrorgames.games/" },
+              { "@type": "ListItem", "position": 2, "name": "Horror Game Reviews", "item": "https://horrorgames.games/reviews" }
+            ]
+          })
+        }}
+      />
+      {/* ItemList JSON-LD for editorial reviews */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Horror Game Reviews",
+            "numberOfItems": items.length,
+            "itemListElement": items.slice(0, 24).map((r, i) => ({
+              "@type": "ListItem",
+              "position": i + 1,
+              "item": {
+                "@type": "Review",
+                "name": r.title,
+                "reviewRating": { "@type": "Rating", "ratingValue": r.rating, "bestRating": 5 },
+                "author": { "@type": "Person", "name": r.author },
+                "datePublished": r.date,
+                "url": `https://horrorgames.games/reviews/${r.slug}`
+              }
+            }))
+          })
+        }}
+      />
       <Header />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}>
