@@ -4,8 +4,6 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Clock, ArrowRight, Search } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 const blogPosts = [
   {
@@ -135,7 +133,6 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Header />
       {/* Header */}
       <header className="bg-gradient-to-b from-gray-800 to-gray-900 py-12">
         <div className="container mx-auto px-4">
@@ -513,7 +510,12 @@ export default function BlogPage() {
         </section>
       </main>
 
-      <Footer />
+      {/* Footer */}
+      <footer className="bg-gray-800 py-12">
+        <div className="container mx-auto px-4 text-center text-gray-400">
+          &copy; {new Date().getFullYear()} Horror Games Blog. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 } 

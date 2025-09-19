@@ -3,8 +3,6 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Clock, ExternalLink } from 'lucide-react';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'Psychological Horror Games: Mind-Bending Terror - Horror Games Online',
@@ -39,7 +37,6 @@ export const metadata: Metadata = {
 export default function PsychologicalHorrorGamesPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Header />
       
       {/* Hero Section */}
       <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-12">
@@ -344,7 +341,7 @@ export default function PsychologicalHorrorGamesPage() {
         </div>
       </main>
 
-      <Footer />
+      
     </div>
   );
 } 

@@ -3,8 +3,6 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Clock, User } from 'lucide-react';
-import Header from '../../../components/Header';
-import Footer from '../../../components/Footer';
 
 export const metadata: Metadata = {
   title: 'Silent Hill F: New Silent Hill Game 2025 - Everything You Need to Know',
@@ -124,8 +122,6 @@ export default function SilentHillFPage() {
           })
         }}
       />
-
-      <Header />
 
       {/* Hero Section */}
       <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-12">
@@ -469,7 +465,10 @@ export default function SilentHillFPage() {
         </div>
       </main>
 
-      <Footer />
+      {/* Footer */}
+      <footer className="bg-gray-800 py-12 text-center text-gray-400">
+        <p>&copy; {new Date().getFullYear()} Horror Games Hub. All rights reserved.</p>
+      </footer>
     </div>
   );
 } 
