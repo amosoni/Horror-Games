@@ -1,4 +1,5 @@
 import React from 'react';
+import Script from 'next/script';
 import '../index.css';
 import type { Metadata } from 'next';
 import I18nProvider from '../components/I18nProvider';
@@ -86,13 +87,16 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
-        {/* Google tag (gtag.js) using next/script */}
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=G-7QH42Q9P3L`}></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-7QH42Q9P3L');`,
-          }}
-        />
+        {/* Google tag (gtag.js) using next/script to avoid hydration mismatch */}
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=G-7QH42Q9P3L`} strategy="afterInteractive" />
+        <Script id="ga-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-7QH42Q9P3L');
+          `}
+        </Script>
         
         {/* Structured Data */}
         <script
