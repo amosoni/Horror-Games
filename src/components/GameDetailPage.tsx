@@ -4,8 +4,6 @@ import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Link from "next/link";
 import type { Game } from "../types/game";
 import { Star, Calendar, User, Tag, MessageCircle, Eye, Gamepad2, ThumbsUp, Trash2, Send } from "lucide-react";
-import Header from "./Header";
-import Footer from "./Footer";
 import { horrorGames as localGames, curatedWebGames } from "../data/games";
 import { halloweenGames } from "../data/halloweenGames";
 import { gameSeoBySlug } from "../data/gameSeo";
@@ -353,7 +351,6 @@ export default function GameDetailPage({ slug }: Props) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-950 to-black text-gray-300">
-      <Header />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Link
           href="/"
@@ -1150,7 +1147,6 @@ export default function GameDetailPage({ slug }: Props) {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
