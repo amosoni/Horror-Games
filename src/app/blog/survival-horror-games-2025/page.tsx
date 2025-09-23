@@ -47,6 +47,27 @@ export const metadata: Metadata = {
 export default function SurvivalHorrorGames2025Page() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Best Survival Horror Games 2025: Complete Guide",
+            "description": "Explore the most anticipated survival horror games releasing in 2025.",
+            "image": "https://horrorgames.games/blog/survival-horror-2025.jpg",
+            "author": { "@type": "Organization", "name": "Horror Games Hub" },
+            "publisher": { "@type": "Organization", "name": "Horror Games Hub", "logo": { "@type": "ImageObject", "url": "https://horrorgames.games/logo.svg" } },
+            "datePublished": "2025-01-10T00:00:00.000Z",
+            "dateModified": "2025-01-10T00:00:00.000Z",
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://horrorgames.games/blog/survival-horror-games-2025" },
+            "articleSection": "Gaming",
+            "keywords": "survival horror games 2025, best horror games 2025, upcoming horror games",
+            "timeRequired": "PT8M"
+          })
+        }}
+      />
       
       {/* Hero Section */}
       <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-12">

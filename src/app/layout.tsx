@@ -9,7 +9,10 @@ import Footer from '../components/Footer';
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://horrorgames.games';
 
 export const metadata: Metadata = {
-  title: 'Horror Games Online - Play Free Horror Games in Browser',
+  title: {
+    default: 'Horror Games Online - Play Free Horror Games in Browser',
+    template: '%s | Horror Games Online',
+  },
   description: 'Play the best free horror games online directly in your browser. No downloads required! Discover survival horror, psychological horror, and jump scare games.',
   keywords: [
     'horror games online',
@@ -29,15 +32,14 @@ export const metadata: Metadata = {
     url: siteUrl + '/',
     siteName: 'Horror Games Online',
     images: [
-      { url: '/logo.svg', width: 512, height: 512, alt: 'Horror Games Online' },
-      { url: '/og-image.svg', width: 1200, height: 630, alt: 'Horror Games Online' },
+      { url: '/og-image.jpg', width: 1200, height: 630, alt: 'Horror Games Online' },
     ]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Horror Games Online - Play Free Horror Games in Browser',
     description: 'Play the best free horror games online directly in your browser. No downloads required! Discover survival horror, psychological horror, and jump scare games.',
-    images: ['/logo.svg', '/og-image.svg'],
+    images: ['/og-image.jpg'],
     site: '@horrorgames'
   },
   robots: {
@@ -82,6 +84,12 @@ export default function RootLayout({
         <meta name="robots" content="index, follow" />
         <meta httpEquiv="X-Robots-Tag" content="index, follow" />
 
+        {/* Performance hints for external origins */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+
         {/* Google AdSense */}
         <script
           async
@@ -116,6 +124,16 @@ export default function RootLayout({
             "icons": [
               { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml" }
             ]
+          })}
+        </Script>
+        <Script id="ld-organization" type="application/ld+json" strategy="beforeInteractive">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Horror Games Hub",
+            "url": "https://horrorgames.games",
+            "logo": "https://horrorgames.games/logo.svg",
+            "sameAs": []
           })}
         </Script>
       </head>

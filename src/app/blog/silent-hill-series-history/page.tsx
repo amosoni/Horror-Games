@@ -22,11 +22,20 @@ export const metadata: Metadata = {
     type: 'article',
     url: 'https://horrorgames.games/blog/silent-hill-series-history',
     siteName: 'Horror Games Online',
+    images: [
+      {
+        url: 'https://horrorgames.games/blog/SILENTHILLf/SILENTHILLf6.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Silent Hill Series History',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Silent Hill Series: Complete History & Evolution',
     description: 'Take a deep dive into the complete history of the Silent Hill franchise.',
+    images: ['https://horrorgames.games/blog/SILENTHILLf/SILENTHILLf6.jpg'],
   },
   robots: 'index, follow',
   alternates: {
@@ -37,6 +46,27 @@ export const metadata: Metadata = {
 export default function SilentHillSeriesHistoryPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Silent Hill Series: Complete History & Evolution",
+            "description": "Take a deep dive into the complete history of the Silent Hill franchise.",
+            "image": "https://horrorgames.games/blog/SILENTHILLf/SILENTHILLf6.jpg",
+            "author": { "@type": "Organization", "name": "Horror Games Hub" },
+            "publisher": { "@type": "Organization", "name": "Horror Games Hub", "logo": { "@type": "ImageObject", "url": "https://horrorgames.games/logo.svg" } },
+            "datePublished": "2024-12-28T00:00:00.000Z",
+            "dateModified": "2024-12-28T00:00:00.000Z",
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://horrorgames.games/blog/silent-hill-series-history" },
+            "articleSection": "Gaming",
+            "keywords": "silent hill series history, franchise evolution, survival horror",
+            "timeRequired": "PT15M"
+          })
+        }}
+      />
       
       {/* Hero Section */}
       <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-12">

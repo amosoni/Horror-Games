@@ -64,7 +64,7 @@ function renderFormattedDescription(desc: string) {
       flushParagraph();
       flushList();
       nodes.push(
-        <p key={`a-${nodes.length}`} className="mb-3 text-gray-300"><span className="font-semibold text-white">A:</span> {line.replace(/^Q:\s*/i, '')}</p>
+        <p key={`a-${nodes.length}`} className="mb-3 text-gray-300"><span className="font-semibold text-white">A:</span> {line.replace(/^A:\s*/i, '')}</p>
       );
       continue;
     }
@@ -536,11 +536,15 @@ export default function GameDetailPage({ slug }: Props) {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Game Image */}
-            <img
-              src={game.imageUrl || "https://placehold.co/1200x675?text=Horror+Game"}
-              alt={game.title}
-              className="w-full h-[420px] object-cover rounded-xl"
-            />
+            <div className="relative w-full h-[420px] rounded-xl overflow-hidden">
+              <Image
+                src={game.imageUrl || "https://placehold.co/1200x675?text=Horror+Game"}
+                alt={game.title}
+                fill
+                sizes="(max-width: 1024px) 100vw, 800px"
+                className="object-cover"
+              />
+            </div>
 
             {/* Game Description */}
             <div className="bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl p-6">

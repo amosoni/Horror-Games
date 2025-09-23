@@ -22,11 +22,20 @@ export const metadata: Metadata = {
     type: 'article',
     url: 'https://horrorgames.games/blog/psychological-horror-games',
     siteName: 'Horror Games Online',
+    images: [
+      {
+        url: 'https://horrorgames.games/blog/SILENTHILLf/SILENTHILLf5.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Psychological Horror Games',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Psychological Horror Games: Mind-Bending Terror',
     description: 'Dive into the world of psychological horror games that mess with your mind and create lasting fear.',
+    images: ['https://horrorgames.games/blog/SILENTHILLf/SILENTHILLf5.jpg'],
   },
   robots: 'index, follow',
   alternates: {
@@ -37,6 +46,27 @@ export const metadata: Metadata = {
 export default function PsychologicalHorrorGamesPage() {
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "Psychological Horror Games: Mind-Bending Terror",
+            "description": "Dive into the world of psychological horror games that mess with your mind and create lasting fear.",
+            "image": "https://horrorgames.games/blog/SILENTHILLf/SILENTHILLf5.jpg",
+            "author": { "@type": "Organization", "name": "Horror Games Hub" },
+            "publisher": { "@type": "Organization", "name": "Horror Games Hub", "logo": { "@type": "ImageObject", "url": "https://horrorgames.games/logo.svg" } },
+            "datePublished": "2025-01-05T00:00:00.000Z",
+            "dateModified": "2025-01-05T00:00:00.000Z",
+            "mainEntityOfPage": { "@type": "WebPage", "@id": "https://horrorgames.games/blog/psychological-horror-games" },
+            "articleSection": "Gaming",
+            "keywords": "psychological horror games, mind-bending horror, atmospheric horror",
+            "timeRequired": "PT12M"
+          })
+        }}
+      />
       
       {/* Hero Section */}
       <header className="relative bg-gradient-to-b from-gray-800 to-gray-900 py-12">

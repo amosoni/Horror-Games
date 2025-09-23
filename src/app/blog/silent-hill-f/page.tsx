@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     siteName: 'Horror Games Hub',
     images: [
       {
-        url: '/blog/SILENTHILLf/SILENTHILLf1.jpg',
+        url: 'https://horrorgames.games/blog/SILENTHILLf/SILENTHILLf1.jpg',
         width: 1200,
         height: 630,
         alt: 'Silent Hill F - New Silent Hill Game 2025',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Silent Hill F: New Silent Hill Game 2025 - Everything You Need to Know',
     description: 'Discover Silent Hill F, the latest installment in the iconic survival horror series. Learn about the new Japanese setting, gameplay mechanics, release date, and more.',
-    images: ['/blog/silent-hill-f-og.jpg'],
+    images: ['https://horrorgames.games/blog/silent-hill-f-og.jpg'],
     site: '@horrorgames',
   },
   robots: {
